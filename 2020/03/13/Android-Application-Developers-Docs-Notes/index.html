@@ -46,18 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="引言我对CSAPP中题目的解答。">
-<meta name="keywords" content="CSAPP">
+  <meta name="description" content="Introduction阅读开发者文档后的要点总结。 基础知识应用组件应用组件是 Android 应用的基本构建块。每个组件都是一个入口点，系统或用户可通过该入口点进入您的应用。有些组件会依赖于其他组件。 4种类型  Activity 服务 广播接收器 内容提供程序  Activity拥有单个界面 服务在后台保持运行 广播接收器在常规用户流之外项别的app传递信息，如设定闹钟的功能 内容提供程序内">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSAPP">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;04&#x2F;CSAPP&#x2F;index.html">
+<meta property="og:title" content="Android Application Developers Docs Notes">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;13&#x2F;Android-Application-Developers-Docs-Notes&#x2F;index.html">
 <meta property="og:site_name" content="xBug">
-<meta property="og:description" content="引言我对CSAPP中题目的解答。">
+<meta property="og:description" content="Introduction阅读开发者文档后的要点总结。 基础知识应用组件应用组件是 Android 应用的基本构建块。每个组件都是一个入口点，系统或用户可通过该入口点进入您的应用。有些组件会依赖于其他组件。 4种类型  Activity 服务 广播接收器 内容提供程序  Activity拥有单个界面 服务在后台保持运行 广播接收器在常规用户流之外项别的app传递信息，如设定闹钟的功能 内容提供程序内">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-21T06:16:18.555Z">
+<meta property="og:updated_time" content="2020-03-13T13:38:40.682Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/01/04/CSAPP/">
+<link rel="canonical" href="http://yoursite.com/2020/03/13/Android-Application-Developers-Docs-Notes/">
 
 
 <script id="page-configurations">
@@ -71,7 +71,7 @@
   };
 </script>
 
-  <title>CSAPP | xBug</title>
+  <title>Android Application Developers Docs Notes | xBug</title>
   
 
 
@@ -170,7 +170,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/04/CSAPP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/13/Android-Application-Developers-Docs-Notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -183,7 +183,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CSAPP
+          Android Application Developers Docs Notes
         </h1>
 
         <div class="post-meta">
@@ -192,30 +192,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-01-04 20:02:49" itemprop="dateCreated datePublished" datetime="2020-01-04T20:02:49+08:00">2020-01-04</time>
+              <time title="创建时间：2020-03-13 21:30:53 / 修改时间：21:38:40" itemprop="dateCreated datePublished" datetime="2020-03-13T21:30:53+08:00">2020-03-13</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-21 14:16:18" itemprop="dateModified" datetime="2020-01-21T14:16:18+08:00">2020-01-21</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/books/" itemprop="url" rel="index">
-                    <span itemprop="name">books</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/books/CS/" itemprop="url" rel="index">
-                    <span itemprop="name">CS</span>
+                  <a href="/categories/Andriod/" itemprop="url" rel="index">
+                    <span itemprop="name">Andriod</span>
                   </a>
                 </span>
             </span>
@@ -238,47 +226,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>我对<code>CSAPP</code>中题目的解答。</p>
-<a id="more"></a>
-
-<h1 id="第1章"><a href="#第1章" class="headerlink" title="第1章"></a>第1章</h1><p><a href="https://dreamanddead.gitbooks.io/csapp-3e-solutions/" target="_blank" rel="noopener">参考答案</a></p>
-<h1 id="第2章"><a href="#第2章" class="headerlink" title="第2章"></a>第2章</h1><p><a href="https://www.cnblogs.com/machao/p/8397961.html" target="_blank" rel="noopener">参考答案</a></p>
-<h2 id="2-12"><a href="#2-12" class="headerlink" title="2.12"></a>2.12</h2><blockquote>
-<p>A. x &amp;= 0x000000FF<br>B. x ^= 0xFFFFFF00<br>C. x |= 0x000000FF</p>
-</blockquote>
-<p>总结：</p>
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>阅读<a href="https://developer.android.com/guide" target="_blank" rel="noopener">开发者文档</a>后的要点总结。</p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a><a href="https://developer.android.com/guide/components/fundamentals" target="_blank" rel="noopener">基础知识</a></h2><h3 id="应用组件"><a href="#应用组件" class="headerlink" title="应用组件"></a><a href="https://developer.android.com/guide/components/fundamentals#Components" target="_blank" rel="noopener">应用组件</a></h3><p>应用组件是 Android 应用的基本构建块。每个组件都是一个入口点，系统或用户可通过该入口点进入您的应用。有些组件会依赖于其他组件。</p>
+<p>4种类型</p>
 <ol>
-<li><p>与。与1不变，与0为0</p>
-</li>
-<li><p>或。或1为1，或0不变</p>
-</li>
-<li><p>异或。异或1取反，异或0不变</p>
-</li>
-<li><p>要求结果一部分不变，一部分变0——与。</p>
-</li>
-<li><p>要求结果一部分不变，一部分变1——或。</p>
-</li>
-<li><p>要求结果一部分不变，一部分取反——异或。</p>
-</li>
+<li>Activity</li>
+<li>服务</li>
+<li>广播接收器</li>
+<li>内容提供程序</li>
 </ol>
-<h2 id="2-13"><a href="#2-13" class="headerlink" title="2.13"></a>2.13</h2><p><code>bis</code>等价于<code>z |= m</code>；</p>
-<p><code>bic</code>等价于<code>z &amp;= ~m</code>。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">bool_or: <span class="keyword">int</span> result = bis(x, y);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">bool_xor: <span class="keyword">int</span> result = bis(bic(x,y), bix(y,x));</span></pre></td></tr></table></figure>
-
-<p>因为<code>x ^ y = (x &amp; ~y) | (y &amp; ~x)</code></p>
-<h2 id="2-15"><a href="#2-15" class="headerlink" title="2.15"></a>2.15</h2><blockquote>
-<p>~(x ^ y)</p>
-</blockquote>
-<h2 id="2-25"><a href="#2-25" class="headerlink" title="2.25"></a>2.25</h2><p>当<code>length</code>为0时，<code>length-1</code>为<code>UMax</code>，导致<code>for</code>循环时数组越界。</p>
-<p>应当将函数头部分改为</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">sum_elements</span><span class="params">(<span class="keyword">float</span> a[], <span class="keyword">unsigned</span> length)</span></span></span></pre></td></tr></table></figure>
-
-<h2 id="2-26"><a href="#2-26" class="headerlink" title="2.26"></a>2.26</h2><p>A. 当字符串<code>s</code>的长度小于字符串<code>t</code>的长度时<br>B. 根据无符号数算术运算的规则，此时<code>strlen(s)-strlen(t)</code>的结果不是负数产生<code>下溢</code>。<br>C. 将<code>strlonger</code>函数改为：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strlonger</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">return</span> (<span class="keyword">int</span>)<span class="built_in">strlen</span>(s) - (<span class="keyword">int</span>)<span class="built_in">strlen</span>(t) &gt; <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-<h2 id="2-30"><a href="#2-30" class="headerlink" title="2.30"></a>2.30</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tadd_ok</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">int</span> sum = x + y;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> (x&gt;<span class="number">0</span> &amp;&amp; y&gt;<span class="number">0</span> &amp;&amp; sum&lt;<span class="number">0</span> || x&lt;<span class="number">0</span> &amp;&amp; y&lt;<span class="number">0</span> &amp;&amp; sum&gt;<span class="number">0</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">else</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-
-
+<h4 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h4><p>拥有单个界面</p>
+<h4 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h4><p>在后台保持运行</p>
+<h4 id="广播接收器"><a href="#广播接收器" class="headerlink" title="广播接收器"></a>广播接收器</h4><p>在常规用户流之外项别的app传递信息，如设定闹钟的功能</p>
+<h4 id="内容提供程序"><a href="#内容提供程序" class="headerlink" title="内容提供程序"></a>内容提供程序</h4><p>内容提供程序管理一组共享的应用数据，您可以将这些数据存储在文件系统、SQLite 数据库、网络中或者您的应用可访问的任何其他持久化存储位置。其他应用可通过内容提供程序查询或修改数据。</p>
 
     </div>
 
@@ -288,7 +248,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
+              <a href="/tags/Android/" rel="tag"># Android</a>
           </div>
 
         
@@ -297,12 +257,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/01/04/%E8%8B%B1%E8%AF%AD%E6%9B%BF%E6%8D%A2%E8%AF%8D/" rel="prev" title="英语替换词">
-      <i class="fa fa-chevron-left"></i> 英语替换词
+    <a href="/2020/02/10/%E6%89%98%E7%A6%8F%E5%9B%9B%E5%A4%A7%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="prev" title="托福四大模块学习方法">
+      <i class="fa fa-chevron-left"></i> 托福四大模块学习方法
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/02/10/%E6%89%98%E7%A6%8F%E5%9B%9B%E5%A4%A7%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="next" title="托福四大模块学习方法">
-      托福四大模块学习方法 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/03/21/%E5%B0%B1%E4%B8%9A%E6%8C%87%E5%AF%BC/" rel="next" title="就业指导">
+      就业指导 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -341,7 +301,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第1章"><span class="nav-number">2.</span> <span class="nav-text">第1章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第2章"><span class="nav-number">3.</span> <span class="nav-text">第2章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-12"><span class="nav-number">3.1.</span> <span class="nav-text">2.12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-13"><span class="nav-number">3.2.</span> <span class="nav-text">2.13</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-15"><span class="nav-number">3.3.</span> <span class="nav-text">2.15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-25"><span class="nav-number">3.4.</span> <span class="nav-text">2.25</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-26"><span class="nav-number">3.5.</span> <span class="nav-text">2.26</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-30"><span class="nav-number">3.6.</span> <span class="nav-text">2.30</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">2.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#应用组件"><span class="nav-number">2.1.</span> <span class="nav-text">应用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity"><span class="nav-number">2.1.1.</span> <span class="nav-text">Activity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务"><span class="nav-number">2.1.2.</span> <span class="nav-text">服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#广播接收器"><span class="nav-number">2.1.3.</span> <span class="nav-text">广播接收器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内容提供程序"><span class="nav-number">2.1.4.</span> <span class="nav-text">内容提供程序</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
