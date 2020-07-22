@@ -166,6 +166,484 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/22/%E5%89%91%E6%8C%87offer-04-%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/22/%E5%89%91%E6%8C%87offer-04-%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE/" class="post-title-link" itemprop="url">剑指offer 04. 二维数组中的查找</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-22 09:03:11 / 修改时间：10:38:21" itemprop="dateCreated datePublished" datetime="2020-07-22T09:03:11+08:00">2020-07-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<p>示例:</p>
+<p>现有矩阵 matrix 如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  [1,   4,  7, 11, 15],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  [2,   5,  8, 12, 19],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  [3,   6,  9, 16, 22],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  [10, 13, 14, 17, 24],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  [18, 21, 23, 26, 30]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">]</span></pre></td></tr></table></figure>
+
+<p>给定 target = <code>5</code>，返回 <code>true</code>。</p>
+<p>给定 target = <code>20</code>，返回 <code>false</code>。</p>
+<p>限制：</p>
+<p><code>0 &lt;= n &lt;= 1000</code></p>
+<p><code>0 &lt;= m &lt;= 1000</code></p>
+<p>来源：力扣（LeetCode）</p>
+<p>链接：<a href="https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof" target="_blank" rel="noopener">https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof</a></p>
+<p>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<hr>
+<p>难度：简单</p>
+<p>标签：数组，双指针</p>
+<h1 id="我的解答"><a href="#我的解答" class="headerlink" title="我的解答"></a>我的解答</h1><p>参考了<a href="https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/solution/mian-shi-ti-04-er-wei-shu-zu-zhong-de-cha-zhao-b-3/" target="_blank" rel="noopener">官方题解</a></p>
+<h2 id="暴力法"><a href="#暴力法" class="headerlink" title="暴力法"></a>暴力法</h2><p>如果采用暴力法，时间复杂度是<code>O(mn)</code>，空间复杂度是<code>O(1)</code>。暴力法完全没有利用数组每行从左到右递增，每列从上到下递增的信息，所以肯定不是好的解法。</p>
+<h2 id="如何利用二维数组有序的信息？"><a href="#如何利用二维数组有序的信息？" class="headerlink" title="如何利用二维数组有序的信息？"></a>如何利用二维数组有序的信息？</h2><p>如果仔细观察并加以联想可以发现：若将二维数组右上角的数<code>x</code>看作树的根节点，那么<code>x</code>左边的数小于<code>x</code>而<code>x</code>下面的数大于<code>x</code>，这种结构很像二叉搜索树。因此，我们可以利用在二叉搜索树中搜索节点值的方法对这个二维数组进行搜索。</p>
+<p>从最右上的数<code>x</code>开始搜索，如果<code>x</code>等于目标值则返回<code>true</code>；<br>如果<code>x</code>大于目标值，则移动到左一列开始搜索；<br>如果<code>x</code>小于目标值，则移动到下一行开始搜索。</p>
+<p>可以证明这种方法不会错过目标值。<br>若当前元素大于目标值，则根据列的既定顺序，当前元素所在列中下面的元素全部大于目标值，故应该向左查找；<br>若当前元素小于目标值，则根骨行的既定顺序，当前元素所在行中左边的元素全部小于目标值，故应该向下查找。</p>
+<p>代码逻辑如下：</p>
+<ul>
+<li>若数组<code>matrix</code>为空，返回<code>false</code></li>
+<li>初始化行下标为<code>0</code>，列下标为<code>matrix[0].length-1</code></li>
+<li>重复以下步骤，直到行or列下标越界<ul>
+<li>获得当前元素<code>num</code></li>
+<li>如果<code>num</code>和目标值<code>target</code>相等，返回<code>true</code></li>
+<li>如果<code>num</code>小于<code>target</code>，则向下搜索，行下标加1</li>
+<li>如果<code>num</code>大于<code>target</code>，则向左搜索，列下标减1</li>
+</ul>
+</li>
+<li>循环结束后若还未返回，则说明未找到与<code>target</code>值相等的元素，返回<code>false</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findNumberIn2DArray</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">int</span> nRows = matrix.length;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">// 如果matrix数组为空，直接返回false</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (nRows &lt; <span class="number">1</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">int</span> nCols = matrix[<span class="number">0</span>].length;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">int</span> j = nCols - <span class="number">1</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">while</span> (i &lt; nRows &amp;&amp; j &gt;= <span class="number">0</span> &amp;&amp; target != matrix[i][j] ) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">if</span> (target &lt; matrix[i][j]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">                --j;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (target &gt; matrix[i][j]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">                ++i;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (i &gt;= nRows || j &lt; <span class="number">0</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        &#125; <span class="keyword">else</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/21/%E5%89%91%E6%8C%87offer-03-%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/21/%E5%89%91%E6%8C%87offer-03-%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/" class="post-title-link" itemprop="url">剑指offer 03. 数组中重复的数字</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-21 23:26:56" itemprop="dateCreated datePublished" datetime="2020-07-21T23:26:56+08:00">2020-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-22 10:38:41" itemprop="dateModified" datetime="2020-07-22T10:38:41+08:00">2020-07-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>找出数组中重复的数字。</p>
+<p>在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</p>
+<p>示例 1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">输入：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">[2, 3, 1, 0, 2, 5, 3]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">输出：2 或 3</span></pre></td></tr></table></figure>
+
+<p>限制：</p>
+<p><code>2 &lt;= n &lt;= 100000</code></p>
+<p>来源：力扣（LeetCode）</p>
+<p>链接：<a href="https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof、" target="_blank" rel="noopener">https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof、</a></p>
+<p>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<hr>
+<p>难度：简单</p>
+<p>标签：数组，哈希表</p>
+<h1 id="我的解答"><a href="#我的解答" class="headerlink" title="我的解答"></a>我的解答</h1><p>题目要求找到第一个重复的数字，看到“<strong>找重复</strong>”等要求，立刻想到哈希表。利用哈希表快速查找的特点而涉及的哈希集合可满足题目的要求，所以我采用了实现了<code>Set</code>接口的<a href="https://docs.oracle.com/javase/7/docs/api/java/util/HashSet.html" target="_blank" rel="noopener"><code>HashSet</code></a>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findRepeatNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">// 遍历nums中的数字，如果使用添加函数.add()返回false，</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">// 则说明哈希集中以存在该元素，则该元素为第一个遇到的重复值。</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">// 返回该元素并且跳出循环。</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> n : nums) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">if</span> (!set.add(n)) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">                num = n;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">break</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> num;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/21/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/21/%E5%89%91%E6%8C%87offer%E9%A2%98%E7%9B%AE%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">剑指offer题目整理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-21 22:55:38" itemprop="dateCreated datePublished" datetime="2020-07-21T22:55:38+08:00">2020-07-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-22 10:41:01" itemprop="dateModified" datetime="2020-07-22T10:41:01+08:00">2020-07-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="剑指offer的刷题总结"><a href="#剑指offer的刷题总结" class="headerlink" title="剑指offer的刷题总结"></a>剑指offer的刷题总结</h1><p>在<a href="https://leetcode-cn.com/problemset/lcof/" target="_blank" rel="noopener">leetcode网站上刷剑指offer</a>的题目，在这里以表格的形式做一下整理。</p>
+<p>其中题号的链接为leetcode网站上该题目的链接，题名的链接为我的解答博文的链接。</p>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>题名</th>
+<th>难度</th>
+<th>标签</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/" target="_blank" rel="noopener">剑指offer 03</a></td>
+<td><a href="./剑指offer-03-数组中重复的数字.md">数组中重复的数字</a></td>
+<td>简单</td>
+<td>数组 哈希表</td>
+</tr>
+<tr>
+<td><a href="https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/" target="_blank" rel="noopener">剑指offer 04</a></td>
+<td><a href="./剑指offer-04-二维数组中的查找.md">二维数组中的查找</a></td>
+<td>简单</td>
+<td>数组 双指针</td>
+</tr>
+<tr>
+<td>剑指offer 05</td>
+<td>替换空格</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 06</td>
+<td>从尾到头打印链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 07</td>
+<td>重建二叉树</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 09</td>
+<td>用两个栈实现队列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 10-1</td>
+<td>斐波那契数列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 10-2</td>
+<td>青蛙跳台阶问题</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 11</td>
+<td>旋转数组的最小数字</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 12</td>
+<td>矩阵中的路径</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 13</td>
+<td>机器人的运动范围</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 14-1</td>
+<td>剪绳子</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 14-2</td>
+<td>剪绳子2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 15</td>
+<td>二进制中1的个数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 16</td>
+<td>数值的整数次方</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 17</td>
+<td>打印从1到最大的n位数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 18</td>
+<td>删除链表的节点</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 19</td>
+<td>正则表达式匹配</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 20</td>
+<td>表示数值的字符串</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 21</td>
+<td>调整数组顺序使奇数位于偶数前面</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 22</td>
+<td>链表中倒数第k个节点</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 24</td>
+<td>反转链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 25</td>
+<td>合并两个排序的链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 26</td>
+<td>树的子结构</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 27</td>
+<td>二叉树的镜像</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 28</td>
+<td>对称的二叉树</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 29</td>
+<td>顺时针打印矩阵</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 30</td>
+<td>包含min函数的栈</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 31</td>
+<td>栈的压入、弹出序列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 32-1</td>
+<td>从上到下打印二叉树</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 32-2</td>
+<td>从上到下打印二叉树2</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 32-3</td>
+<td>从上到下打印二叉树3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 33</td>
+<td>二叉搜索树的后序遍历序列</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 34</td>
+<td>二叉树中和为某一值的路径</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 35</td>
+<td>复杂链表的复制</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 36</td>
+<td>二叉搜索树与双向链表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 37</td>
+<td>序列化二叉树</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>剑指offer 38</td>
+<td>字符串的排列</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/%E6%A0%88%E6%BA%A2%E5%87%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -189,10 +667,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-20 13:47:32 / 修改时间：21:35:39" itemprop="dateCreated datePublished" datetime="2020-07-20T13:47:32+08:00">2020-07-20</time>
+              <time title="创建时间：2020-07-20 13:47:32" itemprop="dateCreated datePublished" datetime="2020-07-20T13:47:32+08:00">2020-07-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-21 13:17:39" itemprop="dateModified" datetime="2020-07-21T13:17:39+08:00">2020-07-21</time>
+              </span>
 
           
 
@@ -206,16 +690,14 @@
 
       
           <h1 id="什么是栈溢出？"><a href="#什么是栈溢出？" class="headerlink" title="什么是栈溢出？"></a>什么是栈溢出？</h1><p>以下是来自维基百科的定义。</p>
-<blockquote>
-<p>In software, a stack overflow occurs if the call stack pointer exceeds the stack bound. The call stack may consist of a limited amount of address space, often determined at the start of the program. The size of the call stack depends on many factors, including the programming language, machine architecture, multi-threading, and amount of available memory. When a program attempts to use more space than is available on the call stack (that is, when it attempts to access memory beyond the call stack’s bounds, which is essentially a buffer overflow), the stack is said to overflow, typically resulting in a program crash. </p>
-<p>在软件中，如果调用栈的</p>
-<p> ——<a href="https://en.wikipedia.org/wiki/Stack_overflow" target="_blank" rel="noopener">维基百科</a></p>
-</blockquote>
-<h1 id="内存布局"><a href="#内存布局" class="headerlink" title="内存布局"></a>内存布局</h1><p>要讨论栈溢出，需要对内存布局有一定了解。</p>
-<p>内存布局主要有2种，分为<strong>系统内存</strong>和<strong>进程内存</strong></p>
-<pre><code>0xffffffff
-            内核空间
-            1GB</code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/20/%E6%A0%88%E6%BA%A2%E5%87%BA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -393,10 +875,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-09 17:49:30 / 修改时间：18:03:58" itemprop="dateCreated datePublished" datetime="2020-07-09T17:49:30+08:00">2020-07-09</time>
+              <time title="创建时间：2020-07-09 17:49:30" itemprop="dateCreated datePublished" datetime="2020-07-09T17:49:30+08:00">2020-07-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-21 22:54:09" itemprop="dateModified" datetime="2020-07-21T22:54:09+08:00">2020-07-21</time>
+              </span>
 
           
 
@@ -409,7 +897,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="第5章-Linux的文件权限与目录配置"><a href="#第5章-Linux的文件权限与目录配置" class="headerlink" title="第5章 Linux的文件权限与目录配置"></a>第5章 Linux的文件权限与目录配置</h1>
+          <h1 id="第5章-Linux的文件权限与目录配置"><a href="#第5章-Linux的文件权限与目录配置" class="headerlink" title="第5章 Linux的文件权限与目录配置"></a>第5章 Linux的文件权限与目录配置</h1><h2 id="5-3-目录配置"><a href="#5-3-目录配置" class="headerlink" title="5.3 目录配置"></a>5.3 目录配置</h2><p>一般每种Linux Distribution（Linux发行版）的配置文件、执行文件的位置和每个目录内放置的内容都差不多，这是由于有一套标准，名为<code>Filesystem Hierarchy Standard (FHS)</code>。</p>
+<h3 id="5-3-1-Linux目录配置的依据–FHS"><a href="#5-3-1-Linux目录配置的依据–FHS" class="headerlink" title="5.3.1 Linux目录配置的依据–FHS"></a>5.3.1 Linux目录配置的依据–FHS</h3>
       
     </div>
 
@@ -612,275 +1101,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/10/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jared Shaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xBug">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/10/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">软件工程课程笔记</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-10 21:21:54" itemprop="dateCreated datePublished" datetime="2020-04-10T21:21:54+08:00">2020-04-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-23 21:49:57" itemprop="dateModified" datetime="2020-04-23T21:49:57+08:00">2020-04-23</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="软件工程课堂随笔"><a href="#软件工程课堂随笔" class="headerlink" title="软件工程课堂随笔"></a>软件工程课堂随笔</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/10/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/13/Android-Application-Developers-Docs-Notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jared Shaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xBug">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/13/Android-Application-Developers-Docs-Notes/" class="post-title-link" itemprop="url">Android Application Developers Docs Notes</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-03-13 21:30:53 / 修改时间：21:38:40" itemprop="dateCreated datePublished" datetime="2020-03-13T21:30:53+08:00">2020-03-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Andriod/" itemprop="url" rel="index">
-                    <span itemprop="name">Andriod</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>阅读<a href="https://developer.android.com/guide" target="_blank" rel="noopener">开发者文档</a>后的要点总结。</p>
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a><a href="https://developer.android.com/guide/components/fundamentals" target="_blank" rel="noopener">基础知识</a></h2><h3 id="应用组件"><a href="#应用组件" class="headerlink" title="应用组件"></a><a href="https://developer.android.com/guide/components/fundamentals#Components" target="_blank" rel="noopener">应用组件</a></h3><p>应用组件是 Android 应用的基本构建块。每个组件都是一个入口点，系统或用户可通过该入口点进入您的应用。有些组件会依赖于其他组件。</p>
-<p>4种类型</p>
-<ol>
-<li>Activity</li>
-<li>服务</li>
-<li>广播接收器</li>
-<li>内容提供程序</li>
-</ol>
-<h4 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h4><p>拥有单个界面</p>
-<h4 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h4><p>在后台保持运行</p>
-<h4 id="广播接收器"><a href="#广播接收器" class="headerlink" title="广播接收器"></a>广播接收器</h4><p>在常规用户流之外项别的app传递信息，如设定闹钟的功能</p>
-<h4 id="内容提供程序"><a href="#内容提供程序" class="headerlink" title="内容提供程序"></a>内容提供程序</h4><p>内容提供程序管理一组共享的应用数据，您可以将这些数据存储在文件系统、SQLite 数据库、网络中或者您的应用可访问的任何其他持久化存储位置。其他应用可通过内容提供程序查询或修改数据。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/10/%E6%89%98%E7%A6%8F%E5%9B%9B%E5%A4%A7%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Jared Shaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xBug">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/10/%E6%89%98%E7%A6%8F%E5%9B%9B%E5%A4%A7%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">托福四大模块学习方法</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-10 15:35:10" itemprop="dateCreated datePublished" datetime="2020-02-10T15:35:10+08:00">2020-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-13 18:25:49" itemprop="dateModified" datetime="2020-04-13T18:25:49+08:00">2020-04-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/English/" itemprop="url" rel="index">
-                    <span itemprop="name">English</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/English/TOEFL/" itemprop="url" rel="index">
-                    <span itemprop="name">TOEFL</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Introductory"><a href="#Introductory" class="headerlink" title="Introductory"></a>Introductory</h2><p>从OG中的总结</p>
-<p>参考了<a href="https://www.zhihu.com/question/29002899/answer/128745572" target="_blank" rel="noopener">如何在短期内迅速提高托福分数？ - 小透明的回答 - 知乎
-</a></p>
-<h2 id="4周计划"><a href="#4周计划" class="headerlink" title="4周计划"></a>4周计划</h2><h3 id="Week-1"><a href="#Week-1" class="headerlink" title="Week 1"></a>Week 1</h3><ol>
-<li>每天1套TPO阅读，琐碎时间刷完亦鸥2000词</li>
-<li>每天1套TPO听力，刷听力词汇，做听写（每天1~2小时）</li>
-</ol>
-<h3 id="Week-2"><a href="#Week-2" class="headerlink" title="Week 2"></a>Week 2</h3><ol>
-<li>继续第1周的活动</li>
-<li>看作文公开课并练习</li>
-</ol>
-<h3 id="Week-3"><a href="#Week-3" class="headerlink" title="Week 3"></a>Week 3</h3><ol>
-<li>口语周</li>
-<li>看一本书《托福口语看这本就够了》</li>
-<li>独立口语刷题，并积累素材</li>
-<li>综合口语吃透第2点的那本书</li>
-<li>作文开始看《十天突破新托福Essay》，学习句式，整理词汇和idea</li>
-</ol>
-<h3 id="Week-4"><a href="#Week-4" class="headerlink" title="Week 4"></a>Week 4</h3><ol>
-<li>查漏补缺</li>
-<li>可以选择背《镇魂单词1.9》</li>
-</ol>
-<h2 id="各模块经验"><a href="#各模块经验" class="headerlink" title="各模块经验"></a>各模块经验</h2><h3 id="Listening"><a href="#Listening" class="headerlink" title="Listening"></a>Listening</h3><p>题型</p>
-<ol>
-<li>Gist-purpose Question</li>
-<li>Making Inferences Question</li>
-<li>Understanding the Function of What Is Said</li>
-<li>Detail Question</li>
-<li>Connecting Content Question</li>
-<li>Understanding Organization Question</li>
-</ol>
-<h4 id="Detail-Question"><a href="#Detail-Question" class="headerlink" title="Detail Question"></a>Detail Question</h4><ul>
-<li>听到一个新名词（概念）的时候，多加留意。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -929,7 +1149,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -938,7 +1158,7 @@
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
