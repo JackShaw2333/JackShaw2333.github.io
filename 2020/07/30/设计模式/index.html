@@ -46,15 +46,17 @@
   };
 </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="to write list">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;07&#x2F;23&#x2F;to-write-list&#x2F;index.html">
+  <meta name="description" content="Introduction参考自《Head First 设计模式》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;07&#x2F;30&#x2F;%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F&#x2F;index.html">
 <meta property="og:site_name" content="xBug">
+<meta property="og:description" content="Introduction参考自《Head First 设计模式》">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-23T03:01:21.461Z">
+<meta property="og:updated_time" content="2020-07-31T01:09:12.793Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/07/23/to-write-list/">
+<link rel="canonical" href="http://yoursite.com/2020/07/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
 
 
 <script id="page-configurations">
@@ -68,7 +70,7 @@
   };
 </script>
 
-  <title>to write list | xBug</title>
+  <title>设计模式 | xBug</title>
   
 
 
@@ -167,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/23/to-write-list/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -180,7 +182,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          to write list
+          设计模式
         </h1>
 
         <div class="post-meta">
@@ -190,8 +192,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-07-23 11:01:21" itemprop="dateCreated datePublished" datetime="2020-07-23T11:01:21+08:00">2020-07-23</time>
+              <time title="创建时间：2020-07-30 00:24:58" itemprop="dateCreated datePublished" datetime="2020-07-30T00:24:58+08:00">2020-07-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-31 09:09:12" itemprop="dateModified" datetime="2020-07-31T09:09:12+08:00">2020-07-31</time>
+              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -211,7 +220,46 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>参考自《Head First 设计模式》</p>
+<a id="more"></a>
+
+<h1 id="设计工具箱"><a href="#设计工具箱" class="headerlink" title="设计工具箱"></a>设计工具箱</h1><p>设计工具箱内的工具包含了：</p>
+<ul>
+<li>基础<ul>
+<li>抽象</li>
+<li>封装</li>
+<li>多态</li>
+<li>继承</li>
+</ul>
+</li>
+<li>原则<ul>
+<li>封装变化</li>
+<li>多用组合，少用继承</li>
+<li>针对接口编程，不针对具体实现编程</li>
+</ul>
+</li>
+<li>模式<ul>
+<li>…</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<h1 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h1><h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><blockquote>
+<p>策略模式定义了算法族，分别封装起来，让它们之间可以相互替换，此模式让算法的变化独立于使用算法的客户。——《设计模式》第24页</p>
+</blockquote>
+<p>书上涉及的模板：</p>
+<ul>
+<li>一个<strong>抽象类</strong>，用以实现不同具体类（如Duck抽象类）</li>
+<li>抽象类中包含<strong>接口类型域</strong>，这个域通常为了表示一种随具体类变化而变化的量（如FlyBehavior接口和QuackBehavior接口）<ul>
+<li>接口定义了这种变化的量的抽象框架（如FlyBehavior接口定义了飞行的基本动作）</li>
+<li>不同的变化对应一个类，分别实现这个接口（如Quack类实现QuackBehavior接口）</li>
+</ul>
+</li>
+<li>具体实现类继承自抽象类，实现适合自己的接口类型的域（如MallardDuck类继承Duck类，且令QuackBehavior域等于Quack类）</li>
+<li>抽象类可以包含改变接口具体实现的方法（如Duck类包含setFlyBehavior方法和setQuackBehavior方法）</li>
+</ul>
+<p><strong>多用组合，少用继承</strong></p>
+
     </div>
 
     
@@ -226,8 +274,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/23/%E5%89%91%E6%8C%87offer-07-%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="prev" title="剑指offer 07. 重建二叉树">
-      <i class="fa fa-chevron-left"></i> 剑指offer 07. 重建二叉树
+    <a href="/2020/07/27/%E5%89%91%E6%8C%87offer-14-1-%E5%89%AA%E7%BB%B3%E5%AD%90/" rel="prev" title="剑指offer 14-1. 剪绳子">
+      <i class="fa fa-chevron-left"></i> 剑指offer 14-1. 剪绳子
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -267,6 +315,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计工具箱"><span class="nav-number">2.</span> <span class="nav-text">设计工具箱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模式"><span class="nav-number">3.</span> <span class="nav-text">模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式"><span class="nav-number">3.1.</span> <span class="nav-text">策略模式</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -280,7 +329,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
