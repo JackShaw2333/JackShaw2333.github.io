@@ -54,7 +54,7 @@
 <meta property="og:site_name" content="xBug">
 <meta property="og:description" content="Introduction学校人工智能实训课的笔记。 以天数为主章节，记录一下每天学习的内容，同时作复习之用。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-09-13T14:54:56.345Z">
+<meta property="og:updated_time" content="2020-09-15T15:08:04.006Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/09/07/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AE%9E%E8%AE%AD%E7%AC%94%E8%AE%B0/">
@@ -200,7 +200,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-13 22:54:56" itemprop="dateModified" datetime="2020-09-13T22:54:56+08:00">2020-09-13</time>
+                <time title="修改时间：2020-09-15 23:08:04" itemprop="dateModified" datetime="2020-09-15T23:08:04+08:00">2020-09-15</time>
               </span>
 
           
@@ -259,7 +259,7 @@
 <p>可以将多个数组进行横向或纵向的拼接</p>
 <ul>
 <li>axis = 0，列向拼接</li>
-<li>axis = 1，航向拼接</li>
+<li>axis = 1，横向拼接</li>
 </ul>
 <h3 id="一些常用的数值方法"><a href="#一些常用的数值方法" class="headerlink" title="一些常用的数值方法"></a>一些常用的数值方法</h3><ul>
 <li><code>arr.mean()</code></li>
@@ -689,6 +689,264 @@ P(F1|C) = \frac{Ni+\alpha}{N+\alpha m}</script><p>$\alpha$为指定的系数，�
 TF(某词) = \frac{该词在文档中出现的次数}{文档的总词数}</script><p><code>sklearn.feature_extraction.text</code>包提供<code>TfidfVectorizer</code>类求TF-IDF值。使用该类实例的<code>.fit_transform()</code>方法对原特征集进行处理，得出新的特征集。</p>
 <h4 id="伯努利模型"><a href="#伯努利模型" class="headerlink" title="伯努利模型"></a>伯努利模型</h4><p>伯努利模型与多项式模型非常相似，都用于处理文本分类数据，但由于伯努利处理的是二项分布，所以它更在意“是或否”。伯努利模型每个特征的取值只能是0或1，所以它比<code>MultinomailNB</code>多定义一个二值化方法，该方法接受一个阈值并将输入的特征二值化（0或1）</p>
 <p><code>sklearn.naive_bayes</code>包中的<code>BernoulliNB</code>类提供了伯努利模型。该类的实例同样接受一个拉普拉斯平滑系数，同时它还接受一个<code>binarize=</code>参数，可以是数值或不输入，不输入表示特征以全部二值化；输入数值则表示小于等于该值的归为一类，大于的归为另一类。</p>
+<h1 id="Day-6"><a href="#Day-6" class="headerlink" title="Day 6"></a>Day 6</h1><h2 id="IV"><a href="#IV" class="headerlink" title="IV"></a>IV</h2><p>IV的全称是information value，中文意思是信息价值或者信息量。</p>
+<p>在构建<strong>分类</strong>模型时，经常需要对特征进行筛选，那么如何挑选特征用于模型训练呢？</p>
+<p>不难看出，挑选特征最主要和最直接的衡量标准是特征的预测能力。而IV就是一种可以用来衡量自变量预测能力的指标。</p>
+<p>假设一个分类问题中，目标变量有2各类别：Y1和Y2。对于一个待分类的样本A，要判断其类别需要一定的信息，假设这个信息总量是I，而这些信息就蕴含在这个样本的特征C1, C2, … Cn中。对于其中的某个特征Ci，它蕴含的信息越多，它对于判断A类别的贡献就越大，Ci的信息价值就越大，相应地Ci的IV就越大。</p>
+<p>为了计算IV，首先需要认识和理解另一个概念——WOE。</p>
+<h3 id="WOE"><a href="#WOE" class="headerlink" title="WOE"></a>WOE</h3><p>WOE的全称是weight of evidence，即证据权重。</p>
+<p>WOE是对原始特征的一种编码形式。要对一个特征进行WOE编码，需要首先把这个变量进行分组处理（也称离散化、分箱）。分组后，对于第i组，WOE的计算公式如下</p>
+<script type="math/tex; mode=display">
+WOE_i = ln(\frac{py_i}{pn_i}) = ln(\frac{\frac{y_i}{y_T}}{\frac{n_i}{n_T}})</script><p>其中</p>
+<ul>
+<li>$py_i$是这个组中正例样本个数占整个样本集中正例样本个数的比例</li>
+<li>$pn_i$是这个组中负例样本个数占整个样本集中负例样本个数的比例</li>
+<li>$y_i$是这个组中正例样本的数量</li>
+<li>$n_i$是这个组中负例样本的数量</li>
+<li>$y_T$整个样本集中所有正例样本的数量</li>
+<li>$n_T$整个样本集中所有负例样本的数量</li>
+</ul>
+<p>计算出一个分组的WOE值后，该分组的IV值计算公式如下所示：</p>
+<script type="math/tex; mode=display">
+IV_i = (py_i - pn_i) \times WOE</script><p>计算出一个特征各分组的IV值后，就可以计算整个特征的IV值</p>
+<script type="math/tex; mode=display">
+IV = \sum_{i}^{n} IV_i</script><p>当我们计算WOE值时，可能出现负值，这说明了当前分组负例样本占比更多；如果WOE值为0，说明当前分组的正负比例和总样本集的正负比例相等。</p>
+<p>进一步理解WOE的正负问题，我们可能得出，WOE描述了某一特征的当前分组对于判断该特征是否会响应（也就是所属的类别）起到的作用大小，WOE的正负表示了影响的正负，WOE的绝对值表示了这种影响的大小。</p>
+<p>所以在计算某特征的总WOE值时，需要将负值的符号消除，也就是对所有WOE的绝对值求和。</p>
+<p>进一步分析IV的计算公式，IV在WOE的基础上考虑了各类别的占比所造成的影响。对于特征的某个分组，这个分组的响应与样本整体响应的比例和这个分组未响应的比例（$py_i - pn_i$）相差越大，IV值越大。</p>
+<p>之所以考虑各类别占比的影响，是因为有这样一种情况，在特征的某一取值时计算出的WOE非常大，但是这个取值的个数太少了，在全体样本集中的比例太少了，那么对于样本整体而言，这个特征的预测能力可能也没有那么强</p>
+<h2 id="分箱"><a href="#分箱" class="headerlink" title="分箱"></a>分箱</h2><p>数据分箱是一种数据预处理技术，用于减少次要观察误差的影响，是多个连续值分组为较少数量分组的办法，也就是将连续性特征离散化。</p>
+<h3 id="分箱的作用和意义"><a href="#分箱的作用和意义" class="headerlink" title="分箱的作用和意义"></a>分箱的作用和意义</h3><p>特征离散化后，模型会更稳定，相比连续性时，单个数据一般只会影响单个区间，而且特征离散化之后，起到了简化模型的作用，适当降低了模型过拟合的风险。</p>
+<p><code>pandas</code>包提供了<code>pandas.cut</code>方法进行分箱。<code>pd.cut()</code>根据值本身来选择箱子的均匀间隔。</p>
+<p><code>pandas</code>包还提供了<code>pandas.qcut()</code>方法进行分箱，该函数根据值的频率来选择箱子的间隔，力求做到每个区间中数据的数量相同。</p>
+<p>分箱后就可以求解WOE和IV值。如果需要对连续性特征进行离散化，需要对分箱后的每组数据进行IV编码，然后再进行训练。</p>
+<h2 id="类别分布不均衡处理"><a href="#类别分布不均衡处理" class="headerlink" title="类别分布不均衡处理"></a>类别分布不均衡处理</h2><p>如果同一组样本中不同类别的样本量差异非常大，则属于类别分布不均衡。类别分布不均衡将导致样本量少的分类包含的特征过少，并很难从中提取规律，模型的准确性会很差。</p>
+<p>解决方法有：</p>
+<ul>
+<li>过抽样</li>
+<li>欠抽样</li>
+</ul>
+<h3 id="过抽样"><a href="#过抽样" class="headerlink" title="过抽样"></a>过抽样</h3><p>过抽样通过增加分类中少数类样本的数量来实现样本均衡，比较好的方法有<code>SMOTE</code>算法。</p>
+<p><code>SMOTE</code>算法的思想是合成新的少数类样本，合成的策略是对于每个少数类样本，从它与最近邻的同类样本的连线上随机选取一个新样本作为新合成的少数类样本。</p>
+<p><code>imblearn.over_sampling</code>包中提供<code>SMOTE</code>类实现过抽样，<code>SMOTE</code>类接受一个参数<code>k_neighbors</code>，表示找出类别少的样本点周围最近的K各邻居。</p>
+<p><code>SMOTE</code>的实例使用<code>.fit_sample()</code>方法进行过抽样，该方法接受一个特征DataFrame和一个标签Series。</p>
+<h3 id="欠抽样"><a href="#欠抽样" class="headerlink" title="欠抽样"></a>欠抽样</h3><p>欠抽样与过抽样相反，它通过减少分类中多数类样本的数量来实现样本均衡。</p>
+<p><code>imblearn.under_sampling</code>包提供<code>RandomUnderSampler</code>类实现欠抽样，使用方法与<code>SMOTE</code>类类似。</p>
+<h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p>回忆之前使用过的线性回归，是一个用于回归问题的典型模型。那么回归模型是否可以用于分类呢？答案是肯定的，逻辑回归就是这样一种模型，通过引入Sigmoid函数实现回归模型用于分类问题。</p>
+<h3 id="Sigmoid函数"><a href="#Sigmoid函数" class="headerlink" title="Sigmoid函数"></a>Sigmoid函数</h3><p>Sigmoid函数将线性回归方程变换为g(z)，并将g(z)的值分布在(0, 1)之间，当g(z)接近0时样本的标签为0，当g(z)接近1时样本的标签为1，这样我们就用回归的形式实现了一个分类模型。</p>
+<script type="math/tex; mode=display">
+g(z) = \frac{1}{1+e^{-z}}</script><p>Sigmoid函数是一个S型的函数，当自变量z趋近于正无穷时，因变量趋近于1；反之趋近于0。它能够将任何实数映射到(0, 1)区间，使其可用于将任意值函数转换成更适合二分类的函数，因此这个函数也可以用于归一化。</p>
+<h3 id="逻辑回归与线性回归的关联"><a href="#逻辑回归与线性回归的关联" class="headerlink" title="逻辑回归与线性回归的关联"></a>逻辑回归与线性回归的关联</h3><p>将线性回归中的$z = \mathbf{\theta}^{\mathrm{T}} \mathbf{x}$代入，得到了二元逻辑回归的一般形式：</p>
+<script type="math/tex; mode=display">
+g(z) = y(x) = \frac{1}{1+e^{-\mathbf{\theta}^{\mathrm{T}} \mathbf{x}}}</script><p>我们构造这样一个形似几率</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+ln \frac{y(x)}{1-y(x)} &= ln \frac{1}{e^{-\mathbf{\theta}^{\mathrm{T}} \mathbf{x}}} \\
+&= \mathbf{\theta}^{\mathrm{T}} \mathbf{x} 
+\end{aligned}</script><p>不难发现，这个式子就是线性回归的形式，因此逻辑回归是由线性回归变化而来。</p>
+<h3 id="逻辑回归的特点"><a href="#逻辑回归的特点" class="headerlink" title="逻辑回归的特点"></a>逻辑回归的特点</h3><ul>
+<li>逻辑回归对线性关系的拟合效果非常好，如信用卡欺诈问题，评分卡制作问题，营销预测问题等，然而逻辑回归对非线性数据的拟合效果非常差</li>
+<li>逻辑回归的计算快，效率优于SVM和随机森林</li>
+<li>逻辑回归可以返回不固定的结果而是返回(0, 1)之间的一个数，这个数可以视作概率</li>
+</ul>
+<h3 id="逻辑回归的损失函数"><a href="#逻辑回归的损失函数" class="headerlink" title="逻辑回归的损失函数"></a>逻辑回归的损失函数</h3><p>在逻辑回归分类时，不管原始样本中的类别如何表示，逻辑回归统一将其视为0/1类别。</p>
+<p>因为逻辑回归也采用了寻找特征和目标之间的关系，每个特征也有权重w，那么也会存在真实值和预测值之间的误差，然而逻辑回归的损失函数和线性回归的损失函数并不一致。逻辑回归采用的是<strong>对数似然损失函数</strong>。</p>
+<script type="math/tex; mode=display">
+cost(h_{\theta} (x), y) = 
+\begin{cases}
+-log(h_{\theta}(x)) & if & y = 1 \\
+-log(1-h_{\theta}(x)) & if & y = 0   
+\end{cases}</script><p>注意一下，没有求解参数需求的模型是没有损失函数的，如CNN。</p>
+<p>综合一下，逻辑回归的完整损失函数为</p>
+<script type="math/tex; mode=display">
+cost(h_{\theta} (x), y) = \sum_{i=1}^{m} (-y_i log(h_{\theta} (x)) - (1 - y)log(1 - h_{\theta} (x)))</script><p>我们使用求解参数$\theta$的迭代方法是梯度下降。</p>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>正则化是为了解决过拟合问题。常用的有L1正则化和L2正则化，它们分别通过在损失函数后加上参数向量$\theta$的L1范式和L2范式的倍数来实现，这个增加的范式被称为“正则项”，实质是一种惩罚项。</p>
+<p>加入L1范式的损失函数如下所示。</p>
+<script type="math/tex; mode=display">
+cost(h_{\theta} (x), y)_{L1} = cost(h_{\theta} (x), y) + \frac{1}{C} \sum_{j=1}^{n} |\theta_j| & (j \geq 1)</script><p>加入L2范式的损失函数如下所示。</p>
+<script type="math/tex; mode=display">
+cost(h_{\theta} (x), y)_{L2} = cost(h_{\theta} (x), y) + \frac{1}{C} \sqrt(\sum_{j=1}^{n} (\theta_j)^2) & (j \geq 1)</script><p>公式中C是用于控制正则化程度的超参数。这里j不需要取0，因为参数向量中第一个参数不需参加正则化。</p>
+<p>L1正则化有可能将参数惩罚到0，L2正则化只会让参数尽量小，不会使其为0。</p>
+<p>通常来说，为了防止过拟合，L2的正则化已经足够，如果选择L2正则化后还是过拟合，可以选用力度更大的L1正则化。</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p><code>sklearn.linear_model</code>包提供了<code>LogisticRegression</code>类实现逻辑回归，这个类的实例可以接受如下参数：</p>
+<ul>
+<li><code>penalty=</code>指定使用的正则化方法，不填写默认<code>&#39;l2&#39;</code>。若选择<code>&#39;l1&#39;</code>，参数<code>solver</code>仅能使用求解方式<code>&#39;liblinear&#39;</code>和<code>&#39;saga&#39;</code>；若选择<code>&#39;l2&#39;</code>则无此限制。</li>
+<li><code>C=</code>惩罚项参数，必须是大于0的浮点数，默认为1.0。从正则化公式不难看出，C越小，正则化力度越大。</li>
+<li><code>max_iter=</code>梯度下降中能走的最大步数，默认为100步。这个参数最好的选取方法是通过绘制学习曲线。</li>
+<li><code>solver=</code>用于指定求解器，即求解最小值的算法</li>
+<li><code>multi_class=</code>用于告知模型要处理的分类问题的类型。一共有3种取值。<ul>
+<li><code>ovr</code>表示分类问题是二分类，</li>
+<li><code>multinomial</code>表示分类问题是多分类问题</li>
+<li><code>auto</code>表示模型根据其他参数的取值自动确定。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Day-7"><a href="#Day-7" class="headerlink" title="Day 7"></a>Day 7</h1><h2 id="分类模型的评价指标"><a href="#分类模型的评价指标" class="headerlink" title="分类模型的评价指标"></a>分类模型的评价指标</h2><p>分类模型的评价指标除了之前常见的一带而过的准确率之外，还有如下几种方式：</p>
+<ul>
+<li>准确率</li>
+<li>精准率</li>
+<li>召回率</li>
+<li>f1-score</li>
+<li>AUC曲线</li>
+</ul>
+<h3 id="混淆矩阵"><a href="#混淆矩阵" class="headerlink" title="混淆矩阵"></a>混淆矩阵</h3><p>在分类任务下，预测结果和真实结果之间存在4种不同的组合：</p>
+<ul>
+<li>真正例（TP）：真实值是<strong>正</strong>，预测值为<strong>正</strong>的比例（正例识别为正例，√）</li>
+<li>伪正例（FP）：真实值是<strong>负</strong>，预测值为<strong>正</strong>的比例（负例识别为正例，×）</li>
+<li>伪反例（FN）：真实值是<strong>正</strong>，预测值为<strong>负</strong>的比例（正例识别为负例，×）</li>
+<li>真反例（TN）：真实值是<strong>负</strong>，预测值为<strong>负</strong>的比例（负例识别为负例，√）</li>
+</ul>
+<script type="math/tex; mode=display">
+真正例率TPR = \frac{TP}{TP + FN} \\
+伪反例率FPR = \frac{FP}{FP + TN}</script><p>不难得出，TPR越大越好，FPR越小越好。</p>
+<h3 id="准确率"><a href="#准确率" class="headerlink" title="准确率"></a>准确率</h3><script type="math/tex; mode=display">
+Accuracy = \frac{TP + TN}{TP + FN + FP +TN}</script><p>准确率描述的是预测正确的比例，很多模型自带的方法<code>.score()</code>使用的就是准确率。</p>
+<p>准确率存在这样一个问题，以时事的新冠病毒检测举例，因为目前在中国，阳性的标签占比非常之小，所以假设采取这样的检测方式：将所有标本的检测结果判定为阴性，那么这种方法的准确率将会非常之高，但毫无疑问这种方式是不可取的。</p>
+<h3 id="召回率"><a href="#召回率" class="headerlink" title="召回率"></a>召回率</h3><p>召回率能够很好的解决上述准确率在标签分布非常不均衡时遇到的指标无效性问题。</p>
+<script type="math/tex; mode=display">
+召回率 = \frac{TP}{TP + FN}</script><p>召回率描述了真正为正例的样本中预测结果为正例的比例，即正样本中有多少被找出。</p>
+<p><code>sklearn.metrics</code>包中提供了<code>recall_score</code>类实现召回率的计算。</p>
+<h3 id="精确率"><a href="#精确率" class="headerlink" title="精确率"></a>精确率</h3><p>注意区分准确率（Accuracy）和精确率（Precision）。</p>
+<script type="math/tex; mode=display">
+Precision = \frac{TP}{TP + FP}</script><p>精确率描述的是预测为正例的样本中预测正确的比例</p>
+<p><code>sklearn.metrics</code>包中提供了<code>accuracy_rate</code>类实现精确率的计算。</p>
+<h3 id="f1-score"><a href="#f1-score" class="headerlink" title="f1-score"></a>f1-score</h3><p>有时精确率和召回率的指标会产生冲突，这时我们可以采用f1-score来描述二分类模型的分类效果。f1-score是精确率和召回率的调和平均数。</p>
+<p>f1-score的公式如下所示</p>
+<script type="math/tex; mode=display">
+f1-score = \frac{1}{\frac{1}{recall} + \frac{1}{pre}} = \frac{2 \times pre \times recall}{pre + recall}</script><p>f1-score的最大值为1，最小值为0，它反映了模型稳健性，是一个综合的评价标准。</p>
+<p><code>sklearn.metrics</code>提供了<code>f1_score</code>类实现f1-score。</p>
+<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>AUC也是一个模型评价标准，<strong>只能用于二分类模型</strong>的评价。AUC应用较广，原因是很多机器学习的分类模型计算结果都是概率的形式，那么对于分类问题，就需要设定一个<strong>阈值</strong>来判定分类，这个阈值的判定就会对我们模型的表现产生影响。其中逻辑回归的阈值默认为0.5</p>
+<p>AUC（Area under Curve）指的是ROC曲线（接收者操作特征曲线）下边的面积。</p>
+<p>ROC曲线就是以FPR为横坐标，TPR为纵坐标绘制的一条曲线，理想情况下最佳的分类器应该尽可能地处于左上角，这就意味着分类器在FPR很低的同时获得了很高的TPR。</p>
+<p>AUC则是ROC曲线下的面积，取值固定在(0, 1)。AUC的值越大越好。</p>
+<p><code>sklearn.metrics</code>包中提供了<code>roc_auc_score</code>类实现了AUC。</p>
+<h2 id="KMeans聚类算法"><a href="#KMeans聚类算法" class="headerlink" title="KMeans聚类算法"></a>KMeans聚类算法</h2><p>在此之前，我们所学习到的算法模型都是有监督学习算法，即模型需要的样本数据既有特征矩阵X，也有标签向量y。同时机器学习中存在着一类无监督学习算法。无监督学习算法的模型只要特征矩阵X即可，不需要真实的标签y。聚类算法是无监督学习中的代表之一。</p>
+<p>聚类算法的目的是将数据划分成有意义或有用的组（簇）。这种划分可以基于需求完成，也可以单纯帮助我们探索数据的自然结构和分布。</p>
+<p>下表总结了聚类和分类的区别</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>聚类</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心</td>
+<td>将数据分成多个组，探索每个组的数据是否有联系</td>
+<td>从已分组的数据中学习，把新数据放到已经分好的组中</td>
+</tr>
+<tr>
+<td>学习类型</td>
+<td>无监督</td>
+<td>有监督</td>
+</tr>
+<tr>
+<td>典型算法</td>
+<td>KMeans</td>
+<td>贝叶斯，逻辑回归</td>
+</tr>
+<tr>
+<td>算法输出</td>
+<td>聚类结果总是不确定的，不一定总是能反映数据的真实分类，同样的聚类，根据不同的业务需求，结果好坏不确定</td>
+<td>分类结果是确定的，优劣是客观的，不是根据业务或算法需求决定</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="簇和质心"><a href="#簇和质心" class="headerlink" title="簇和质心"></a>簇和质心</h3><p>KMeans算法将一组N个样本的特征矩阵X划分为K个无交集的簇，直观上看簇是一个又一个聚集在一起的数据，在一个簇中的数据就认为是同一类。簇就是聚类的结果。</p>
+<p>簇中所有数据的均值就是这个簇的质心。在n维平面中，所有数据在某一维的坐标的均值就是质点在这个维度的坐标值。</p>
+<p>在KMeans算法中，簇的个数K是一个超参数，KMeans的核心任务就是找出最优的K个质心，并将其余数据合适地分配到这K个质心所代表的簇中。具体流程如下：</p>
+<ul>
+<li>随机抽取K个样本作为最初的质心</li>
+<li>开始循环<ul>
+<li>将每个样本点分配到离它们最近的质心，生成K个簇</li>
+<li>对于每个簇，计算该簇的新质心</li>
+<li>当质心的位置不再发生变化，则迭代停止，聚类完成</li>
+</ul>
+</li>
+</ul>
+<p>当聚类完成时，以后的每次迭代各个簇都不会再发生变化，质心也不再发生变化。</p>
+<p>我们认为聚类算法分出的每个簇中的数据具有相似性，而不同的簇之间的数据之间的差异较大。所以聚类算法应该追求“簇内差异小，簇外差异大”，而这个差异由样本点到其所在簇的质心的距离来衡量。</p>
+<p>对于一个簇来说，所有样本点到质心的距离和越小，就可以认为这个簇中的样本越相似，簇内差异越小。</p>
+<h3 id="损失函数？"><a href="#损失函数？" class="headerlink" title="损失函数？"></a>损失函数？</h3><p>如果我们采用欧式距离，则一个簇中所有样本点到质心的距离的平方和为簇内平方和，使用簇内平方和就可以表示簇内差异大小。</p>
+<p>如果将一个数据集中所有簇的簇内平方和相加，就得到了整体平方和，又叫做total inertia，这个值越小，代表着每个簇内样本越相似，聚类的效果越好。</p>
+<p>KMeans追求的是求解能让簇内平方和最小化的质心。实际上，在质心不断变化不断迭代的过程中，整体平方和在减小，如此当整体平方和最小的时候，质心就不再发生变化了。</p>
+<p>因此我们可以认为求解质心的过程也就是最小化整体平方和的过程。但是损失函数的本质是衡量模型的拟合效果，只有有着求解参数需求的算法，才会有损失函数。而KMeans算法不存在求解说明参数，本质也并非拟合数据，而是对数据进行一种探索。</p>
+<h3 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h3><p><code>sklearn.cluster</code>包提供了<code>KMeans</code>类实现KMeans聚类算法。</p>
+<p>该类的实例有2个重要参数：</p>
+<ul>
+<li><code>n_clusters=</code>是KMeans中的K，表示着我们告诉模型我们要分几类。这是KMeans当中唯一一个必填的参数，默认是8类。通常在开始聚类之前，我们也不知道<code>n_clusters</code>究竟是多少。</li>
+<li><code>random_state=</code>用于初始化质心的生成器。</li>
+</ul>
+<p>当我们刚拿到数据集，如果可能的话，我们希望能够通过可视化先观察一下这个数据集的分布，以此来为聚类时输入的n_clusters做一个参考。</p>
+<h3 id="KMeans对结果的预测"><a href="#KMeans对结果的预测" class="headerlink" title="KMeans对结果的预测"></a>KMeans对结果的预测</h3><p>KMeans算法通常是不需要预测结果，但有时我们需要使用<code>.predict()</code>进行预测操作，因为有时数据量过大，我们可以通过少量数据先确定质心，然后剩下的数据之间用<code>.predict()</code>确定质心。</p>
+<h2 id="聚类算法的效果"><a href="#聚类算法的效果" class="headerlink" title="聚类算法的效果"></a>聚类算法的效果</h2><p>聚类模型的结果不是某种标签输出，且其结果不确定，优劣与否很大程度上取决于业务需求或算法需求。那这样是否就没有衡量指标呢？</p>
+<p>之前提到聚类算法的目的是保证“簇内差异小，簇外差异大”，这提示着我们可以通过衡量与簇相关的差异来衡量聚类的效果。</p>
+<h3 id="轮廓系数"><a href="#轮廓系数" class="headerlink" title="轮廓系数"></a>轮廓系数</h3><p>轮廓系数能够衡量：</p>
+<ul>
+<li>样本与其自身所在的簇中其他样本的相似度a，等于样本与同一簇中所有其他点之间的平均距离</li>
+<li>样本与其他簇中的样本的相似度b，等于样本与下一个簇中所有点之间的平均距离</li>
+</ul>
+<p>根据“簇内差异小，簇外差异大”的目标，我们希望b永远大于a，并且这种差距越大越好。</p>
+<p>轮廓系数是最常用的聚类算法的评价指标，它是对每个样本来定义的。轮廓系数的表达式为：</p>
+<script type="math/tex; mode=display">
+s = \frac{b - a}{max(a, b)}</script><p>很容易理解轮廓系数范围是(-1, 1)，值越接近1表示样本与自己所在的簇中的样本很相似，并且与其他簇中的样本不相似；值越接近-1就表示样本与簇外的样本更相似。</p>
+<p>如果一个簇中大多数样本具有比较高的轮廓系数，则簇和整个数据集的平均轮廓系数越高，则聚类是合适的</p>
+<p><code>sklearn.metrics</code>包提供<code>silhouette_score</code>类计算轮廓系数，它的返回值是一个数据集中所有样本的轮廓系数的均值。</p>
+<p>这个包中同样提供<code>silhouette_sample</code>类，它的参数与轮廓系数一致，但返回的是数据集中的每个样本自己的轮廓系数。</p>
+<h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><p>SVM是机器学习中获得关注最多的算法，也是最接近深度学习的机器学习算法。在图像和文本识别问题的表现很好。</p>
+<p>SVM的原理这里简略不计。</p>
+<p>不是所有的数据都线性可分，因此需要对其进行升维变化，让数据从原始空间投射到新空间，升维后可以明显找出一个平面将数据切分开。</p>
+<p>核函数能够帮助我们寻找合适的新空间投射函数。</p>
+<p>常用的核函数有以下4种：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>输入</th>
+<th>含义</th>
+<th>解决问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘linear’</td>
+<td>线性核</td>
+<td>线性</td>
+</tr>
+<tr>
+<td>‘poly’</td>
+<td>多项式核</td>
+<td>偏线性</td>
+</tr>
+<tr>
+<td>‘sigmoid’</td>
+<td>双曲正切核</td>
+<td>非线性</td>
+</tr>
+<tr>
+<td>‘rbf’</td>
+<td>高斯径向基</td>
+<td>偏非线性</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>线性核函数和多项式核函数在线性数据集表现良好，在非线性集表现一般</li>
+<li>sigmoid核的表现不好，较少使用</li>
+<li>rbf核在任何数据上表现都不错，属于首先考虑使用的核函数</li>
+</ul>
+<p><code>sklearn.svm</code>包中提供了<code>SVC</code>类实现SVM，该类实例中重要的参数有：</p>
+<ul>
+<li><code>kernel</code>使用的核函数</li>
+<li><code>C</code>正则化力度</li>
+<li><code>class_weight</code>对类别分布不均衡的处理</li>
+</ul>
+<p>初遇数据集时，很难区分数据集是否线性可分，为此我们可以先使用PCA降维将其降到适合可视化的维度，然后在图像中查看其是否线性可分。</p>
 
     </div>
 
@@ -753,7 +1011,7 @@ TF(某词) = \frac{该词在文档中出现的次数}{文档的总词数}</scrip
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-1"><span class="nav-number">2.</span> <span class="nav-text">Day 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#numpy"><span class="nav-number">2.1.</span> <span class="nav-text">numpy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy数组和列表的区别"><span class="nav-number">2.1.1.</span> <span class="nav-text">numpy数组和列表的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy数组常见的创建方式"><span class="nav-number">2.1.2.</span> <span class="nav-text">numpy数组常见的创建方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy的常用属性"><span class="nav-number">2.1.3.</span> <span class="nav-text">numpy的常用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组的索引和切片方式"><span class="nav-number">2.1.4.</span> <span class="nav-text">数组的索引和切片方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切片"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">切片</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变形"><span class="nav-number">2.1.5.</span> <span class="nav-text">变形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#级联"><span class="nav-number">2.1.6.</span> <span class="nav-text">级联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些常用的数值方法"><span class="nav-number">2.1.7.</span> <span class="nav-text">一些常用的数值方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于矩阵"><span class="nav-number">2.1.8.</span> <span class="nav-text">基于矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pandas"><span class="nav-number">2.2.</span> <span class="nav-text">pandas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Series"><span class="nav-number">2.2.1.</span> <span class="nav-text">Series</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建方法"><span class="nav-number">2.2.2.</span> <span class="nav-text">创建方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重要方法"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">重要方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataFrame"><span class="nav-number">2.2.3.</span> <span class="nav-text">DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建方式"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">创建方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引和切片操作"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">索引和切片操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#索引-1"><span class="nav-number">2.2.3.2.1.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#切片-1"><span class="nav-number">2.2.3.2.2.</span> <span class="nav-text">切片</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间序列的转换：从字符串object到datetime"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">时间序列的转换：从字符串object到datetime</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置行索引"><span class="nav-number">2.2.3.4.</span> <span class="nav-text">设置行索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久化存储"><span class="nav-number">2.2.3.5.</span> <span class="nav-text">持久化存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加载数据"><span class="nav-number">2.2.3.6.</span> <span class="nav-text">加载数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对数据重新取样"><span class="nav-number">2.2.3.7.</span> <span class="nav-text">对数据重新取样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFrame中某一列纵向移动"><span class="nav-number">2.2.3.8.</span> <span class="nav-text">DataFrame中某一列纵向移动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据清洗"><span class="nav-number">2.3.</span> <span class="nav-text">数据清洗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#清洗空值（缺失值）"><span class="nav-number">2.3.1.</span> <span class="nav-text">清洗空值（缺失值）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将空值对应行数据进行删除"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">将空值对应行数据进行删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对空值进行填充"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">对空值进行填充</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清洗重复值"><span class="nav-number">2.3.2.</span> <span class="nav-text">清洗重复值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清洗异常值"><span class="nav-number">2.3.3.</span> <span class="nav-text">清洗异常值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-2"><span class="nav-number">3.</span> <span class="nav-text">Day 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandas的高级用法"><span class="nav-number">3.1.</span> <span class="nav-text">pandas的高级用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas级联操作"><span class="nav-number">3.1.1.</span> <span class="nav-text">pandas级联操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas合并操作"><span class="nav-number">3.1.2.</span> <span class="nav-text">pandas合并操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas替换操作"><span class="nav-number">3.1.3.</span> <span class="nav-text">pandas替换操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#映射"><span class="nav-number">3.1.4.</span> <span class="nav-text">映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算工具"><span class="nav-number">3.1.5.</span> <span class="nav-text">运算工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机抽样"><span class="nav-number">3.1.6.</span> <span class="nav-text">随机抽样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据的分类处理"><span class="nav-number">3.1.7.</span> <span class="nav-text">数据的分类处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级数据聚合"><span class="nav-number">3.1.8.</span> <span class="nav-text">高级数据聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据加载和分词"><span class="nav-number">3.1.9.</span> <span class="nav-text">数据加载和分词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取数据库中的数据"><span class="nav-number">3.1.10.</span> <span class="nav-text">读取数据库中的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#透视表"><span class="nav-number">3.1.11.</span> <span class="nav-text">透视表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉表"><span class="nav-number">3.1.12.</span> <span class="nav-text">交叉表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-3"><span class="nav-number">4.</span> <span class="nav-text">Day 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习简介"><span class="nav-number">4.1.</span> <span class="nav-text">机器学习简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法模型"><span class="nav-number">4.1.1.</span> <span class="nav-text">算法模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样本数据"><span class="nav-number">4.1.2.</span> <span class="nav-text">样本数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#样本数据的载体"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">样本数据的载体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取样本数据的常见途径"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">获取样本数据的常见途径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">4.2.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为何需要特征工程？"><span class="nav-number">4.2.1.</span> <span class="nav-text">为何需要特征工程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征工程的常用工具"><span class="nav-number">4.2.2.</span> <span class="nav-text">特征工程的常用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征抽取"><span class="nav-number">4.2.3.</span> <span class="nav-text">特征抽取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串的特征值化"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">字符串的特征值化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#jieba"><span class="nav-number">4.2.3.1.1.</span> <span class="nav-text">jieba</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典的特征值化"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">字典的特征值化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#one-hot编码"><span class="nav-number">4.2.3.3.</span> <span class="nav-text">one hot编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征预处理"><span class="nav-number">4.2.4.</span> <span class="nav-text">特征预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#归一化"><span class="nav-number">4.2.4.1.</span> <span class="nav-text">归一化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准化"><span class="nav-number">4.2.4.2.</span> <span class="nav-text">标准化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#归一化-or-标准化？"><span class="nav-number">4.2.4.3.</span> <span class="nav-text">归一化 or 标准化？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征选择"><span class="nav-number">4.2.5.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#filter过滤式"><span class="nav-number">4.2.5.1.</span> <span class="nav-text">filter过滤式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PCA降维"><span class="nav-number">4.2.5.2.</span> <span class="nav-text">PCA降维</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-4"><span class="nav-number">5.</span> <span class="nav-text">Day 4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#训练集、测试集划分"><span class="nav-number">5.1.</span> <span class="nav-text">训练集、测试集划分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN分类算法"><span class="nav-number">5.2.</span> <span class="nav-text">KNN分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超参数"><span class="nav-number">5.3.</span> <span class="nav-text">超参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K折交叉验证"><span class="nav-number">5.4.</span> <span class="nav-text">K折交叉验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片数据的等比例压缩和扁平化处理"><span class="nav-number">5.5.</span> <span class="nav-text">图片数据的等比例压缩和扁平化处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#等比例压缩"><span class="nav-number">5.5.1.</span> <span class="nav-text">等比例压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扁平化处理"><span class="nav-number">5.5.2.</span> <span class="nav-text">扁平化处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性回归"><span class="nav-number">5.6.</span> <span class="nav-text">线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#减小误差的方法"><span class="nav-number">5.6.1.</span> <span class="nav-text">减小误差的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L0，L1，L2范式"><span class="nav-number">5.6.2.</span> <span class="nav-text">L0，L1，L2范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小二乘法"><span class="nav-number">5.6.3.</span> <span class="nav-text">最小二乘法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归算法的评价"><span class="nav-number">5.7.</span> <span class="nav-text">回归算法的评价</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#是否预测到了正确或者接近正确的数值"><span class="nav-number">5.7.1.</span> <span class="nav-text">是否预测到了正确或者接近正确的数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否拟合到了足够的信息"><span class="nav-number">5.7.2.</span> <span class="nav-text">是否拟合到了足够的信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-5"><span class="nav-number">6.</span> <span class="nav-text">Day 5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#欠拟合-amp-过拟合"><span class="nav-number">6.1.</span> <span class="nav-text">欠拟合 &amp; 过拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#欠拟合"><span class="nav-number">6.1.1.</span> <span class="nav-text">欠拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合"><span class="nav-number">6.1.2.</span> <span class="nav-text">过拟合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式回归"><span class="nav-number">6.2.</span> <span class="nav-text">多项式回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过拟合处理：正则化"><span class="nav-number">6.3.</span> <span class="nav-text">过拟合处理：正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#L2正则化"><span class="nav-number">6.3.1.</span> <span class="nav-text">L2正则化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型的保存和加载"><span class="nav-number">6.4.</span> <span class="nav-text">模型的保存和加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯"><span class="nav-number">6.5.</span> <span class="nav-text">朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯推断"><span class="nav-number">6.5.1.</span> <span class="nav-text">贝叶斯推断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯定理"><span class="nav-number">6.5.2.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#朴素贝叶斯的分类"><span class="nav-number">6.5.3.</span> <span class="nav-text">朴素贝叶斯的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#高斯模型"><span class="nav-number">6.5.3.1.</span> <span class="nav-text">高斯模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多项式模型"><span class="nav-number">6.5.3.2.</span> <span class="nav-text">多项式模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TF-IDF"><span class="nav-number">6.5.3.3.</span> <span class="nav-text">TF-IDF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#伯努利模型"><span class="nav-number">6.5.3.4.</span> <span class="nav-text">伯努利模型</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-1"><span class="nav-number">2.</span> <span class="nav-text">Day 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#numpy"><span class="nav-number">2.1.</span> <span class="nav-text">numpy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy数组和列表的区别"><span class="nav-number">2.1.1.</span> <span class="nav-text">numpy数组和列表的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy数组常见的创建方式"><span class="nav-number">2.1.2.</span> <span class="nav-text">numpy数组常见的创建方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#numpy的常用属性"><span class="nav-number">2.1.3.</span> <span class="nav-text">numpy的常用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组的索引和切片方式"><span class="nav-number">2.1.4.</span> <span class="nav-text">数组的索引和切片方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#索引"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切片"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">切片</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变形"><span class="nav-number">2.1.5.</span> <span class="nav-text">变形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#级联"><span class="nav-number">2.1.6.</span> <span class="nav-text">级联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些常用的数值方法"><span class="nav-number">2.1.7.</span> <span class="nav-text">一些常用的数值方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于矩阵"><span class="nav-number">2.1.8.</span> <span class="nav-text">基于矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pandas"><span class="nav-number">2.2.</span> <span class="nav-text">pandas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Series"><span class="nav-number">2.2.1.</span> <span class="nav-text">Series</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建方法"><span class="nav-number">2.2.2.</span> <span class="nav-text">创建方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重要方法"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">重要方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataFrame"><span class="nav-number">2.2.3.</span> <span class="nav-text">DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建方式"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">创建方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引和切片操作"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">索引和切片操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#索引-1"><span class="nav-number">2.2.3.2.1.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#切片-1"><span class="nav-number">2.2.3.2.2.</span> <span class="nav-text">切片</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间序列的转换：从字符串object到datetime"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">时间序列的转换：从字符串object到datetime</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置行索引"><span class="nav-number">2.2.3.4.</span> <span class="nav-text">设置行索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#持久化存储"><span class="nav-number">2.2.3.5.</span> <span class="nav-text">持久化存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加载数据"><span class="nav-number">2.2.3.6.</span> <span class="nav-text">加载数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对数据重新取样"><span class="nav-number">2.2.3.7.</span> <span class="nav-text">对数据重新取样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFrame中某一列纵向移动"><span class="nav-number">2.2.3.8.</span> <span class="nav-text">DataFrame中某一列纵向移动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据清洗"><span class="nav-number">2.3.</span> <span class="nav-text">数据清洗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#清洗空值（缺失值）"><span class="nav-number">2.3.1.</span> <span class="nav-text">清洗空值（缺失值）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将空值对应行数据进行删除"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">将空值对应行数据进行删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对空值进行填充"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">对空值进行填充</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清洗重复值"><span class="nav-number">2.3.2.</span> <span class="nav-text">清洗重复值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清洗异常值"><span class="nav-number">2.3.3.</span> <span class="nav-text">清洗异常值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-2"><span class="nav-number">3.</span> <span class="nav-text">Day 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandas的高级用法"><span class="nav-number">3.1.</span> <span class="nav-text">pandas的高级用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas级联操作"><span class="nav-number">3.1.1.</span> <span class="nav-text">pandas级联操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas合并操作"><span class="nav-number">3.1.2.</span> <span class="nav-text">pandas合并操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas替换操作"><span class="nav-number">3.1.3.</span> <span class="nav-text">pandas替换操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#映射"><span class="nav-number">3.1.4.</span> <span class="nav-text">映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算工具"><span class="nav-number">3.1.5.</span> <span class="nav-text">运算工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机抽样"><span class="nav-number">3.1.6.</span> <span class="nav-text">随机抽样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据的分类处理"><span class="nav-number">3.1.7.</span> <span class="nav-text">数据的分类处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级数据聚合"><span class="nav-number">3.1.8.</span> <span class="nav-text">高级数据聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据加载和分词"><span class="nav-number">3.1.9.</span> <span class="nav-text">数据加载和分词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取数据库中的数据"><span class="nav-number">3.1.10.</span> <span class="nav-text">读取数据库中的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#透视表"><span class="nav-number">3.1.11.</span> <span class="nav-text">透视表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉表"><span class="nav-number">3.1.12.</span> <span class="nav-text">交叉表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-3"><span class="nav-number">4.</span> <span class="nav-text">Day 3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习简介"><span class="nav-number">4.1.</span> <span class="nav-text">机器学习简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法模型"><span class="nav-number">4.1.1.</span> <span class="nav-text">算法模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样本数据"><span class="nav-number">4.1.2.</span> <span class="nav-text">样本数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#样本数据的载体"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">样本数据的载体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取样本数据的常见途径"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">获取样本数据的常见途径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">4.2.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为何需要特征工程？"><span class="nav-number">4.2.1.</span> <span class="nav-text">为何需要特征工程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征工程的常用工具"><span class="nav-number">4.2.2.</span> <span class="nav-text">特征工程的常用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征抽取"><span class="nav-number">4.2.3.</span> <span class="nav-text">特征抽取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串的特征值化"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">字符串的特征值化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#jieba"><span class="nav-number">4.2.3.1.1.</span> <span class="nav-text">jieba</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典的特征值化"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">字典的特征值化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#one-hot编码"><span class="nav-number">4.2.3.3.</span> <span class="nav-text">one hot编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征预处理"><span class="nav-number">4.2.4.</span> <span class="nav-text">特征预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#归一化"><span class="nav-number">4.2.4.1.</span> <span class="nav-text">归一化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准化"><span class="nav-number">4.2.4.2.</span> <span class="nav-text">标准化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#归一化-or-标准化？"><span class="nav-number">4.2.4.3.</span> <span class="nav-text">归一化 or 标准化？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征选择"><span class="nav-number">4.2.5.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#filter过滤式"><span class="nav-number">4.2.5.1.</span> <span class="nav-text">filter过滤式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PCA降维"><span class="nav-number">4.2.5.2.</span> <span class="nav-text">PCA降维</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-4"><span class="nav-number">5.</span> <span class="nav-text">Day 4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#训练集、测试集划分"><span class="nav-number">5.1.</span> <span class="nav-text">训练集、测试集划分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KNN分类算法"><span class="nav-number">5.2.</span> <span class="nav-text">KNN分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超参数"><span class="nav-number">5.3.</span> <span class="nav-text">超参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K折交叉验证"><span class="nav-number">5.4.</span> <span class="nav-text">K折交叉验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片数据的等比例压缩和扁平化处理"><span class="nav-number">5.5.</span> <span class="nav-text">图片数据的等比例压缩和扁平化处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#等比例压缩"><span class="nav-number">5.5.1.</span> <span class="nav-text">等比例压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扁平化处理"><span class="nav-number">5.5.2.</span> <span class="nav-text">扁平化处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性回归"><span class="nav-number">5.6.</span> <span class="nav-text">线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#减小误差的方法"><span class="nav-number">5.6.1.</span> <span class="nav-text">减小误差的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L0，L1，L2范式"><span class="nav-number">5.6.2.</span> <span class="nav-text">L0，L1，L2范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小二乘法"><span class="nav-number">5.6.3.</span> <span class="nav-text">最小二乘法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归算法的评价"><span class="nav-number">5.7.</span> <span class="nav-text">回归算法的评价</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#是否预测到了正确或者接近正确的数值"><span class="nav-number">5.7.1.</span> <span class="nav-text">是否预测到了正确或者接近正确的数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否拟合到了足够的信息"><span class="nav-number">5.7.2.</span> <span class="nav-text">是否拟合到了足够的信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-5"><span class="nav-number">6.</span> <span class="nav-text">Day 5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#欠拟合-amp-过拟合"><span class="nav-number">6.1.</span> <span class="nav-text">欠拟合 &amp; 过拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#欠拟合"><span class="nav-number">6.1.1.</span> <span class="nav-text">欠拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合"><span class="nav-number">6.1.2.</span> <span class="nav-text">过拟合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式回归"><span class="nav-number">6.2.</span> <span class="nav-text">多项式回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过拟合处理：正则化"><span class="nav-number">6.3.</span> <span class="nav-text">过拟合处理：正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#L2正则化"><span class="nav-number">6.3.1.</span> <span class="nav-text">L2正则化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型的保存和加载"><span class="nav-number">6.4.</span> <span class="nav-text">模型的保存和加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯"><span class="nav-number">6.5.</span> <span class="nav-text">朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯推断"><span class="nav-number">6.5.1.</span> <span class="nav-text">贝叶斯推断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贝叶斯定理"><span class="nav-number">6.5.2.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#朴素贝叶斯的分类"><span class="nav-number">6.5.3.</span> <span class="nav-text">朴素贝叶斯的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#高斯模型"><span class="nav-number">6.5.3.1.</span> <span class="nav-text">高斯模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多项式模型"><span class="nav-number">6.5.3.2.</span> <span class="nav-text">多项式模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TF-IDF"><span class="nav-number">6.5.3.3.</span> <span class="nav-text">TF-IDF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#伯努利模型"><span class="nav-number">6.5.3.4.</span> <span class="nav-text">伯努利模型</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-6"><span class="nav-number">7.</span> <span class="nav-text">Day 6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IV"><span class="nav-number">7.1.</span> <span class="nav-text">IV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WOE"><span class="nav-number">7.1.1.</span> <span class="nav-text">WOE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分箱"><span class="nav-number">7.2.</span> <span class="nav-text">分箱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分箱的作用和意义"><span class="nav-number">7.2.1.</span> <span class="nav-text">分箱的作用和意义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类别分布不均衡处理"><span class="nav-number">7.3.</span> <span class="nav-text">类别分布不均衡处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过抽样"><span class="nav-number">7.3.1.</span> <span class="nav-text">过抽样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欠抽样"><span class="nav-number">7.3.2.</span> <span class="nav-text">欠抽样</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归"><span class="nav-number">7.4.</span> <span class="nav-text">逻辑回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sigmoid函数"><span class="nav-number">7.4.1.</span> <span class="nav-text">Sigmoid函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归与线性回归的关联"><span class="nav-number">7.4.2.</span> <span class="nav-text">逻辑回归与线性回归的关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归的特点"><span class="nav-number">7.4.3.</span> <span class="nav-text">逻辑回归的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归的损失函数"><span class="nav-number">7.4.4.</span> <span class="nav-text">逻辑回归的损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正则化"><span class="nav-number">7.4.5.</span> <span class="nav-text">正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">7.4.6.</span> <span class="nav-text">API</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Day-7"><span class="nav-number">8.</span> <span class="nav-text">Day 7</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类模型的评价指标"><span class="nav-number">8.1.</span> <span class="nav-text">分类模型的评价指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#混淆矩阵"><span class="nav-number">8.1.1.</span> <span class="nav-text">混淆矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准确率"><span class="nav-number">8.1.2.</span> <span class="nav-text">准确率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#召回率"><span class="nav-number">8.1.3.</span> <span class="nav-text">召回率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#精确率"><span class="nav-number">8.1.4.</span> <span class="nav-text">精确率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#f1-score"><span class="nav-number">8.1.5.</span> <span class="nav-text">f1-score</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AUC"><span class="nav-number">8.1.6.</span> <span class="nav-text">AUC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KMeans聚类算法"><span class="nav-number">8.2.</span> <span class="nav-text">KMeans聚类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#簇和质心"><span class="nav-number">8.2.1.</span> <span class="nav-text">簇和质心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数？"><span class="nav-number">8.2.2.</span> <span class="nav-text">损失函数？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API-1"><span class="nav-number">8.2.3.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KMeans对结果的预测"><span class="nav-number">8.2.4.</span> <span class="nav-text">KMeans对结果的预测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚类算法的效果"><span class="nav-number">8.3.</span> <span class="nav-text">聚类算法的效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#轮廓系数"><span class="nav-number">8.3.1.</span> <span class="nav-text">轮廓系数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVM"><span class="nav-number">8.4.</span> <span class="nav-text">SVM</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
