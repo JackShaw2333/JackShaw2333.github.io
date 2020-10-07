@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="IEEE的浮点数表示计算机采用IEEE 754标准对浮点数进行编码。 IEEE 754标准将浮点数分为3部分：  符号（sign）。s &#x3D; 1是负数，反之是正数 尾数（significand）。M是一个二进制小数 阶码（exponent）。E的作用是对浮点数加权，权重是2的E次幂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浮点数的机器表示">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;09&#x2F;29&#x2F;%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%9C%BA%E5%99%A8%E8%A1%A8%E7%A4%BA&#x2F;index.html">
+<meta property="og:site_name" content="xBug">
+<meta property="og:description" content="IEEE的浮点数表示计算机采用IEEE 754标准对浮点数进行编码。 IEEE 754标准将浮点数分为3部分：  符号（sign）。s &#x3D; 1是负数，反之是正数 尾数（significand）。M是一个二进制小数 阶码（exponent）。E的作用是对浮点数加权，权重是2的E次幂">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-29T14:04:25.380Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/29/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%9C%BA%E5%99%A8%E8%A1%A8%E7%A4%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>浮点数的机器表示 | xBug</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xBug</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/29/%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E6%9C%BA%E5%99%A8%E8%A1%A8%E7%A4%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浮点数的机器表示
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-29 22:01:08 / 修改时间：22:04:25" itemprop="dateCreated datePublished" datetime="2020-09-29T22:01:08+08:00">2020-09-29</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="IEEE的浮点数表示"><a href="#IEEE的浮点数表示" class="headerlink" title="IEEE的浮点数表示"></a>IEEE的浮点数表示</h2><p>计算机采用<code>IEEE 754</code>标准对浮点数进行编码。</p>
+<p><code>IEEE 754</code>标准将浮点数分为3部分：</p>
+<ul>
+<li>符号（sign）。<code>s = 1</code>是负数，反之是正数</li>
+<li>尾数（significand）。<code>M</code>是一个二进制小数</li>
+<li>阶码（exponent）。<code>E</code>的作用是对浮点数加权，权重是2的<code>E</code>次幂</li>
+</ul>
+<a id="more"></a>
+<p>浮点数的位表示因此被分为3个字段，分别对这些值进行编码：</p>
+<ul>
+<li>1个单独的符号位<code>s</code>直接编码符号</li>
+<li>k位阶码字段<code>exp</code>编码阶码<code>E</code></li>
+<li>n位小数字段<code>frac</code>编码尾数<code>M</code>，依赖于阶码字段的值是否为0</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>浮点格式</th>
+<th>s</th>
+<th>exp</th>
+<th>frac</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单精度32位</td>
+<td>1位</td>
+<td>8位</td>
+<td>23位</td>
+</tr>
+<tr>
+<td>双精度64位</td>
+<td>1位</td>
+<td>11位</td>
+<td>52位</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>根据<code>exp</code>的值，被编码的值可分为3种不同的情况</p>
+<h3 id="规格化的值"><a href="#规格化的值" class="headerlink" title="规格化的值"></a>规格化的值</h3><p>当<code>exp</code>的位模式不全为1或0时，属于这种情况。</p>
+<p>此时阶码字段被解释为以<strong>偏置（bias）形式表示的有符号整数</strong>，即<code>E = e - Bias</code>，其中<code>e</code>为<code>exp</code>字段被解释为无符号数时的值，而<code>Bias</code>是一个与<code>exp</code>字段长度有关的固定值，等于<code>2^(k-1)-1</code>（单精度时是127，双精度是1023）</p>
+<p><code>frac</code>为小数字段，表示的是小数<code>f</code>。尾数值<code>M = 1 + f</code>。这种表示方式被称为<strong>隐含的以1开头（implied leading 1）的表示</strong>。</p>
+<h3 id="非规格化的值"><a href="#非规格化的值" class="headerlink" title="非规格化的值"></a>非规格化的值</h3><p>当阶码域全为0时，所表示的数是非规格化的数。在这种情况下，阶码值是<code>E = 1 - Bias</code>，尾数<code>M = f</code>，不包含隐含的开头1。</p>
+<p>非规格化数有2个用途：</p>
+<ul>
+<li>提供了一种表示0的方法。需要注意的是，这种表示方法会出现<code>+0</code>和<code>-0</code>。</li>
+<li>表示那些非常接近0的数，这种属性称为<strong>逐渐溢出（gradual overflow）</strong>。</li>
+</ul>
+<h3 id="特殊值"><a href="#特殊值" class="headerlink" title="特殊值"></a>特殊值</h3><p>当阶码全为1时的数为特殊值。此时当小数域为0时表示无穷；若小数域非0表示<code>NaN (Not a Number)</code></p>
+<p>如果将所有固定位长可表示的浮点数标注在数轴上，可以发现的一个现象是——可表示的数并非均匀分布的，越靠近原点处越稠密。</p>
+<p>值得注意的是<strong>规格化浮点数</strong>和<strong>非规格化浮点数</strong>这样的编码方式保证了浮点数的进位在编码上的体现是平滑的。</p>
+<h2 id="舍入（rounding）"><a href="#舍入（rounding）" class="headerlink" title="舍入（rounding）"></a>舍入（rounding）</h2><p>常用的舍入方式有4种：</p>
+<ul>
+<li>向偶数舍入（IEEE 754默认使用的摄入方式）</li>
+<li>向零舍入</li>
+<li>向下舍入</li>
+<li>向上舍入</li>
+</ul>
+<p>在二进制数舍入时注意<code>halfway</code>值，即被舍掉部分为<code>100...</code>（1后面全是0）的值。当被舍掉部分大于<code>halfway</code>值，则进位；小于则不进位；等于时则需要向偶数舍入，即若进位后舍入的值为偶数则进位，否则不进位。</p>
+<h2 id="浮点运算"><a href="#浮点运算" class="headerlink" title="浮点运算"></a>浮点运算</h2><p>当浮点数相乘时，符号位相与，阶码位相加，尾数位相乘。</p>
+<p>相乘的结果可能需要进行如下修正：</p>
+<ul>
+<li>如果<code>M &gt;= 2</code>，<code>M</code>右移并且增加阶码位</li>
+<li>如果阶码位溢出，则结果为无穷</li>
+<li>对<code>M</code>进行舍入操作</li>
+</ul>
+<p>浮点数的运算具备以下特征</p>
+<ul>
+<li>满足交换律</li>
+<li>不满足结合律</li>
+<li>不满足分配律</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/27/%E7%BA%A2%E9%BB%91%E6%A0%91/" rel="prev" title="红黑树">
+      <i class="fa fa-chevron-left"></i> 红黑树
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/29/%E6%89%98%E7%A6%8F%E5%86%99%E4%BD%9C/" rel="next" title="托福写作">
+      托福写作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IEEE的浮点数表示"><span class="nav-number">1.</span> <span class="nav-text">IEEE的浮点数表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规格化的值"><span class="nav-number">1.1.</span> <span class="nav-text">规格化的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非规格化的值"><span class="nav-number">1.2.</span> <span class="nav-text">非规格化的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊值"><span class="nav-number">1.3.</span> <span class="nav-text">特殊值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#舍入（rounding）"><span class="nav-number">2.</span> <span class="nav-text">舍入（rounding）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点运算"><span class="nav-number">3.</span> <span class="nav-text">浮点运算</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jared Shaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jared Shaw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
