@@ -53,7 +53,7 @@
 <meta property="og:site_name" content="xBug">
 <meta property="og:description" content="红黑树红黑树（red-black tree）是一颗二叉搜索树，它的每个结点有一个存储位标识节点的颜色，可以是RED或BLACK。红黑树确保没有一条路径会比其他路径长出2倍，因而近似是平衡的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-09-27T12:17:23.962Z">
+<meta property="og:updated_time" content="2020-10-14T14:40:23.494Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/09/27/%E7%BA%A2%E9%BB%91%E6%A0%91/">
@@ -191,10 +191,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-09-27 15:14:42 / 修改时间：20:17:23" itemprop="dateCreated datePublished" datetime="2020-09-27T15:14:42+08:00">2020-09-27</time>
+              <time title="创建时间：2020-09-27 15:14:42" itemprop="dateCreated datePublished" datetime="2020-09-27T15:14:42+08:00">2020-09-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-14 22:40:23" itemprop="dateModified" datetime="2020-10-14T22:40:23+08:00">2020-10-14</time>
+              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -214,31 +220,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h1><p>红黑树（red-black tree）是一颗二叉搜索树，它的每个结点有一个存储位标识节点的颜色，可以是<code>RED</code>或<code>BLACK</code>。红黑树确保没有一条路径会比其他路径长出2倍，因而近似是平衡的。</p>
+        <h2 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h2><p>红黑树（red-black tree）是一颗二叉搜索树，它的每个结点有一个存储位标识节点的颜色，可以是<code>RED</code>或<code>BLACK</code>。红黑树确保没有一条路径会比其他路径长出2倍，因而近似是平衡的。</p>
 <a id="more"></a>
 <p>一颗红黑树是满足以下红黑性质的二叉搜索树：</p>
-<ul>
-<li>每个结点非黑即红</li>
-<li>根节点是黑色的</li>
-<li>每个叶节点是（NIL）黑色的</li>
-<li>如果1个结点是红色的，则它的2个子结点都是黑色的</li>
-<li>对每个结点，从该结点到其所有后代叶结点的简单路径上，均包含相同数目的黑色结点</li>
-</ul>
+<ol>
+<li><span id="property-1">每个结点非黑即红</span></li>
+<li><span id="property-2">根节点是黑色的</span></li>
+<li><span id="property-3">每个叶节点是（NIL）黑色的</span></li>
+<li><span id="property-4">如果1个结点是<font color="red">红</font>色的，则它的2个子结点都是黑色的</span></li>
+<li><span id="property-5">对每个结点，从该结点到其所有后代叶结点的简单路径上，均包含相同数目的黑色结点</span></li>
+</ol>
 <p>从最后1个性质可以推出，黑色结点一定有2个子结点。</p>
 <p>红黑树并非完美的平衡二叉树，它的平衡条件不如AVL树严格，因此根据同一组数据构造出的红黑树的高度相比AVL树会更高。</p>
 <p>但是根据最后一个性质可以得出，红黑树左右子树的黑结点层数是相同的，这称为黑色完美平衡。</p>
-<h1 id="红黑树的相关操作"><a href="#红黑树的相关操作" class="headerlink" title="红黑树的相关操作"></a>红黑树的相关操作</h1><h2 id="平衡操作"><a href="#平衡操作" class="headerlink" title="平衡操作"></a>平衡操作</h2><p>红黑树的平衡依靠的是3种操作：</p>
+<h2 id="红黑树的相关操作"><a href="#红黑树的相关操作" class="headerlink" title="红黑树的相关操作"></a>红黑树的相关操作</h2><h3 id="平衡操作"><a href="#平衡操作" class="headerlink" title="平衡操作"></a>平衡操作</h3><p>红黑树的平衡依靠的是3种操作：</p>
 <ul>
 <li>左旋：以某个结点为旋转结点，其右子结点变为旋转结点的的父结点，右子结点的左子结点变为旋转结点的右子结点。</li>
 <li>右旋：以某个结点为旋转结点，其左子结点变为旋转结点的的父结点，左子结点的右子结点变为旋转结点的左子结点。</li>
 <li>变色</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">  P                      V</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> &#x2F; \       对P左旋       &#x2F; \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">F   V    ----------&gt;   P   X</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   &#x2F; \                &#x2F; \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  R   X              F   R</span></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">    P                   F</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   &#x2F; \     对P右旋      &#x2F; \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  F   V  ----------&gt;  D   P</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> &#x2F; \                     &#x2F; \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">D   K                   K   V</span></pre></td></tr></table></figure>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">  P                      V</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> / \       对P左旋      / \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">F   V    ----------&gt;   P   X</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   / \                / \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  R   X              F   R</span></pre></td></tr></table></figure>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">    P                    F</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   / \     对P右旋      / \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  F   V  ----------&gt;   D   P</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> / \                      / \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">D   K                    K   V</span></pre></td></tr></table></figure>
 <p>由上述图示可以看出旋转操作不会影响旋转结点的父结点及以上的结构。</p>
 <p><strong>左旋</strong>影响旋转结点和其<strong>右子树</strong>的结构；</p>
 <p><strong>右旋</strong>影响旋转结点和其<strong>左子树</strong>的结构。</p>
-<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><p>插入操作可分为2步：</p>
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><p>插入操作可分为2步：</p>
 <ul>
 <li>查找插入位置</li>
 <li>插入后自平衡</li>
@@ -248,27 +254,53 @@
 <li>红黑树为空树</li>
 <li>插入结点的key已存在</li>
 <li>插入结点的父结点为黑结点</li>
-<li>插入结点的父结点为红结点<ol>
-<li>叔叔结点存在并为红结点</li>
-<li>叔叔结点不存在或为黑结点，且插入结点的父结点是祖父结点的<strong>左子结点</strong><ol>
+<li>插入结点的父结点为<font color="red">红</font>结点<ol>
+<li>叔叔结点存在并为<font color="red">红</font>结点</li>
+<li>叔叔结点不存在，且插入结点的父结点是祖父结点的<strong>左子结点</strong><ol>
 <li>插入节点是其父结点的<strong>左子结点</strong></li>
-<li>插入节点是其父结点的<strong>右子结点</strong> </li>
+<li>插入节点是其父结点的<strong>右子结点</strong></li>
 </ol>
 </li>
-<li>叔叔结点不存在或为黑结点，且插入结点的父结点是祖父结点的<strong>右子结点</strong> <ol>
+<li>叔叔结点不存在，且插入结点的父结点是祖父结点的<strong>右子结点</strong><ol>
 <li>插入节点是其父结点的<strong>左子结点</strong></li>
-<li>插入节点是其父结点的<strong>右子结点</strong> </li>
+<li>插入节点是其父结点的<strong>右子结点</strong></li>
 </ol>
 </li>
 </ol>
 </li>
 </ol>
 <p>一共有8种情景需要考虑，但其实情景1，2，3的处理其实很简单，而情景4.2和情景4.3只是方向反转，所以总体而言并不复杂。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<h4 id="情景1-红黑树为空树"><a href="#情景1-红黑树为空树" class="headerlink" title="情景1 红黑树为空树"></a>情景1 红黑树为空树</h4><p>此时直接将插入节点作为树根即可。不要忘记根据<a href="#property-2">红黑树性质2</a>将根节点置黑色。</p>
+<h4 id="情景2-插入节点的key已存在"><a href="#情景2-插入节点的key已存在" class="headerlink" title="情景2 插入节点的key已存在"></a>情景2 插入节点的key已存在</h4><p>此时只需更新已存在的这个结点的值即可。</p>
+<h4 id="情景3-插入结点的父结点为黑结点"><a href="#情景3-插入结点的父结点为黑结点" class="headerlink" title="情景3 插入结点的父结点为黑结点"></a>情景3 插入结点的父结点为黑结点</h4><p>此时插入的结点为红色即可，不会影响红黑树的平衡。</p>
+<h4 id="情景4-插入结点的父结点为红结点"><a href="#情景4-插入结点的父结点为红结点" class="headerlink" title="情景4 插入结点的父结点为红结点"></a>情景4 插入结点的父结点为<font color="red">红</font>结点</h4><p>若父结点为<font color="red">红</font>结点，根据<a href="#property-4">红黑树性质4</a>该插入结点必须为黑节点。</p>
+<p>又根据<a href="#property-2">红黑树性质2：根节点是黑色的</a>，该插入结点的父结点肯定不是根节点，则该插入结点一定存在祖父结点。这是非常重要的一点，后续的旋转操作需要祖父结点的参与。</p>
+<p>情景4分为多个子情景</p>
+<h5 id="子情景4-1-叔结点存在，为红结点"><a href="#子情景4-1-叔结点存在，为红结点" class="headerlink" title="子情景4.1 叔结点存在，为红结点"></a>子情景4.1 叔结点存在，为<font color="red">红</font>结点</h5><p>同样根据<a href="#property-4">红黑树性质4</a>，祖父结点只能为黑色。那么，树内相关结点的形状就可能如下图左侧所示（后缀r表示红色，后缀b表示黑色，后文同理）。其中<code>Ir</code>结点为插入结点，为了保持红黑树的平衡，插入结点都先初始化为红色。</p>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">    PPb                   PPr</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   /  \       变色       /  \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  Pr   Sr  ----------&gt;  Pb   Sb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> /                     /</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">Ir                    Ir</span></pre></td></tr></table></figure>
+<p>此时最简单的方法就是改变<strong>父结点一层和祖父结点</strong>的颜色。</p>
+<p>变色后</p>
+<ul>
+<li>如果祖父结点<code>PP</code>的父结点为红色，那么祖父结点需要被当作插入结点，递归向上进行平衡操作直到红黑树平衡</li>
+<li>如果祖父结点本身是根节点，那么<code>PP</code>结点需要重新置黑色，注意此时黑色结点的层数（黑高）增加了</li>
+</ul>
+<h5 id="子情景4-2-叔结点不存在，且插入结点的父结点是祖父结点的左子结点"><a href="#子情景4-2-叔结点不存在，且插入结点的父结点是祖父结点的左子结点" class="headerlink" title="子情景4.2 叔结点不存在，且插入结点的父结点是祖父结点的左子结点"></a>子情景4.2 叔结点不存在，且插入结点的父结点是祖父结点的左子结点</h5><p>此时若只考虑插入前的红黑树情况（不考虑上一情景中的向上递归），则叔结点必为空结点（Nil），否则父结点子树和叔结点子树的黑高不同，违反<a href="#property-5">红黑树性质5</a>。</p>
+<h6 id="子子情景4-2-1-插入结点为父结点的左子结点"><a href="#子子情景4-2-1-插入结点为父结点的左子结点" class="headerlink" title="子子情景4.2.1 插入结点为父结点的左子结点"></a>子子情景4.2.1 插入结点为父结点的左子结点</h6><p>此时树相关结点的形状可能如下图左侧所示。</p>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">    PPb                 Pb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   /     对PP右旋      /  \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  Pr    ---------&gt;   Ir   PPr</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> /</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">Ir</span></pre></td></tr></table></figure>
+<p>此时的处理方法是</p>
+<ul>
+<li>将<code>P</code>结点设为黑色，<code>PP</code>结点设为红色</li>
+<li>对<code>PP</code>右旋</li>
+</ul>
+<p>也可以采取相反的变色操作，<code>P</code>变为红色，<code>I</code>和<code>PP</code>变为黑色，但此时仍需递归向上平衡操作。</p>
+<h6 id="子子情景4-2-2-插入结点是其父结点的右子结点"><a href="#子子情景4-2-2-插入结点是其父结点的右子结点" class="headerlink" title="子子情景4.2.2 插入结点是其父结点的右子结点"></a>子子情景4.2.2 插入结点是其父结点的右子结点</h6><p>这种情况可以转换为子子情景4.2.1，具体操作如下图所示。</p>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">  PPb               PPb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> /      对P左旋     /</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">Pr    ----------&gt;  Ir</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> \                /</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  Ir             Pr</span></pre></td></tr></table></figure>
+<p>对父结点<code>P</code>左旋后，就转换为子子情景4.2.1。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="(https://www.jianshu.com/p/e136ec79235c)">30张图带你彻底理解红黑树</a></li>
 <li>算法导论（原书第3版）</li>
 </ul>
-
+<!--<font color="red">红</font>-->
     </div>
 
     
@@ -327,7 +359,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#红黑树"><span class="nav-number">1.</span> <span class="nav-text">红黑树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#红黑树的相关操作"><span class="nav-number">2.</span> <span class="nav-text">红黑树的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡操作"><span class="nav-number">2.1.</span> <span class="nav-text">平衡操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树"><span class="nav-number">1.</span> <span class="nav-text">红黑树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树的相关操作"><span class="nav-number">2.</span> <span class="nav-text">红黑树的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平衡操作"><span class="nav-number">2.1.</span> <span class="nav-text">平衡操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#情景1-红黑树为空树"><span class="nav-number">2.2.1.</span> <span class="nav-text">情景1 红黑树为空树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景2-插入节点的key已存在"><span class="nav-number">2.2.2.</span> <span class="nav-text">情景2 插入节点的key已存在</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景3-插入结点的父结点为黑结点"><span class="nav-number">2.2.3.</span> <span class="nav-text">情景3 插入结点的父结点为黑结点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景4-插入结点的父结点为红结点"><span class="nav-number">2.2.4.</span> <span class="nav-text">情景4 插入结点的父结点为红结点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#子情景4-1-叔结点存在，为红结点"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">子情景4.1 叔结点存在，为红结点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#子情景4-2-叔结点不存在，且插入结点的父结点是祖父结点的左子结点"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">子情景4.2 叔结点不存在，且插入结点的父结点是祖父结点的左子结点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#子子情景4-2-1-插入结点为父结点的左子结点"><span class="nav-number">2.2.4.2.1.</span> <span class="nav-text">子子情景4.2.1 插入结点为父结点的左子结点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#子子情景4-2-2-插入结点是其父结点的右子结点"><span class="nav-number">2.2.4.2.2.</span> <span class="nav-text">子子情景4.2.2 插入结点是其父结点的右子结点</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -341,7 +373,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
