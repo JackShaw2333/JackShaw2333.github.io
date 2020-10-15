@@ -53,7 +53,7 @@
 <meta property="og:site_name" content="xBug">
 <meta property="og:description" content="红黑树红黑树（red-black tree）是一颗二叉搜索树，它的每个结点有一个存储位标识节点的颜色，可以是RED或BLACK。红黑树确保没有一条路径会比其他路径长出2倍，因而近似是平衡的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-10-14T14:40:23.494Z">
+<meta property="og:updated_time" content="2020-10-15T09:29:47.384Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/09/27/%E7%BA%A2%E9%BB%91%E6%A0%91/">
@@ -199,7 +199,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-14 22:40:23" itemprop="dateModified" datetime="2020-10-14T22:40:23+08:00">2020-10-14</time>
+                <time title="修改时间：2020-10-15 17:29:47" itemprop="dateModified" datetime="2020-10-15T17:29:47+08:00">2020-10-15</time>
               </span>
 
           
@@ -296,6 +296,29 @@
 <h6 id="子子情景4-2-2-插入结点是其父结点的右子结点"><a href="#子子情景4-2-2-插入结点是其父结点的右子结点" class="headerlink" title="子子情景4.2.2 插入结点是其父结点的右子结点"></a>子子情景4.2.2 插入结点是其父结点的右子结点</h6><p>这种情况可以转换为子子情景4.2.1，具体操作如下图所示。</p>
 <figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">  PPb               PPb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> /      对P左旋     /</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">Pr    ----------&gt;  Ir</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> \                /</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  Ir             Pr</span></pre></td></tr></table></figure>
 <p>对父结点<code>P</code>左旋后，就转换为子子情景4.2.1。</p>
+<h5 id="子情景4-3-叔结点不存在，且插入结点的父结点是祖父结点的右子结点"><a href="#子情景4-3-叔结点不存在，且插入结点的父结点是祖父结点的右子结点" class="headerlink" title="子情景4.3 叔结点不存在，且插入结点的父结点是祖父结点的右子结点"></a>子情景4.3 叔结点不存在，且插入结点的父结点是祖父结点的右子结点</h5><p>该情景与情景4.2对称，直接用图说明操作过程。</p>
+<h6 id="子子情景4-3-1-插入节点是其父结点的左子结点"><a href="#子子情景4-3-1-插入节点是其父结点的左子结点" class="headerlink" title="子子情景4.3.1 插入节点是其父结点的左子结点"></a>子子情景4.3.1 插入节点是其父结点的左子结点</h6><figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">PPb                PPb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  \     对P右旋      \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  Pr  ----------&gt;    Ir</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> /                     \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">Ir                      Pr</span></pre></td></tr></table></figure>
+<p>对P右旋后转换为子子情景4.3.2</p>
+<h6 id="子子情景4-3-2-插入节点是其父结点的右子结点"><a href="#子子情景4-3-2-插入节点是其父结点的右子结点" class="headerlink" title="子子情景4.3.2 插入节点是其父结点的右子结点"></a>子子情景4.3.2 插入节点是其父结点的右子结点</h6><figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">PPb                     Pb</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  \        对PP左旋    /  \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">   Pr    ----------&gt; PPr   Ir  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">     Ir</span></pre></td></tr></table></figure>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>删除操作可分为2步：</p>
+<ul>
+<li>查找目标结点</li>
+<li>删除后自平衡</li>
+</ul>
+<p>删除结点后的自平衡操作中很重要的一块内容是寻找合适的替代结点。寻找替代结点存在2种情景：</p>
+<ul>
+<li>若被删除结点无子结点，直接删除</li>
+<li>若被删除结点有子结点，用后继结点（大于被删除结点的最小结点）替换</li>
+</ul>
+<p>大于被删除结点的最小结点也就是被删除结点右子树的最左结点，即中序遍历序列里被删除结点的下一结点。当然也可以用中序遍历序列中被删除结点的前一结点进行替换。一般采用后继结点进行替换。</p>
+<p>考虑这样一种思考方式，将被删除结点和替代结点交换后，再删除处于原先替代结点位置的被删除结点。</p>
+<p>通过这种思考方式，上述2种情景就可以彼此转换，转换关系如下所示</p>
+<ul>
+<li>情景1：无需考虑替代结点，直接删除即可</li>
+<li>情景2：此时被删除结点为后继结点，递归操作</li>
+</ul>
+<p>分析以上2种情形可知，最终删除操作都能够转换为情景1的情况，即在叶节点层进行删除操作。</p>
+<p>当然，若被删除结点只有1个子结点时，可以简单地使用子结点进行替代，省去寻找后继以及接下来的递归操作。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="(https://www.jianshu.com/p/e136ec79235c)">30张图带你彻底理解红黑树</a></li>
 <li>算法导论（原书第3版）</li>
@@ -359,7 +382,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树"><span class="nav-number">1.</span> <span class="nav-text">红黑树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树的相关操作"><span class="nav-number">2.</span> <span class="nav-text">红黑树的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平衡操作"><span class="nav-number">2.1.</span> <span class="nav-text">平衡操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#情景1-红黑树为空树"><span class="nav-number">2.2.1.</span> <span class="nav-text">情景1 红黑树为空树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景2-插入节点的key已存在"><span class="nav-number">2.2.2.</span> <span class="nav-text">情景2 插入节点的key已存在</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景3-插入结点的父结点为黑结点"><span class="nav-number">2.2.3.</span> <span class="nav-text">情景3 插入结点的父结点为黑结点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景4-插入结点的父结点为红结点"><span class="nav-number">2.2.4.</span> <span class="nav-text">情景4 插入结点的父结点为红结点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#子情景4-1-叔结点存在，为红结点"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">子情景4.1 叔结点存在，为红结点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#子情景4-2-叔结点不存在，且插入结点的父结点是祖父结点的左子结点"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">子情景4.2 叔结点不存在，且插入结点的父结点是祖父结点的左子结点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#子子情景4-2-1-插入结点为父结点的左子结点"><span class="nav-number">2.2.4.2.1.</span> <span class="nav-text">子子情景4.2.1 插入结点为父结点的左子结点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#子子情景4-2-2-插入结点是其父结点的右子结点"><span class="nav-number">2.2.4.2.2.</span> <span class="nav-text">子子情景4.2.2 插入结点是其父结点的右子结点</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树"><span class="nav-number">1.</span> <span class="nav-text">红黑树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树的相关操作"><span class="nav-number">2.</span> <span class="nav-text">红黑树的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平衡操作"><span class="nav-number">2.1.</span> <span class="nav-text">平衡操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入"><span class="nav-number">2.2.</span> <span class="nav-text">插入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#情景1-红黑树为空树"><span class="nav-number">2.2.1.</span> <span class="nav-text">情景1 红黑树为空树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景2-插入节点的key已存在"><span class="nav-number">2.2.2.</span> <span class="nav-text">情景2 插入节点的key已存在</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景3-插入结点的父结点为黑结点"><span class="nav-number">2.2.3.</span> <span class="nav-text">情景3 插入结点的父结点为黑结点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#情景4-插入结点的父结点为红结点"><span class="nav-number">2.2.4.</span> <span class="nav-text">情景4 插入结点的父结点为红结点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#子情景4-1-叔结点存在，为红结点"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">子情景4.1 叔结点存在，为红结点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#子情景4-2-叔结点不存在，且插入结点的父结点是祖父结点的左子结点"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">子情景4.2 叔结点不存在，且插入结点的父结点是祖父结点的左子结点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#子子情景4-2-1-插入结点为父结点的左子结点"><span class="nav-number">2.2.4.2.1.</span> <span class="nav-text">子子情景4.2.1 插入结点为父结点的左子结点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#子子情景4-2-2-插入结点是其父结点的右子结点"><span class="nav-number">2.2.4.2.2.</span> <span class="nav-text">子子情景4.2.2 插入结点是其父结点的右子结点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#子情景4-3-叔结点不存在，且插入结点的父结点是祖父结点的右子结点"><span class="nav-number">2.2.4.3.</span> <span class="nav-text">子情景4.3 叔结点不存在，且插入结点的父结点是祖父结点的右子结点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#子子情景4-3-1-插入节点是其父结点的左子结点"><span class="nav-number">2.2.4.3.1.</span> <span class="nav-text">子子情景4.3.1 插入节点是其父结点的左子结点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#子子情景4-3-2-插入节点是其父结点的右子结点"><span class="nav-number">2.2.4.3.2.</span> <span class="nav-text">子子情景4.3.2 插入节点是其父结点的右子结点</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">2.3.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
