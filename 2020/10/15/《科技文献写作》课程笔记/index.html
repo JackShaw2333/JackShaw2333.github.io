@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="结课报告要求根据已学知识，请写一份题目为“《科技文献写作》结课报告”课程结课报告，说明  如何进行科技文献的撰写工作 撰文时各部分应遵守何种撰写规范。  可以针对某一个问题，如“学术道德规范”展开讨论，也可以针对几个问题，如“科技文献中引言及正文的撰写规范”展开论述，着重表达自己对科技文献写作的个人思考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《科技文献写作》课程笔记">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;10&#x2F;15&#x2F;%E3%80%8A%E7%A7%91%E6%8A%80%E6%96%87%E7%8C%AE%E5%86%99%E4%BD%9C%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0&#x2F;index.html">
+<meta property="og:site_name" content="xBug">
+<meta property="og:description" content="结课报告要求根据已学知识，请写一份题目为“《科技文献写作》结课报告”课程结课报告，说明  如何进行科技文献的撰写工作 撰文时各部分应遵守何种撰写规范。  可以针对某一个问题，如“学术道德规范”展开讨论，也可以针对几个问题，如“科技文献中引言及正文的撰写规范”展开论述，着重表达自己对科技文献写作的个人思考。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-10-16T05:39:58.402Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/15/%E3%80%8A%E7%A7%91%E6%8A%80%E6%96%87%E7%8C%AE%E5%86%99%E4%BD%9C%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>《科技文献写作》课程笔记 | xBug</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xBug</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/15/%E3%80%8A%E7%A7%91%E6%8A%80%E6%96%87%E7%8C%AE%E5%86%99%E4%BD%9C%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《科技文献写作》课程笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-15 22:43:03" itemprop="dateCreated datePublished" datetime="2020-10-15T22:43:03+08:00">2020-10-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-16 13:39:58" itemprop="dateModified" datetime="2020-10-16T13:39:58+08:00">2020-10-16</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="结课报告要求"><a href="#结课报告要求" class="headerlink" title="结课报告要求"></a>结课报告要求</h2><p>根据已学知识，请写一份题目为“《科技文献写作》结课报告”课程结课报告，说明</p>
+<ul>
+<li>如何进行科技文献的撰写工作</li>
+<li>撰文时各部分应遵守何种撰写规范。</li>
+</ul>
+<p>可以针对某一个问题，如“学术道德规范”展开讨论，也可以针对几个问题，如“科技文献中引言及正文的撰写规范”展开论述，着重表达自己对科技文献写作的个人思考。</p>
+<a id="more"></a>
+<h2 id="科技文献写作3要素"><a href="#科技文献写作3要素" class="headerlink" title="科技文献写作3要素"></a>科技文献写作3要素</h2><ul>
+<li>言之有物</li>
+<li>合乎规范</li>
+<li>正确表达</li>
+</ul>
+<h2 id="科技文献基本原则"><a href="#科技文献基本原则" class="headerlink" title="科技文献基本原则"></a>科技文献基本原则</h2><ul>
+<li>勿复制粘贴</li>
+<li>勿抄袭</li>
+<li>勿找枪手</li>
+</ul>
+<h2 id="科技文献写作分类"><a href="#科技文献写作分类" class="headerlink" title="科技文献写作分类"></a>科技文献写作分类</h2><ul>
+<li>学术型论文</li>
+<li>技术型论文</li>
+<li>学位论文</li>
+</ul>
+<p>这3者的主要区别在于：学位论文在文献综述，实验环境介绍和实验方法介绍方面需要更加详细。</p>
+<h2 id="科技文献写作特点"><a href="#科技文献写作特点" class="headerlink" title="科技文献写作特点"></a>科技文献写作特点</h2><ul>
+<li>科学性<ul>
+<li>严肃</li>
+<li>严谨</li>
+<li>严密</li>
+<li>严格</li>
+</ul>
+</li>
+<li>学术性<ul>
+<li>更多强调作者的主张</li>
+<li>学术性不同于科学性</li>
+<li>不能实验验证的要进行分析和推理</li>
+<li>讨论全面，不局限于专业领域</li>
+</ul>
+</li>
+<li>实用性</li>
+<li>可读性</li>
+<li>规范性</li>
+</ul>
+<h2 id="已有文献的检索"><a href="#已有文献的检索" class="headerlink" title="已有文献的检索"></a>已有文献的检索</h2><ul>
+<li>符合论点<ul>
+<li>不掐头去尾</li>
+<li>材料应与论点联系密切</li>
+<li>不以点带面</li>
+</ul>
+</li>
+<li>尽量采用一手材料，考察核对准确</li>
+</ul>
+<h2 id="科技文献的写作过程"><a href="#科技文献的写作过程" class="headerlink" title="科技文献的写作过程"></a>科技文献的写作过程</h2><ul>
+<li>准备素材</li>
+<li>进行选题</li>
+<li>编写提纲</li>
+<li>着手写作</li>
+<li>完成初稿</li>
+<li>修改定稿</li>
+</ul>
+<h3 id="选题"><a href="#选题" class="headerlink" title="选题"></a>选题</h3><ul>
+<li>亟待解决的</li>
+<li>前沿的</li>
+<li>预期效果理想的</li>
+</ul>
+<p>选题的具体方法</p>
+<ul>
+<li>先看文献再选</li>
+<li>多学科交叉领域选</li>
+<li>旧话题，新角度</li>
+<li>继续别人的话题</li>
+</ul>
+<p>选题注意</p>
+<ul>
+<li>忌雷同、陈旧</li>
+<li>忌贪大</li>
+<li>忌盲目选题</li>
+<li>忌七拼八凑</li>
+</ul>
+<h3 id="编写提纲"><a href="#编写提纲" class="headerlink" title="编写提纲"></a>编写提纲</h3><ul>
+<li>确定论文提要，再加进材料</li>
+<li>页数分配</li>
+<li>简单提纲，概括要点</li>
+<li>详细提纲，列出主要论点</li>
+</ul>
+<p>注意</p>
+<ul>
+<li>全局观念</li>
+<li>从中心论点出发</li>
+<li>考虑各部分逻辑关系</li>
+</ul>
+<p>方法</p>
+<ul>
+<li>标题</li>
+<li>总论点</li>
+<li>全篇安排：几个方面，什么顺序</li>
+<li>安排大项目后，逐个考虑每个项目的下位论点，直到段一级，写出段旨</li>
+<li>依次考虑各段安排，编码准备使用的材料</li>
+<li>增删改查</li>
+</ul>
+<h3 id="撰写"><a href="#撰写" class="headerlink" title="撰写"></a>撰写</h3><ul>
+<li>严格顺序</li>
+<li>分段写</li>
+<li>重点写</li>
+<li>一气呵成</li>
+</ul>
+<p>使用脑海中第一次想到的词，初稿完成后再修改。</p>
+<p>初稿是要把所有想写的话全都写出来。</p>
+<p>对原计划的不当之处的修改应在初稿写完后。</p>
+<p>写初稿不要追求完美。</p>
+<h2 id="科技文献写作规范"><a href="#科技文献写作规范" class="headerlink" title="科技文献写作规范"></a>科技文献写作规范</h2><ul>
+<li>大规范<ul>
+<li>提出问题-&gt;提出解决方案-&gt;效果验证</li>
+<li>结构<ul>
+<li>题目</li>
+<li>摘要</li>
+<li>目录</li>
+<li>正文章节</li>
+<li>结论</li>
+<li>致谢</li>
+<li>参考文献</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>小规范<ul>
+<li>用语规范</li>
+</ul>
+</li>
+</ul>
+<p>一些规范文件：</p>
+<ul>
+<li>ISO<ul>
+<li>《文献工作——科学报告编写格式》（1983）</li>
+</ul>
+</li>
+<li>我国<ul>
+<li>《科学技术报告、学位论文的编写格式》（GB7713-87）</li>
+<li>《文献编写规则》（GB6447-86）</li>
+<li>《文后参考文献著录规则》（GB7714-87）</li>
+</ul>
+</li>
+</ul>
+<h3 id="题目规范"><a href="#题目规范" class="headerlink" title="题目规范"></a>题目规范</h3><p>不宜超过24个字。</p>
+<ul>
+<li>准确得体</li>
+<li>避免流于一般化</li>
+<li>尽量不用动宾结构</li>
+</ul>
+<h3 id="摘要规范"><a href="#摘要规范" class="headerlink" title="摘要规范"></a>摘要规范</h3><p>摘要主要内容：</p>
+<ul>
+<li>目的</li>
+<li>对象</li>
+<li>方法</li>
+<li>主要发现</li>
+<li>主要结论</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>使用第3人称</li>
+<li>不出现图号、表号和章节号</li>
+<li>不加注释</li>
+<li>文字为主</li>
+<li>包含所有关键字信息</li>
+<li>少用长句</li>
+<li>完成正文之后再写摘要</li>
+</ul>
+<p>英文摘要要求：</p>
+<ul>
+<li>一般过去时和一般现在时，少用完成时</li>
+<li>一般用被动语态</li>
+<li>尽量不用第一人称</li>
+<li>尽量用短句</li>
+<li>动词尽量靠近主语</li>
+<li>形容词定语 &gt; 名词定语 &gt; 动名词定语</li>
+<li>名词定语 &gt; of句型</li>
+</ul>
+<p>学校摘要要求：</p>
+<ul>
+<li>300-500字</li>
+<li>宋体小四号，首行缩进2字符，行间距1.5倍</li>
+<li>英文、拼音使用<code>Times New Roman</code>字体</li>
+</ul>
+<h3 id="目录规范"><a href="#目录规范" class="headerlink" title="目录规范"></a>目录规范</h3><p>目录仅需列到第3级。</p>
+<h3 id="引言规范"><a href="#引言规范" class="headerlink" title="引言规范"></a>引言规范</h3><p>引言内容：</p>
+<ul>
+<li>研究的目的和意义</li>
+<li>前人研究结果与分析</li>
+<li>采用的方法和研究途径</li>
+<li>最重要的研究成果</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>言简意赅，不与摘要雷同</li>
+<li>开门见山</li>
+<li>解释定义专业术语或缩写词</li>
+<li>引用最相关文献</li>
+<li>如实评述</li>
+<li>评价慎重</li>
+</ul>
+<p>写作手法：</p>
+<ul>
+<li>旁征博引</li>
+<li>评价得当审慎</li>
+<li>条理清楚</li>
+<li>引用名人名篇</li>
+<li>少用专著</li>
+</ul>
+<p>学校要求：</p>
+<p>绪论不少于2000字。</p>
+<h3 id="结论规范"><a href="#结论规范" class="headerlink" title="结论规范"></a>结论规范</h3><p>主要内容：</p>
+<ul>
+<li>结果说明了什么，解决了什么</li>
+<li>对前人结果的验证、修正、发展或否定</li>
+<li>本研究的不足之处或遗留问题</li>
+</ul>
+<p>要求：</p>
+<ul>
+<li>概括准确，肯定否定要明确</li>
+<li>提供明确、具体的定性和定量信息</li>
+<li>不自我评价</li>
+</ul>
+<p>注意</p>
+<ul>
+<li>比摘要相关的内容更全面</li>
+<li>不在结论中继续分析</li>
+<li>给出局限性说明</li>
+</ul>
+<h3 id="致谢规范"><a href="#致谢规范" class="headerlink" title="致谢规范"></a>致谢规范</h3><ul>
+<li>对相关人员的感谢</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/11/MIT-6-828%E7%AC%94%E8%AE%B0/" rel="prev" title="MIT 6.828笔记">
+      <i class="fa fa-chevron-left"></i> MIT 6.828笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#结课报告要求"><span class="nav-number">1.</span> <span class="nav-text">结课报告要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#科技文献写作3要素"><span class="nav-number">2.</span> <span class="nav-text">科技文献写作3要素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#科技文献基本原则"><span class="nav-number">3.</span> <span class="nav-text">科技文献基本原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#科技文献写作分类"><span class="nav-number">4.</span> <span class="nav-text">科技文献写作分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#科技文献写作特点"><span class="nav-number">5.</span> <span class="nav-text">科技文献写作特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已有文献的检索"><span class="nav-number">6.</span> <span class="nav-text">已有文献的检索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#科技文献的写作过程"><span class="nav-number">7.</span> <span class="nav-text">科技文献的写作过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选题"><span class="nav-number">7.1.</span> <span class="nav-text">选题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写提纲"><span class="nav-number">7.2.</span> <span class="nav-text">编写提纲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#撰写"><span class="nav-number">7.3.</span> <span class="nav-text">撰写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#科技文献写作规范"><span class="nav-number">8.</span> <span class="nav-text">科技文献写作规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目规范"><span class="nav-number">8.1.</span> <span class="nav-text">题目规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要规范"><span class="nav-number">8.2.</span> <span class="nav-text">摘要规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录规范"><span class="nav-number">8.3.</span> <span class="nav-text">目录规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引言规范"><span class="nav-number">8.4.</span> <span class="nav-text">引言规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论规范"><span class="nav-number">8.5.</span> <span class="nav-text">结论规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#致谢规范"><span class="nav-number">8.6.</span> <span class="nav-text">致谢规范</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jared Shaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jared Shaw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
