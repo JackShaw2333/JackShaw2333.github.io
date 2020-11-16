@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Sources课程的资料来源如下。 录播视频B站主页 课程主页">
+<meta name="keywords" content="static analysis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Static Analysis - NJU notes">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;10&#x2F;19&#x2F;Static-Analysis-NJU-notes&#x2F;index.html">
+<meta property="og:site_name" content="xBug">
+<meta property="og:description" content="Sources课程的资料来源如下。 录播视频B站主页 课程主页">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-10T15:40:59.888Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/10/19/Static-Analysis-NJU-notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Static Analysis - NJU notes | xBug</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xBug</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/19/Static-Analysis-NJU-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Static Analysis - NJU notes
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-19 14:28:45" itemprop="dateCreated datePublished" datetime="2020-10-19T14:28:45+08:00">2020-10-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-10 23:40:59" itemprop="dateModified" datetime="2020-11-10T23:40:59+08:00">2020-11-10</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Sources"><a href="#Sources" class="headerlink" title="Sources"></a>Sources</h2><p>课程的资料来源如下。</p>
+<p><a href="https://space.bilibili.com/2919428?spm_id_from=333.788.b_765f7570696e666f.1" target="_blank" rel="noopener">录播视频B站主页</a></p>
+<p><a href="https://pascal-group.bitbucket.io/" target="_blank" rel="noopener">课程主页</a></p>
+<a id="more"></a>
+<h2 id="Lec-1-Introduction"><a href="#Lec-1-Introduction" class="headerlink" title="Lec 1 Introduction"></a>Lec 1 Introduction</h2><h3 id="PL-and-Static-Analysis"><a href="#PL-and-Static-Analysis" class="headerlink" title="PL and Static Analysis"></a>PL and Static Analysis</h3><p>Static Analysis属于Programming Language的一种application.</p>
+<h3 id="Why-we-need-Static-Analysis"><a href="#Why-we-need-Static-Analysis" class="headerlink" title="Why we need Static Analysis"></a>Why we need Static Analysis</h3><p>因为程序愈加复杂，人们更加关注以下内容：</p>
+<ul>
+<li>Program Reliability</li>
+<li>Program Security</li>
+<li>Compiler Optimization</li>
+<li>Program Understanding</li>
+</ul>
+<h3 id="What-is-Static-Analysis"><a href="#What-is-Static-Analysis" class="headerlink" title="What is Static Analysis"></a>What is Static Analysis</h3><p>Static Analysis试图在程序P运行之前分析它的行为以及它所满足的某些性质。</p>
+<p>然而，根据<code>Rice&#39;s Theorem</code>，不存在一种方法能够判断（给出确切的回答）一个程序P是否满足一些<code>non-trivial</code>的性质。</p>
+<blockquote>
+<p>There is no such approach to determine whether P satisfies such non-trival properties, i.e., giving <strong>exact answer</strong>: Yes or No</p>
+</blockquote>
+<h4 id="Rice’s-Theorem"><a href="#Rice’s-Theorem" class="headerlink" title="Rice’s Theorem"></a>Rice’s Theorem</h4><blockquote>
+<p>Any non-trivial property of the behavior of programs in a r.e. language is undecideable.</p>
+</blockquote>
+<p>其中，<code>r.e.</code>指<code>recursively enumerable</code>，即能被图灵机识别的语言。</p>
+<p>那么，什么是<code>non-trivial properties</code>？</p>
+<blockquote>
+<p>A property is trivial if either it is not satisfied by any r.e. language, or if it is satisfied by all r.e. languages; otherwise it is non-trivial.</p>
+</blockquote>
+<p>可以简单的理解为，<code>non-trivial</code>性质是一些有趣的性质，是于程序运行时行为有关的性质。</p>
+<h3 id="Static-Analysis-features-and-examples"><a href="#Static-Analysis-features-and-examples" class="headerlink" title="Static Analysis features and examples"></a>Static Analysis features and examples</h3><p>我们期望一个完美的Static Analysis能够做到如下2点：</p>
+<ul>
+<li>Sound</li>
+<li>Complete</li>
+</ul>
+<p>然而<code>Rice&#39;s Theorem</code>告诉我们不存在这样完美的Static Analysis。</p>
+<p>Sound，Complete和Truth的关系如下图所示。</p>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">+----------------------------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">| Sound                      |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">|      +-------------------+ |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">|      | Truth             | |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">|      |      +----------+ | |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">|      |      | Complete | | |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">|      |      +----------+ | |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">|      +-------------------+ |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">+----------------------------+</span></pre></td></tr></table></figure>
+<ul>
+<li>Truth代表Sound &amp; Complete，是程序所有真正可能的行为</li>
+<li>Sound是一种overapproximation，存在<code>false positives</code></li>
+<li>Complete是一种underapproximation，存在<code>false negatives</code></li>
+</ul>
+<p>因为<code>Rice&#39;s Theorem</code>指出的问题，所以我们的目的转而为实现<strong>有用的</strong>static analysis。</p>
+<p>一般而言，我们选择牺牲completeness，实现sound and not fully-pricise static analysis。</p>
+<h4 id="Necessity-of-soundness"><a href="#Necessity-of-soundness" class="headerlink" title="Necessity of soundness"></a>Necessity of soundness</h4><p>soundness对于诸如compiler optimization和program verification的应用非常关键。</p>
+<p>到这里，可以给static analysis下一个定义：</p>
+<blockquote>
+<p>Static Analysis: ensure (or get close to) soundness, while making good trade-offs between analysis precision and analysis speed.</p>
+</blockquote>
+<p>如果用2个词概括static analysis，就是<code>abstraction</code>和<code>overapproximation</code>。</p>
+<h2 id="Lec-2-IR"><a href="#Lec-2-IR" class="headerlink" title="Lec 2 IR"></a>Lec 2 IR</h2><h3 id="ASR-vs-IR"><a href="#ASR-vs-IR" class="headerlink" title="ASR vs IR"></a>ASR vs IR</h3><p>AST:</p>
+<ul>
+<li>high-level，接近语法结构</li>
+<li>language dependent</li>
+<li>适合快速的type checking</li>
+<li>缺乏control flow信息</li>
+</ul>
+<p>IR:</p>
+<ul>
+<li>low-level，更接近机器码</li>
+<li>language independent</li>
+<li>compact and uniform</li>
+<li>包含control flow信息</li>
+<li>basis for static analysis</li>
+</ul>
+<h3 id="IR-three-address-code-3AC"><a href="#IR-three-address-code-3AC" class="headerlink" title="IR: three-address code (3AC)"></a>IR: three-address code (3AC)</h3><p>At most one operator on the right side of an instruction.</p>
+<p>Each 3AC contains at most 3 address.</p>
+<p>Address can be:</p>
+<ul>
+<li>Name</li>
+<li>Constant</li>
+<li>Temporary name</li>
+</ul>
+<h3 id="3AC-in-real-static-analyzer-Soot"><a href="#3AC-in-real-static-analyzer-Soot" class="headerlink" title="3AC in real static analyzer: Soot"></a>3AC in real static analyzer: Soot</h3><p>Soot’s IR is Jimple: typed 3AC</p>
+<h4 id="JVM中的4种方法调用"><a href="#JVM中的4种方法调用" class="headerlink" title="JVM中的4种方法调用"></a>JVM中的4种方法调用</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>invokespecial</td>
+<td>call constructor, call superclass methods, call private methods</td>
+</tr>
+<tr>
+<td>invokevirtual</td>
+<td>instance methods call (virtual dispatch)</td>
+</tr>
+<tr>
+<td>invokeinterface</td>
+<td>调用interface的方法 不能做优化 检查是否实现interface方法</td>
+</tr>
+<tr>
+<td>invokestatic</td>
+<td>call static methods</td>
+</tr>
+<tr>
+<td>Java7: invokedynamic</td>
+<td>用于在JVM上运行非静态语言</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="method-signature"><a href="#method-signature" class="headerlink" title="method signature"></a>method signature</h4><p>jimple中的method signature格式为<code>class-name: return-type method-name(param1-type, param2-type, ...)</code></p>
+<h4 id="clinit方法"><a href="#clinit方法" class="headerlink" title="clinit方法"></a><code>clinit</code>方法</h4><p>程序在用到某一个类时需要将该类加载到内存，加载后就会调用<code>clinit</code>方法，进行例如初始化静态变量等操作。</p>
+<h3 id="Static-single-assignment-SSA"><a href="#Static-single-assignment-SSA" class="headerlink" title="Static single assignment (SSA)"></a>Static single assignment (SSA)</h3><h3 id="Basic-blocks"><a href="#Basic-blocks" class="headerlink" title="Basic blocks"></a>Basic blocks</h3><h3 id="Control-flow-graphs-CFG"><a href="#Control-flow-graphs-CFG" class="headerlink" title="Control flow graphs (CFG)"></a>Control flow graphs (CFG)</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/static-analysis/" rel="tag"># static analysis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/15/%E3%80%8A%E7%A7%91%E6%8A%80%E6%96%87%E7%8C%AE%E5%86%99%E4%BD%9C%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="prev" title="《科技文献写作》课程笔记">
+      <i class="fa fa-chevron-left"></i> 《科技文献写作》课程笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/22/Phrases-from-Yes-Minister/" rel="next" title="Phrases from "YM & YPM"">
+      Phrases from "YM & YPM" <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sources"><span class="nav-number">1.</span> <span class="nav-text">Sources</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">Lec 1 Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PL-and-Static-Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">PL and Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-we-need-Static-Analysis"><span class="nav-number">2.2.</span> <span class="nav-text">Why we need Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Static-Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">What is Static Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rice’s-Theorem"><span class="nav-number">2.3.1.</span> <span class="nav-text">Rice’s Theorem</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Analysis-features-and-examples"><span class="nav-number">2.4.</span> <span class="nav-text">Static Analysis features and examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Necessity-of-soundness"><span class="nav-number">2.4.1.</span> <span class="nav-text">Necessity of soundness</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-2-IR"><span class="nav-number">3.</span> <span class="nav-text">Lec 2 IR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASR-vs-IR"><span class="nav-number">3.1.</span> <span class="nav-text">ASR vs IR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IR-three-address-code-3AC"><span class="nav-number">3.2.</span> <span class="nav-text">IR: three-address code (3AC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3AC-in-real-static-analyzer-Soot"><span class="nav-number">3.3.</span> <span class="nav-text">3AC in real static analyzer: Soot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM中的4种方法调用"><span class="nav-number">3.3.1.</span> <span class="nav-text">JVM中的4种方法调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#method-signature"><span class="nav-number">3.3.2.</span> <span class="nav-text">method signature</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clinit方法"><span class="nav-number">3.3.3.</span> <span class="nav-text">clinit方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-single-assignment-SSA"><span class="nav-number">3.4.</span> <span class="nav-text">Static single assignment (SSA)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-blocks"><span class="nav-number">3.5.</span> <span class="nav-text">Basic blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-flow-graphs-CFG"><span class="nav-number">3.6.</span> <span class="nav-text">Control flow graphs (CFG)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jared Shaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jared Shaw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
