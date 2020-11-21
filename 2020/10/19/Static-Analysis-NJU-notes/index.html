@@ -54,8 +54,10 @@
 <meta property="og:site_name" content="xBug">
 <meta property="og:description" content="Sources课程的资料来源如下。 录播视频B站主页 课程主页">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-10T15:40:59.888Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;imgchr.com&#x2F;i&#x2F;DQQfVP">
+<meta property="og:updated_time" content="2020-11-21T12:17:57.431Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;imgchr.com&#x2F;i&#x2F;DQQfVP">
 
 <link rel="canonical" href="http://yoursite.com/2020/10/19/Static-Analysis-NJU-notes/">
 
@@ -200,7 +202,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-10 23:40:59" itemprop="dateModified" datetime="2020-11-10T23:40:59+08:00">2020-11-10</time>
+                <time title="修改时间：2020-11-21 20:17:57" itemprop="dateModified" datetime="2020-11-21T20:17:57+08:00">2020-11-21</time>
               </span>
 
           
@@ -283,15 +285,15 @@
 <li>包含control flow信息</li>
 <li>basis for static analysis</li>
 </ul>
-<h3 id="IR-three-address-code-3AC"><a href="#IR-three-address-code-3AC" class="headerlink" title="IR: three-address code (3AC)"></a>IR: three-address code (3AC)</h3><p>At most one operator on the right side of an instruction.</p>
-<p>Each 3AC contains at most 3 address.</p>
+<h3 id="IR-three-address-code-3AC"><a href="#IR-three-address-code-3AC" class="headerlink" title="IR: three-address code (3AC)"></a>IR: three-address code (<code>3AC</code>)</h3><p>At most one operator on the right side of an instruction.</p>
+<p>Each <code>3AC</code> contains at most 3 address.</p>
 <p>Address can be:</p>
 <ul>
 <li>Name</li>
 <li>Constant</li>
 <li>Temporary name</li>
 </ul>
-<h3 id="3AC-in-real-static-analyzer-Soot"><a href="#3AC-in-real-static-analyzer-Soot" class="headerlink" title="3AC in real static analyzer: Soot"></a>3AC in real static analyzer: Soot</h3><p>Soot’s IR is Jimple: typed 3AC</p>
+<h3 id="3AC-in-real-static-analyzer-Soot"><a href="#3AC-in-real-static-analyzer-Soot" class="headerlink" title="3AC in real static analyzer: Soot"></a><code>3AC</code> in real static analyzer: Soot</h3><p>Soot’s IR is <code>Jimple</code>: typed <code>3AC</code></p>
 <h4 id="JVM中的4种方法调用"><a href="#JVM中的4种方法调用" class="headerlink" title="JVM中的4种方法调用"></a>JVM中的4种方法调用</h4><div class="table-container">
 <table>
 <thead>
@@ -302,31 +304,362 @@
 </thead>
 <tbody>
 <tr>
-<td>invokespecial</td>
+<td><code>invokespecial</code></td>
 <td>call constructor, call superclass methods, call private methods</td>
 </tr>
 <tr>
-<td>invokevirtual</td>
+<td><code>invokevirtual</code></td>
 <td>instance methods call (virtual dispatch)</td>
 </tr>
 <tr>
-<td>invokeinterface</td>
+<td><code>invokeinterface</code></td>
 <td>调用interface的方法 不能做优化 检查是否实现interface方法</td>
 </tr>
 <tr>
-<td>invokestatic</td>
+<td><code>invokestatic</code></td>
 <td>call static methods</td>
 </tr>
 <tr>
-<td>Java7: invokedynamic</td>
+<td>Java7: <code>invokedynamic</code></td>
 <td>用于在JVM上运行非静态语言</td>
 </tr>
 </tbody>
 </table>
 </div>
-<h4 id="method-signature"><a href="#method-signature" class="headerlink" title="method signature"></a>method signature</h4><p>jimple中的method signature格式为<code>class-name: return-type method-name(param1-type, param2-type, ...)</code></p>
+<h4 id="method-signature"><a href="#method-signature" class="headerlink" title="method signature"></a>method signature</h4><p><code>Jimple</code>中的<code>method signature</code>格式为<code>class-name: return-type method-name(param1-type, param2-type, ...)</code></p>
 <h4 id="clinit方法"><a href="#clinit方法" class="headerlink" title="clinit方法"></a><code>clinit</code>方法</h4><p>程序在用到某一个类时需要将该类加载到内存，加载后就会调用<code>clinit</code>方法，进行例如初始化静态变量等操作。</p>
-<h3 id="Static-single-assignment-SSA"><a href="#Static-single-assignment-SSA" class="headerlink" title="Static single assignment (SSA)"></a>Static single assignment (SSA)</h3><h3 id="Basic-blocks"><a href="#Basic-blocks" class="headerlink" title="Basic blocks"></a>Basic blocks</h3><h3 id="Control-flow-graphs-CFG"><a href="#Control-flow-graphs-CFG" class="headerlink" title="Control flow graphs (CFG)"></a>Control flow graphs (CFG)</h3>
+<h3 id="Static-single-assignment-SSA-（Optional）"><a href="#Static-single-assignment-SSA-（Optional）" class="headerlink" title="Static single assignment (SSA) （Optional）"></a>Static single assignment (SSA) （Optional）</h3><p>每一个变量都有一个单独的名字。</p>
+<h3 id="Basic-blocks（BB）"><a href="#Basic-blocks（BB）" class="headerlink" title="Basic blocks（BB）"></a>Basic blocks（<code>BB</code>）</h3><p>需要满足的性质：</p>
+<ul>
+<li><code>BB</code>的入口只能是它的第一条指令</li>
+<li><code>BB</code>的出口只能是它的最后一条指令</li>
+</ul>
+<p>建立<code>BB</code>的算法：</p>
+<ul>
+<li>确定<code>leader</code><ul>
+<li>程序的第1条<code>3AC</code>为<code>leader</code></li>
+<li>任何跳转的target为<code>leader</code></li>
+<li>任何跳转<code>3AC</code>的下一条<code>3AC</code>为<code>leader</code></li>
+</ul>
+</li>
+<li>构建<code>BB</code><ul>
+<li>2条<code>leader</code>之间的<code>3AC</code>属于前一条<code>leader</code>的<code>BB</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Control-flow-graphs-CFG"><a href="#Control-flow-graphs-CFG" class="headerlink" title="Control flow graphs (CFG)"></a>Control flow graphs (CFG)</h3><p>CFG以<code>BB</code>为结点。</p>
+<p>构建边算法：</p>
+<ul>
+<li><code>BB</code> <code>A</code>和<code>BB</code> <code>B</code>之间有一条边当且仅当：<ul>
+<li><code>A</code>末尾有一条任意形式的跳转指令到<code>B</code>开头</li>
+<li><code>A</code>与<code>B</code>相邻（<code>A</code>末尾是无条件跳转除外）</li>
+</ul>
+</li>
+</ul>
+<p>这样指令的跳转label可以替换为<code>BB</code>。</p>
+<p>通常需要加入<code>entry</code>和<code>exit</code>结点。</p>
+<h2 id="Lec-3-Data-flow-analysis-1"><a href="#Lec-3-Data-flow-analysis-1" class="headerlink" title="Lec 3 Data flow analysis 1"></a>Lec 3 Data flow analysis 1</h2><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><ul>
+<li>how data flows on CFG?</li>
+<li><p>how <strong>application-specific (abstraction) data flows (safe-approximation)</strong> through the <strong>nodes (transfer funcs) and edges (control-flow handling) of</strong> CFG?</p>
+</li>
+<li><p>may analysis</p>
+<ul>
+<li>outputs info that may be true</li>
+<li><strong>over-approximation</strong> is safe</li>
+</ul>
+</li>
+<li>must analysis<ul>
+<li>outputs info that must be true</li>
+<li><strong>under-approximation</strong> is safe</li>
+</ul>
+</li>
+</ul>
+<p>因此，不同的DFA有不同的</p>
+<ul>
+<li>abstraction</li>
+<li>safe strategies</li>
+<li>transfer functions</li>
+<li>control-flow handling</li>
+</ul>
+<h3 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h3><h4 id="Input-and-output-states"><a href="#Input-and-output-states" class="headerlink" title="Input and output states"></a>Input and output states</h4><ul>
+<li>each IR execution将一个<code>input state</code>转化为一个<code>output state</code></li>
+<li>每一个state都与一条IR前后的<code>program point</code>相关联</li>
+</ul>
+<p>汇聚形式的某个IR的$input\ state = output\ state1 \sqcap output\ state2$，其中$\sqcap$为<code>meet operator</code>，可以表示$\cup$或$\cap$等。</p>
+<p>在任何一个DFA应用中，我们将每个<code>program point</code>都和一个data-flow value关联，这个value代表了在这个point能观察到的所有可能的state的抽象形式。</p>
+<blockquote>
+<p>所有可能的data-flow value的集合是这次应用的<code>domain</code>。</p>
+</blockquote>
+<h4 id="Notations-for-transfer-function’s-constraints"><a href="#Notations-for-transfer-function’s-constraints" class="headerlink" title="Notations for transfer function’s constraints"></a>Notations for transfer function’s constraints</h4><figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  . &lt;--- IN[s]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">+---+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">| s |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">+---+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  . &lt;--- OUT[s]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">  v</span></pre></td></tr></table></figure>
+<p>每个语句s都是一个<code>transfer function</code></p>
+<ul>
+<li>forward analysis<ul>
+<li>$OUT[s] = f_s(IN[s])$</li>
+</ul>
+</li>
+<li>backward analysis<ul>
+<li>$IN[s] = f_s(OUT[s])$</li>
+</ul>
+</li>
+</ul>
+<h4 id="Notations-for-control-flow’s-constraints"><a href="#Notations-for-control-flow’s-constraints" class="headerlink" title="Notations for control flow’s constraints"></a>Notations for control flow’s constraints</h4><figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">   B</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">+-----+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">| S1  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">| S2  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">| S3  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">| ... |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">| Sn  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">+-----+</span></pre></td></tr></table></figure>
+<h5 id="control-flow-within-a-BB"><a href="#control-flow-within-a-BB" class="headerlink" title="control flow within a BB"></a>control flow within a <code>BB</code></h5><p>$IN[s_{i+1}]=OUT[s_i], \ for \ all \ i = 1, 2, …, n-1$</p>
+<h5 id="control-flow-among-BBs"><a href="#control-flow-among-BBs" class="headerlink" title="control flow among BBs"></a>control flow among <code>BB</code>s</h5><p>$IN[B] = IN[s_1], OUT[B] = OUT[s_n]$</p>
+<p>汇聚情况</p>
+<h6 id="forward"><a href="#forward" class="headerlink" title="forward"></a>forward</h6><figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">+----+  +----+   |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">| P1 |  | P2 |   |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">+----+  +----+   v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   \      /</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    v    v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    +----+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    | B  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    +----+</span></pre></td></tr></table></figure>
+<p>$IN[B] = \sqcap_{P \ a \  predecessor \ of \ B} OUT[P]$</p>
+<p>$OUT[B] = f_B(IN[B]), f_B = f_{s_n} \circ … \circ f_{s_1}$</p>
+<h6 id="backward"><a href="#backward" class="headerlink" title="backward"></a>backward</h6><figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">    +----+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    | B  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    +----+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">     /  \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    v    v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">+----+  +----+   ^</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">| S1 |  | S2 |   |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">+----+  +----+   |</span></pre></td></tr></table></figure>
+<p>$OUT[B]=\sqcap_{S \ a \ successor \ of \ B} IN[S]$</p>
+<p>$IN[B] = f_B(OUT[B]),  f_B = f_{s_1} \circ … \circ f_{s_n}$</p>
+<h3 id="Reaching-definitions-analysis"><a href="#Reaching-definitions-analysis" class="headerlink" title="Reaching definitions analysis"></a>Reaching definitions analysis</h3><h4 id="Issues-not-covered"><a href="#Issues-not-covered" class="headerlink" title="Issues not covered"></a>Issues not covered</h4><ul>
+<li>method calls</li>
+<li>aliases</li>
+</ul>
+<p>暂不引入上述2概念，否则过于复杂</p>
+<hr>
+<p>“对变量v的定义”指的是对v赋值的语句。</p>
+<p>什么是reaching definitions?</p>
+<blockquote>
+<p>A definition <code>d</code> at program point <code>p</code> reaches a point <code>q</code> if there is a path from <code>p</code> to <code>q</code> such that <code>d</code> is not killed along the path</p>
+</blockquote>
+<p>因为考虑所有的path，所以是may analysis。</p>
+<p>reaching definition可用于检查变量是否被初始化。</p>
+<h4 id="Understanding-reaching-definitions"><a href="#Understanding-reaching-definitions" class="headerlink" title="Understanding reaching definitions"></a>Understanding reaching definitions</h4><figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">B</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">+---------------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">| D: v = x op y |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">+---------------+</span></pre></td></tr></table></figure>
+<p>这条语句“生成”了一个定义<code>D</code>并且“杀死”了程序中其他对变量<code>v</code>的定义。此时abstraction是definition，故集合内的元素为definition。</p>
+<h4 id="transfer-function"><a href="#transfer-function" class="headerlink" title="transfer function"></a>transfer function</h4><p>$OUT[B] = gen_B \cup (IN[B]-kill_B)$</p>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">+----+  +----+   |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">| P1 |  | P2 |   |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">+----+  +----+   v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   \      /</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    v    v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    +----+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    | B  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    +----+</span></pre></td></tr></table></figure>
+<h4 id="control-flow"><a href="#control-flow" class="headerlink" title="control flow"></a>control flow</h4><p>$IN[B] = \cup_{P \ a \  predecessor \ of \ B} OUT[P]$</p>
+<h4 id="Algorithm-of-reaching-definitions-analysis"><a href="#Algorithm-of-reaching-definitions-analysis" class="headerlink" title="Algorithm of reaching definitions analysis"></a>Algorithm of reaching definitions analysis</h4><p>暂略</p>
+<h2 id="Lec-4-Data-flow-analysis-2"><a href="#Lec-4-Data-flow-analysis-2" class="headerlink" title="Lec 4 Data flow analysis 2"></a>Lec 4 Data flow analysis 2</h2><h3 id="Live-variables-analysis"><a href="#Live-variables-analysis" class="headerlink" title="Live variables analysis"></a>Live variables analysis</h3><blockquote>
+<p>Live variables analysis tells if the value of variable <code>v</code> at program point <code>p</code> could be used along some path in CFG starting at <code>p</code>. If so, <code>v</code> is live at <code>p</code>; otherwise, <code>v</code> is dead at <code>p</code></p>
+</blockquote>
+<p>可用于寄存器优化。</p>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">      P</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">      +-----------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">      | v = 3     |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">      +-----------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">            v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">      B</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">      +-----------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">      | ?         |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      +-----------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">      /           \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">     v             v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">S1            S2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">+---------+   +---------+   ^</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">| ... = v |   | ... ... |   |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">+---------+   +---------+   |</span></pre></td></tr></table></figure>
+<p>backward方式更适合live variables analysis。</p>
+<p>此时abstraction为liva variables，故集合内的元素为variables。</p>
+<p>LVA是may analysis。</p>
+<p>$OUT[B] = \cup_{S\ a\ successor\ of\ B}IN[S]$</p>
+<p>$IN[B] = use_B \cup (OUT[B] - def_B)$</p>
+<h4 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h4><p>暂略</p>
+<h3 id="Available-expressions-analysis"><a href="#Available-expressions-analysis" class="headerlink" title="Available expressions analysis"></a>Available expressions analysis</h3><blockquote>
+<p>An expression <code>x op y</code> is available at program point <code>p</code> if</p>
+<ul>
+<li>all paths from the <code>entry</code> to <code>p</code> must pass through the evalution of <code>x op y</code></li>
+<li>after the last evalution of <code>x op y</code>, there is no redefinition of <code>x</code> or <code>y</code></li>
+</ul>
+</blockquote>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">       |   IN = &#123;a + b&#125;    |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       v                   |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">+------------+             v</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">| a = x op y |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">+------------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       |   OUT = &#123;x op y&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">       v</span></pre></td></tr></table></figure>
+<p>forward analysis</p>
+<p>$OUT[B] = gen_B \cup (IN[B] - kill_B)$</p>
+<p>$IN[B] = \cap_{P\ a\ predecessor\ of\ B}OUT[P]$</p>
+<h4 id="Algorithm-1"><a href="#Algorithm-1" class="headerlink" title="Algorithm"></a>Algorithm</h4><h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>reaching definitions</th>
+<th>live variables</th>
+<th>available expressions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>domain</td>
+<td>set of definitions</td>
+<td>set of variables</td>
+<td>set of expressions</td>
+</tr>
+<tr>
+<td>direction</td>
+<td>forwards</td>
+<td>backwards</td>
+<td>forwards</td>
+</tr>
+<tr>
+<td>may / must</td>
+<td>may</td>
+<td>may</td>
+<td>must</td>
+</tr>
+<tr>
+<td>boundary</td>
+<td>$OUT[entry] = \phi$</td>
+<td>$IN[exit] = \phi$</td>
+<td>$OUT[entry] = \phi$</td>
+</tr>
+<tr>
+<td>initialization</td>
+<td>$OUT[B] = \phi$</td>
+<td>$IN[B] = \phi$</td>
+<td>$OUT[B] = \cup$</td>
+</tr>
+<tr>
+<td>transder function</td>
+<td>$OUT = gen \cup (IN - kill)$</td>
+<td>$IN = gen \cup (OUT - kill)$</td>
+<td>$OUT = gen \cup (IN - kill)$</td>
+</tr>
+<tr>
+<td>meet</td>
+<td>$\cup$</td>
+<td>$\cup$</td>
+<td>$\cap$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Lec-5-Data-flow-analysis-foundations-1"><a href="#Lec-5-Data-flow-analysis-foundations-1" class="headerlink" title="Lec 5 Data flow analysis - foundations 1"></a>Lec 5 Data flow analysis - foundations 1</h2><h3 id="Iterative-algorithm-another-view"><a href="#Iterative-algorithm-another-view" class="headerlink" title="Iterative algorithm, another view"></a>Iterative algorithm, another view</h3><p>假设一个<code>CFG</code>有k个结点，迭代算法在每轮迭代时更新每个结点的$OUT[n]$。</p>
+<p>同时假设DFA中值的<code>domain</code>是$V$，我们可以定义一个<code>k-tuple</code></p>
+<script type="math/tex; mode=display">(OUT[n_1], ..., OUT[n_k])</script><p>并且它是集合$(V_1 \times V2 \times … \times V_k)$的元素，即$V^k$的元素。</p>
+<p>那么每轮迭代可以看作一个映射$F: V^k \mapsto V^k$</p>
+<h3 id="Partial-order"><a href="#Partial-order" class="headerlink" title="Partial order"></a>Partial order</h3><p>偏序集的3个性质</p>
+<ul>
+<li>reflexivity</li>
+<li>antisymmetry</li>
+<li>transitivity</li>
+</ul>
+<p><code>poset</code>中2个元素之间不一定可以比较。</p>
+<h3 id="Upper-and-lower-bounds"><a href="#Upper-and-lower-bounds" class="headerlink" title="Upper and lower bounds"></a>Upper and lower bounds</h3><h4 id="lub-join-amp-glb-meet"><a href="#lub-join-amp-glb-meet" class="headerlink" title="lub (join) &amp; glb (meet)"></a><code>lub</code> (join) &amp; <code>glb</code> (meet)</h4><p>一些性质：</p>
+<ul>
+<li>不是每个<code>poset</code>都有<code>lub</code>或<code>glb</code></li>
+<li>如果一个<code>poset</code>有<code>lub</code>或<code>glb</code>，它一定是唯一的</li>
+</ul>
+<h3 id="Lattice-semilattice-complete-and-product-lattice"><a href="#Lattice-semilattice-complete-and-product-lattice" class="headerlink" title="Lattice, semilattice, complete and product lattice"></a>Lattice, semilattice, complete and product lattice</h3><p>如果一个<code>poset</code>中任意2个元素，它们的<code>lub</code>和<code>glb</code>都存在，则这个<code>poset</code>称为lattice</p>
+<p>2种semilattice:</p>
+<ul>
+<li>如果只存在<code>lub</code>，称为join lattice</li>
+<li>如果只存在<code>glb</code>，称为meet lattice</li>
+</ul>
+<p>一个<code>lattice</code>中任意子集都存在<code>lub</code>和<code>glb</code>，则这个<code>lattice</code>是<code>complete poset</code>。</p>
+<p>对于每个<code>complete lattice</code> P</p>
+<ul>
+<li>P的<code>lub</code>$\top$称为<code>top</code></li>
+<li>P的<code>glb</code>$\bot$称为<code>bottom</code></li>
+</ul>
+<p>同时，每个finite的lattice一定是<code>complete lattice</code>，反之不一定，例如“[0, 1]之间的实数上的小于等于关系”。</p>
+<p>如果lattices$L_1, … ,L_n$每个lattice都存在<code>lub</code>和<code>glb</code>，那么可以定义一个<code>product lattice</code>$L^n$，是所有lattice的笛卡尔积。</p>
+<p><code>product lattice</code>的一些性质：</p>
+<ul>
+<li><code>product lattice</code>也是lattice</li>
+<li>如果单个lattice is complete，那么<code>product lattice</code>也complete</li>
+</ul>
+<h3 id="Data-flow-analysis-framework-via-lattice"><a href="#Data-flow-analysis-framework-via-lattice" class="headerlink" title="Data flow analysis framework via lattice"></a>Data flow analysis framework via lattice</h3><p>一个DFA framework $(D, L, F)$由以下构成：</p>
+<ul>
+<li>$D$: a direction of flow, forwards or backwards</li>
+<li>$L$: a lattice includeing a domain of $V$ and a meet or join operator</li>
+<li>$F$: a family transfer function from $V$ to $V$</li>
+</ul>
+<p>这样，DFA可以看作是迭代地对lattice的值进行transfer func转换和meet/join操作的过程。</p>
+<h3 id="Monotonicity-and-fixed-point-theorem-（重要）"><a href="#Monotonicity-and-fixed-point-theorem-（重要）" class="headerlink" title="Monotonicity and fixed point theorem （重要）"></a>Monotonicity and fixed point theorem （重要）</h3><h4 id="Monotonicity"><a href="#Monotonicity" class="headerlink" title="Monotonicity"></a>Monotonicity</h4><blockquote>
+<p>A function f: $L \mapsto L$ ($L$ is a lattice) is monotonic if $\forall x, y \in L$，</p>
+<script type="math/tex; mode=display">x \leq y \implies f(x) \leq f(y)</script></blockquote>
+<h4 id="Fix-point-theorem"><a href="#Fix-point-theorem" class="headerlink" title="Fix-point theorem"></a>Fix-point theorem</h4><blockquote>
+<p>对于一个<code>complete lattice</code>，如果</p>
+<ul>
+<li>$f: L \mapsto L$ is <strong>monotonic</strong> and</li>
+<li>$L$ is <strong>finite</strong></li>
+</ul>
+<p>那么</p>
+<ul>
+<li>最小不动点可以通过$f(\bot), f(f(\bot)), …, f^k(\bot)$迭代求出</li>
+<li>最大不动点可以通过$f(\top), f(f(\top)), …, f^k(\top)$迭代求出</li>
+</ul>
+</blockquote>
+<h5 id="存在性证明"><a href="#存在性证明" class="headerlink" title="存在性证明"></a>存在性证明</h5><h5 id="最小（大）性证明"><a href="#最小（大）性证明" class="headerlink" title="最小（大）性证明"></a>最小（大）性证明</h5><h2 id="Lec-6-DFA-foundations-2"><a href="#Lec-6-DFA-foundations-2" class="headerlink" title="Lec 6 DFA - foundations 2"></a>Lec 6 DFA - foundations 2</h2><h3 id="Relate-iterative-algorithm-to-fixed-point-theorem"><a href="#Relate-iterative-algorithm-to-fixed-point-theorem" class="headerlink" title="Relate iterative algorithm to fixed point theorem"></a>Relate iterative algorithm to fixed point theorem</h3><p>迭代算法中的函数$f$是由transfer function和meet/join operator组成的。为此我们需要证明</p>
+<ul>
+<li>迭代算法中使用的complete lattice是finite的</li>
+<li>函数$f$是单调的</li>
+</ul>
+<p>当我们将迭代算法和不动点定理成功关联之后，我们可以证明迭代算法</p>
+<ul>
+<li>一定能找到不动点</li>
+<li>能找到最优不动点（“最优”含义后文定义）</li>
+</ul>
+<p>目前还需解决的问题是“迭代算法何时能找到这个不动点？”，为此引入以下概念</p>
+<blockquote>
+<p>the height of a lattice <code>h</code> is the length of the <strong>longest path</strong> from $\top$ to $\bot$ in the lattice</p>
+</blockquote>
+<p>不难得出，一个有<code>k</code>个node的CFG，每个结点的取值集合是lattice且<code>height</code>为<code>h</code>，所以最坏情况的迭代次数为<code>k * h</code>。</p>
+<h3 id="May-must-analysis-a-lattice-view"><a href="#May-must-analysis-a-lattice-view" class="headerlink" title="May/must analysis, a lattice view"></a>May/must analysis, a lattice view</h3><ul>
+<li>may analysis中least fixed point最准</li>
+<li>must analysis中greatest fixed point最准</li>
+</ul>
+<p><img src="https://imgchr.com/i/DQQfVP" alt="may-must-analysis"></p>
+<h3 id="MOP-and-distributivity"><a href="#MOP-and-distributivity" class="headerlink" title="MOP and distributivity"></a>MOP and distributivity</h3><h4 id="Meet-Over-All-Paths-Solution-MOP"><a href="#Meet-Over-All-Paths-Solution-MOP" class="headerlink" title="Meet-Over-All-Paths Solution (MOP)"></a>Meet-Over-All-Paths Solution (MOP)</h4><p>$P = Entry \rightarrow S_1 \rightarrow … \rightarrow S_n$</p>
+<p>P的transfer function $F_P$是path上所有statement的transfer function的复合</p>
+<script type="math/tex; mode=display">MOP[S_i] = {\sqcup / \sqcap}_{a\ path\ P\ from\ Entry\ to\ S_i} F_P(OUT[Entry])</script><p>MOP计算每个path末尾的data-flow value并且使用join/meet得出它们的lub/glb。</p>
+<p>MOP的一些问题：</p>
+<ul>
+<li>有些path可能是unexecutable，所以会导致不精确</li>
+<li>unbounded and not enumerable，导致不可行</li>
+</ul>
+<h4 id="Our-iterative-algorithm-vs-MOP"><a href="#Our-iterative-algorithm-vs-MOP" class="headerlink" title="Our iterative algorithm vs MOP"></a>Our iterative algorithm vs MOP</h4><p>我们的方法会在中间某个<code>BB</code>处进行meet/join操作，然后再进行transfer function操作，而MOP在最后才进行meet/join操作，抽象地表示即为</p>
+<ul>
+<li>$Ours = F(x \sqcup y)$</li>
+<li>$MOP = F(x) \sqcup F(y)$</li>
+</ul>
+<p>因为</p>
+<script type="math/tex; mode=display">x \leq x \sqcup y</script><script type="math/tex; mode=display">y \leq x \sqcup y</script><p>又因为$F$是单调的，所以</p>
+<script type="math/tex; mode=display">F(x) \leq F(x \sqcup y)</script><script type="math/tex; mode=display">F(y) \leq F(x \sqcup y)</script><p>所以</p>
+<script type="math/tex; mode=display">F(x) \sqcup F(y) \leq F(x \sqcup y)</script><p>即$MOP \leq Ours$，若$F$满足分配律，那么$MOP = Ours$</p>
+<p>注意，<strong>bit-vector &amp; gen/kill problems (set union/intersection for join/meet) are distributive</strong></p>
+<h3 id="Constant-propagation"><a href="#Constant-propagation" class="headerlink" title="Constant propagation"></a>Constant propagation</h3><h3 id="Worklist-algorithm"><a href="#Worklist-algorithm" class="headerlink" title="Worklist algorithm"></a>Worklist algorithm</h3><h2 id="Lec-7-Interprocedural-Analysis"><a href="#Lec-7-Interprocedural-Analysis" class="headerlink" title="Lec 7 Interprocedural Analysis"></a>Lec 7 Interprocedural Analysis</h2><h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><h3 id="Call-graph-construction-CHA）"><a href="#Call-graph-construction-CHA）" class="headerlink" title="Call graph construction (CHA）"></a>Call graph construction (CHA）</h3><blockquote>
+<p>a call graph is a set of edges from call-sites to their target methods</p>
+</blockquote>
+<p>以面向对象的典型语言Java为例。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>static call</th>
+<th>special call</th>
+<th>virtual call</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>instruction</td>
+<td>invokestatic</td>
+<td>invokespecial</td>
+<td>invokeinterface, invokevirtual</td>
+</tr>
+<tr>
+<td>receiver objects</td>
+<td>$\times$</td>
+<td>$\surd$</td>
+<td>$\surd$</td>
+</tr>
+<tr>
+<td>target methods</td>
+<td>static methods</td>
+<td>constructors, private instance methods, superclass instance methods</td>
+<td>other instance methods</td>
+</tr>
+<tr>
+<td>#target methods</td>
+<td>1</td>
+<td>1</td>
+<td>$\geq 1$ (polymorphism)</td>
+</tr>
+<tr>
+<td>determinacy</td>
+<td>compile-time</td>
+<td>compile-time</td>
+<td>run-time</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>virtual call</code>是构建OOPL call graph的关键。</p>
+<h4 id="Method-dispatch-of-virtual-calls"><a href="#Method-dispatch-of-virtual-calls" class="headerlink" title="Method dispatch of virtual calls"></a>Method dispatch of virtual calls</h4><p>在运行时，virtual call基于以下内容解析</p>
+<ul>
+<li>type of the receiver object</li>
+<li>method signature at the call site</li>
+</ul>
+<p>method signature可以视作method的ID</p>
+<h3 id="Interprocedural-control-flow-graph"><a href="#Interprocedural-control-flow-graph" class="headerlink" title="Interprocedural control-flow graph"></a>Interprocedural control-flow graph</h3><h3 id="Interprocedural-data-flow-analysis"><a href="#Interprocedural-data-flow-analysis" class="headerlink" title="Interprocedural data-flow analysis"></a>Interprocedural data-flow analysis</h3>
     </div>
 
     
@@ -388,7 +721,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sources"><span class="nav-number">1.</span> <span class="nav-text">Sources</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">Lec 1 Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PL-and-Static-Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">PL and Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-we-need-Static-Analysis"><span class="nav-number">2.2.</span> <span class="nav-text">Why we need Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Static-Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">What is Static Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rice’s-Theorem"><span class="nav-number">2.3.1.</span> <span class="nav-text">Rice’s Theorem</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Analysis-features-and-examples"><span class="nav-number">2.4.</span> <span class="nav-text">Static Analysis features and examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Necessity-of-soundness"><span class="nav-number">2.4.1.</span> <span class="nav-text">Necessity of soundness</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-2-IR"><span class="nav-number">3.</span> <span class="nav-text">Lec 2 IR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASR-vs-IR"><span class="nav-number">3.1.</span> <span class="nav-text">ASR vs IR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IR-three-address-code-3AC"><span class="nav-number">3.2.</span> <span class="nav-text">IR: three-address code (3AC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3AC-in-real-static-analyzer-Soot"><span class="nav-number">3.3.</span> <span class="nav-text">3AC in real static analyzer: Soot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM中的4种方法调用"><span class="nav-number">3.3.1.</span> <span class="nav-text">JVM中的4种方法调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#method-signature"><span class="nav-number">3.3.2.</span> <span class="nav-text">method signature</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clinit方法"><span class="nav-number">3.3.3.</span> <span class="nav-text">clinit方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-single-assignment-SSA"><span class="nav-number">3.4.</span> <span class="nav-text">Static single assignment (SSA)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-blocks"><span class="nav-number">3.5.</span> <span class="nav-text">Basic blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-flow-graphs-CFG"><span class="nav-number">3.6.</span> <span class="nav-text">Control flow graphs (CFG)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sources"><span class="nav-number">1.</span> <span class="nav-text">Sources</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">Lec 1 Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PL-and-Static-Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">PL and Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-we-need-Static-Analysis"><span class="nav-number">2.2.</span> <span class="nav-text">Why we need Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Static-Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">What is Static Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rice’s-Theorem"><span class="nav-number">2.3.1.</span> <span class="nav-text">Rice’s Theorem</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Analysis-features-and-examples"><span class="nav-number">2.4.</span> <span class="nav-text">Static Analysis features and examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Necessity-of-soundness"><span class="nav-number">2.4.1.</span> <span class="nav-text">Necessity of soundness</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-2-IR"><span class="nav-number">3.</span> <span class="nav-text">Lec 2 IR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASR-vs-IR"><span class="nav-number">3.1.</span> <span class="nav-text">ASR vs IR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IR-three-address-code-3AC"><span class="nav-number">3.2.</span> <span class="nav-text">IR: three-address code (3AC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3AC-in-real-static-analyzer-Soot"><span class="nav-number">3.3.</span> <span class="nav-text">3AC in real static analyzer: Soot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM中的4种方法调用"><span class="nav-number">3.3.1.</span> <span class="nav-text">JVM中的4种方法调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#method-signature"><span class="nav-number">3.3.2.</span> <span class="nav-text">method signature</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clinit方法"><span class="nav-number">3.3.3.</span> <span class="nav-text">clinit方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-single-assignment-SSA-（Optional）"><span class="nav-number">3.4.</span> <span class="nav-text">Static single assignment (SSA) （Optional）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-blocks（BB）"><span class="nav-number">3.5.</span> <span class="nav-text">Basic blocks（BB）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-flow-graphs-CFG"><span class="nav-number">3.6.</span> <span class="nav-text">Control flow graphs (CFG)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-3-Data-flow-analysis-1"><span class="nav-number">4.</span> <span class="nav-text">Lec 3 Data flow analysis 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Overview"><span class="nav-number">4.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preliminaries"><span class="nav-number">4.2.</span> <span class="nav-text">Preliminaries</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input-and-output-states"><span class="nav-number">4.2.1.</span> <span class="nav-text">Input and output states</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Notations-for-transfer-function’s-constraints"><span class="nav-number">4.2.2.</span> <span class="nav-text">Notations for transfer function’s constraints</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Notations-for-control-flow’s-constraints"><span class="nav-number">4.2.3.</span> <span class="nav-text">Notations for control flow’s constraints</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#control-flow-within-a-BB"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">control flow within a BB</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#control-flow-among-BBs"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">control flow among BBs</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#forward"><span class="nav-number">4.2.3.2.1.</span> <span class="nav-text">forward</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#backward"><span class="nav-number">4.2.3.2.2.</span> <span class="nav-text">backward</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reaching-definitions-analysis"><span class="nav-number">4.3.</span> <span class="nav-text">Reaching definitions analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Issues-not-covered"><span class="nav-number">4.3.1.</span> <span class="nav-text">Issues not covered</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Understanding-reaching-definitions"><span class="nav-number">4.3.2.</span> <span class="nav-text">Understanding reaching definitions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transfer-function"><span class="nav-number">4.3.3.</span> <span class="nav-text">transfer function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#control-flow"><span class="nav-number">4.3.4.</span> <span class="nav-text">control flow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm-of-reaching-definitions-analysis"><span class="nav-number">4.3.5.</span> <span class="nav-text">Algorithm of reaching definitions analysis</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-4-Data-flow-analysis-2"><span class="nav-number">5.</span> <span class="nav-text">Lec 4 Data flow analysis 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Live-variables-analysis"><span class="nav-number">5.1.</span> <span class="nav-text">Live variables analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm"><span class="nav-number">5.1.1.</span> <span class="nav-text">Algorithm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Available-expressions-analysis"><span class="nav-number">5.2.</span> <span class="nav-text">Available expressions analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">Algorithm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">5.3.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-5-Data-flow-analysis-foundations-1"><span class="nav-number">6.</span> <span class="nav-text">Lec 5 Data flow analysis - foundations 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative-algorithm-another-view"><span class="nav-number">6.1.</span> <span class="nav-text">Iterative algorithm, another view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partial-order"><span class="nav-number">6.2.</span> <span class="nav-text">Partial order</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Upper-and-lower-bounds"><span class="nav-number">6.3.</span> <span class="nav-text">Upper and lower bounds</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lub-join-amp-glb-meet"><span class="nav-number">6.3.1.</span> <span class="nav-text">lub (join) &amp; glb (meet)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lattice-semilattice-complete-and-product-lattice"><span class="nav-number">6.4.</span> <span class="nav-text">Lattice, semilattice, complete and product lattice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-flow-analysis-framework-via-lattice"><span class="nav-number">6.5.</span> <span class="nav-text">Data flow analysis framework via lattice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monotonicity-and-fixed-point-theorem-（重要）"><span class="nav-number">6.6.</span> <span class="nav-text">Monotonicity and fixed point theorem （重要）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Monotonicity"><span class="nav-number">6.6.1.</span> <span class="nav-text">Monotonicity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fix-point-theorem"><span class="nav-number">6.6.2.</span> <span class="nav-text">Fix-point theorem</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#存在性证明"><span class="nav-number">6.6.2.1.</span> <span class="nav-text">存在性证明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最小（大）性证明"><span class="nav-number">6.6.2.2.</span> <span class="nav-text">最小（大）性证明</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-6-DFA-foundations-2"><span class="nav-number">7.</span> <span class="nav-text">Lec 6 DFA - foundations 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Relate-iterative-algorithm-to-fixed-point-theorem"><span class="nav-number">7.1.</span> <span class="nav-text">Relate iterative algorithm to fixed point theorem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#May-must-analysis-a-lattice-view"><span class="nav-number">7.2.</span> <span class="nav-text">May/must analysis, a lattice view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOP-and-distributivity"><span class="nav-number">7.3.</span> <span class="nav-text">MOP and distributivity</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Meet-Over-All-Paths-Solution-MOP"><span class="nav-number">7.3.1.</span> <span class="nav-text">Meet-Over-All-Paths Solution (MOP)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Our-iterative-algorithm-vs-MOP"><span class="nav-number">7.3.2.</span> <span class="nav-text">Our iterative algorithm vs MOP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Constant-propagation"><span class="nav-number">7.4.</span> <span class="nav-text">Constant propagation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Worklist-algorithm"><span class="nav-number">7.5.</span> <span class="nav-text">Worklist algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-7-Interprocedural-Analysis"><span class="nav-number">8.</span> <span class="nav-text">Lec 7 Interprocedural Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Motivation"><span class="nav-number">8.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Call-graph-construction-CHA）"><span class="nav-number">8.2.</span> <span class="nav-text">Call graph construction (CHA）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-dispatch-of-virtual-calls"><span class="nav-number">8.2.1.</span> <span class="nav-text">Method dispatch of virtual calls</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interprocedural-control-flow-graph"><span class="nav-number">8.3.</span> <span class="nav-text">Interprocedural control-flow graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interprocedural-data-flow-analysis"><span class="nav-number">8.4.</span> <span class="nav-text">Interprocedural data-flow analysis</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
