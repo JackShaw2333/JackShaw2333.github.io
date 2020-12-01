@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="IntroThis is notes of Mayur Naik’s youtube courses Software Analysis Lectures (University of Pennsylvania) Mayur Naik’s youtube channel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Static Analysis Lectures - Mayur Naik">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;11&#x2F;28&#x2F;Static-Analysis-Lectures-Mayur-Naik&#x2F;index.html">
+<meta property="og:site_name" content="xBug">
+<meta property="og:description" content="IntroThis is notes of Mayur Naik’s youtube courses Software Analysis Lectures (University of Pennsylvania) Mayur Naik’s youtube channel">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;s3.ax1x.com&#x2F;2020&#x2F;11&#x2F;29&#x2F;DgnY26.png">
+<meta property="og:updated_time" content="2020-12-01T13:43:03.407Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;s3.ax1x.com&#x2F;2020&#x2F;11&#x2F;29&#x2F;DgnY26.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/11/28/Static-Analysis-Lectures-Mayur-Naik/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Static Analysis Lectures - Mayur Naik | xBug</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xBug</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/28/Static-Analysis-Lectures-Mayur-Naik/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Static Analysis Lectures - Mayur Naik
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-28 16:38:49" itemprop="dateCreated datePublished" datetime="2020-11-28T16:38:49+08:00">2020-11-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-01 21:43:03" itemprop="dateModified" datetime="2020-12-01T21:43:03+08:00">2020-12-01</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>This is notes of Mayur Naik’s youtube courses <a href="https://www.youtube.com/playlist?list=PLF3-CvSRq2SYXEiS80KuZQ80q8K2aHLQX" target="_blank" rel="noopener"><code>Software Analysis Lectures (University of Pennsylvania)</code></a></p>
+<p><a href="https://www.youtube.com/channel/UCvwqRhlkE_Wm2FF9qzvHfJw" target="_blank" rel="noopener">Mayur Naik’s youtube channel</a></p>
+<a id="more"></a>
+<h2 id="Module-1-Introduction-to-Software-Analysis"><a href="#Module-1-Introduction-to-Software-Analysis" class="headerlink" title="Module 1: Introduction to Software Analysis"></a>Module 1: Introduction to Software Analysis</h2><h3 id="Parts-of-static-analysis"><a href="#Parts-of-static-analysis" class="headerlink" title="Parts of static analysis:"></a>Parts of static analysis:</h3><ul>
+<li>program representation</li>
+<li>abstract domain</li>
+<li>transfer functions</li>
+<li>fixed-point computation algorithm</li>
+</ul>
+<h3 id="sound-amp-complete"><a href="#sound-amp-complete" class="headerlink" title="sound &amp; complete"></a>sound &amp; complete</h3><ul>
+<li>sound: never accept bad program (may reject good program), false positive</li>
+<li>complete: never reject good program (may accept bad program), false negative</li>
+</ul>
+<p>for trival analysis:</p>
+<ul>
+<li>reject all programs, it is sound</li>
+<li>accept all programs, it is complete</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>dynamic</th>
+<th>static</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cost</td>
+<td>proportional to run-time</td>
+<td>proportional to program’s size</td>
+</tr>
+<tr>
+<td>effectiveness</td>
+<td>unsound</td>
+<td>incomplete</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="precision-amp-recall"><a href="#precision-amp-recall" class="headerlink" title="precision &amp; recall"></a>precision &amp; recall</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Accept</th>
+<th>Reject</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Good</td>
+<td>True Negative</td>
+<td>False Positive</td>
+</tr>
+<tr>
+<td>Bad</td>
+<td>False Negative</td>
+<td>True Positive</td>
+</tr>
+</tbody>
+</table>
+</div>
+<script type="math/tex; mode=display">precision = \frac{\# True Positives}{\# Rejected}</script><script type="math/tex; mode=display">recall = \frac{\# True Positives}{\# Bad}</script><p>precision衡量判断正确的比例；recall衡量正确找出所有positive的比例</p>
+<script type="math/tex; mode=display">F-measure = \frac{2}{\frac{1}{precision} + \frac{1}{recall}} \in [0, 1]</script><h2 id="Module-2-Software-Specifications"><a href="#Module-2-Software-Specifications" class="headerlink" title="Module 2: Software Specifications"></a>Module 2: Software Specifications</h2><h3 id="Key-observations"><a href="#Key-observations" class="headerlink" title="Key observations"></a>Key observations</h3><ul>
+<li>specifications must be explict</li>
+<li>independent development and testing</li>
+<li>resources are finite</li>
+<li>specifications evolve over time</li>
+</ul>
+<h3 id="Landscape-of-testing-approaches"><a href="#Landscape-of-testing-approaches" class="headerlink" title="Landscape of testing approaches"></a>Landscape of testing approaches</h3><h3 id="classification-of-specifications"><a href="#classification-of-specifications" class="headerlink" title="classification of specifications"></a>classification of specifications</h3><ul>
+<li>safety properties</li>
+<li>liveness properties</li>
+</ul>
+<h3 id="pre-amp-post-conditions"><a href="#pre-amp-post-conditions" class="headerlink" title="pre- &amp; post-conditions"></a>pre- &amp; post-conditions</h3><ul>
+<li>pre-conditions must be true before a statement or method</li>
+<li>post-conditions must be true after a statement or method is completed</li>
+</ul>
+<p>pre- &amp; post-conditions generalize the notion of assertion.</p>
+<h4 id="Invariants"><a href="#Invariants" class="headerlink" title="Invariants"></a>Invariants</h4><ul>
+<li>loop invariants<ul>
+<li>a property of a loop that hold before and after each iteration</li>
+</ul>
+</li>
+<li>class invariants<ul>
+<li>a property that holds for all objects of a class</li>
+<li>established upon the construction of the objects and constantly maintained between calls to public methods</li>
+</ul>
+</li>
+</ul>
+<p>specifications can be implemented as annotations in Java.</p>
+<h3 id="Inferring-specifications"><a href="#Inferring-specifications" class="headerlink" title="Inferring specifications"></a>Inferring specifications</h3><p>编程人员往往不愿意在代码中编码和维护specifications，所以诞生了这样的想法：自动推断</p>
+<h4 id="Houdini-algorithm"><a href="#Houdini-algorithm" class="headerlink" title="Houdini algorithm"></a>Houdini algorithm</h4><p>1个有名的guess &amp; check的方法是<code>Houdini Algorithm</code>.</p>
+<p>它可以自动infer pre-conditions, post-conditions, loop and class invariants。</p>
+<p><code>Houdini algorithm</code>的想法是generate many candidate invariants and employ ESC/Java to verify or refute each.</p>
+<h5 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h5><p><a href="https://imgchr.com/i/DgnY26" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2020/11/29/DgnY26.png" alt="workflow-of-houdini-algorithm"></a></p>
+<h5 id="Pseudocode"><a href="#Pseudocode" class="headerlink" title="Pseudocode"></a>Pseudocode</h5><p>$<br>\mathbf{Input}:\ An\ unannotated\ program\ \mathbf{P} \\<br>\mathbf{Output}:\ An\ annotated\ version\ of\ \mathbf{P} \\<br>\mathbf{Algorithm}: \\<br>Generate\ a\ set\ of\ canditate\ invariants\ and\ put\ it\ into\ \mathbf{P} \\<br>repeat \\<br>\qquad invoke\ the\ invariant\ checker\ to\ check\ \mathbf{P} \\<br>\qquad remove\ any\ refuted\ candidate\ invariants\ from\ \mathbf{P} \\<br>until\ no\ warnings\ remain<br>$</p>
+<p><code>Houdini algorithm</code>对每个<code>method</code>每轮只检查一次，与当前<code>method</code>不相关的<code>invariant</code>都暂时默认是正确的。</p>
+<h5 id="Pros-amp-Cons"><a href="#Pros-amp-Cons" class="headerlink" title="Pros &amp; Cons"></a>Pros &amp; Cons</h5><ul>
+<li>pros<ul>
+<li>infer both loop invariants and method contracts</li>
+<li>infer the strongest invariant in the candidate set</li>
+<li>easy to implement</li>
+</ul>
+</li>
+<li>cons<ul>
+<li>only infer conjunction invariants, for example, with candidates <code>a</code>, <code>b</code> and <code>c</code>: can infer <code>a &amp;&amp; b &amp;&amp; c</code>, but not <code>a || !b</code></li>
+<li>getting a high-quality invariant requires aggressively many invariants which makes refutation process more expensive</li>
+<li>no guarantee inferred invariants useful for verifying desired property</li>
+</ul>
+</li>
+</ul>
+<h3 id="Measuring-test-suite-quality"><a href="#Measuring-test-suite-quality" class="headerlink" title="Measuring test suite quality"></a>Measuring test suite quality</h3><p>Coverage metrics &amp; mutation analysis are 2 approaches to know how good a test suite is.</p>
+<h4 id="Coverage-metrics"><a href="#Coverage-metrics" class="headerlink" title="Coverage metrics"></a>Coverage metrics</h4><p>types of code coverage</p>
+<ul>
+<li>function coverage</li>
+<li>statement coverage</li>
+<li>branch coverage</li>
+</ul>
+<h4 id="Mutation-analysis"><a href="#Mutation-analysis" class="headerlink" title="Mutation analysis"></a>Mutation analysis</h4><p>founded on <strong>competent programmer assumption</strong>, which is</p>
+<blockquote>
+<p>The program is close to correct to begin with. It means that program faults are syntactically small and can be corrected with a few keystrokes.</p>
+</blockquote>
+<p>Its key idea is <strong>test variations (mutants) of the program</strong>. 例如更改一些计算符号等类似的微小改动。</p>
+<p>正常情况下，test suite对original code和mutant code的测试结果会不同，如果测试结果相同，一般说明test suite不完善，但也有可能是mutant和original等价，因此这个判别问题也需要一定方法进行解决。</p>
+<p>然而这个问题不可判定，因此常常需要人工介入来判断。</p>
+<h2 id="Module-3-Random-Testing"><a href="#Module-3-Random-Testing" class="headerlink" title="Module 3: Random Testing"></a>Module 3: Random Testing</h2><p>random testing is also called <code>fuzzing</code>.</p>
+<h3 id="What-kinds-of-bugs-can-fuzzing-find"><a href="#What-kinds-of-bugs-can-fuzzing-find" class="headerlink" title="What kinds of bugs can fuzzing find?"></a>What kinds of bugs can fuzzing find?</h3><ul>
+<li>memory errors</li>
+<li>other undefined behaviors<ul>
+<li>integer overflow, divide-by-zero, null dereference</li>
+</ul>
+</li>
+<li>assertion violations</li>
+<li>infinite loops</li>
+<li>concurrency bugs</li>
+</ul>
+<h3 id="Random-testing-Pros-amp-Cons"><a href="#Random-testing-Pros-amp-Cons" class="headerlink" title="Random testing: Pros &amp; Cons"></a>Random testing: Pros &amp; Cons</h3><ul>
+<li>Pros<ul>
+<li>easy to implement</li>
+<li>provably good coverage given enough tests</li>
+<li>can work with programs in any format</li>
+<li>appealing for finding security vulnerability</li>
+</ul>
+</li>
+<li>Cons<ul>
+<li>inefficient test suite</li>
+<li>might find bugs that are unimportant</li>
+<li>poor code coverage</li>
+</ul>
+</li>
+</ul>
+<h3 id="AFL-American-Fuzzy-Lop"><a href="#AFL-American-Fuzzy-Lop" class="headerlink" title="AFL: American Fuzzy Lop"></a>AFL: American Fuzzy Lop</h3><p>It is arguably the best-known coverage-guided fuzzing tool.</p>
+<p>Its core ideas:</p>
+<ul>
+<li>genetic algorithm</li>
+<li>efficient source-code instrumentation</li>
+<li>effective heuristics for input mutation</li>
+</ul>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">+------+        +----------+        +--------+        +---------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">| LOAD | -----&gt; | MINIMIZE | -----&gt; | MUTATE | -----&gt; | AUGMENT |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">+------+        +----------+        +--------+        +---------+</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    ^                                                      |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    |                                                      |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    +------------------------------------------------------+</span></pre></td></tr></table></figure>
+<p>Its 4 segments:</p>
+<ul>
+<li>LOAD<ul>
+<li>pick test cases from the mixture of seeds and feedbacks</li>
+</ul>
+</li>
+<li>MINIMIZE<ul>
+<li>trim the test cases but don’t alter the behavior of the test cases</li>
+</ul>
+</li>
+<li>MUTATE<ul>
+<li>repeatedly mutate the minimized test cases using a variety of traditional heuristic based fuzzing strategies</li>
+</ul>
+</li>
+<li>AUGMENT<ul>
+<li>add the feedbacks, which resulted in a new state transition, to the initial seeds</li>
+<li>go to LOAD</li>
+</ul>
+</li>
+</ul>
+<p>其中，mutation heuristics are arguably the most important component of a successful fuzzer</p>
+<p>Strategies used by AFL:</p>
+<ul>
+<li>flipping bits and bytes</li>
+<li>incrementing or decrementing constants</li>
+<li>replacing with potentially troublesome integers, usually from a pre-set set</li>
+<li>test case slicing</li>
+</ul>
+<h3 id="LibFuzzer"><a href="#LibFuzzer" class="headerlink" title="LibFuzzer"></a>LibFuzzer</h3><p>Motivation: enable to fuzz libraries instead of the entire program.</p>
+<h3 id="OSS-Fuzz"><a href="#OSS-Fuzz" class="headerlink" title="OSS-Fuzz"></a>OSS-Fuzz</h3><p><code>OSS-Fuzz</code> is a continuous fuzzing infrastructure hosted on the Google Cloud Platform.</p>
+<h3 id="ClusterFuzz"><a href="#ClusterFuzz" class="headerlink" title="ClusterFuzz"></a>ClusterFuzz</h3><p>The backend of OSS-Fuzz.</p>
+<h3 id="Grammar-based-fuzzing"><a href="#Grammar-based-fuzzing" class="headerlink" title="Grammar-based fuzzing"></a>Grammar-based fuzzing</h3><blockquote>
+<p>Pumping lemma</p>
+<p>All sufficiently long words in a regular language may be pumped - that is, have a middle section of the word repeated an arbitrary number of times - to produce a new word that also lies within the same language.</p>
+</blockquote>
+<p>如果一个语言<code>L</code>不满足<code>pumping lemma</code>，那么这个语言就不是正则语言。</p>
+<p>Context-free Grammars provides a practical ground for use by grammar-based fuzzing.</p>
+<p>使用上下文无关文法指定程序输入的好处有</p>
+<ul>
+<li>systematic and efficient test generation</li>
+<li>expressive enough to handle complex formats (e.g. XML or JSON)</li>
+<li>providee the basis for fuzzing a wide range of software components</li>
+</ul>
+<h3 id="Concurrency-testing-in-practice"><a href="#Concurrency-testing-in-practice" class="headerlink" title="Concurrency testing in practice"></a>Concurrency testing in practice</h3><p>使用sleep()随机delay来查看程序的行为。</p>
+<h4 id="Cuzz-fuzzing-thread-schedules"><a href="#Cuzz-fuzzing-thread-schedules" class="headerlink" title="Cuzz: fuzzing thread schedules"></a>Cuzz: fuzzing thread schedules</h4><ul>
+<li><code>Cuzz</code> introduces <code>sleep()</code> calls<ul>
+<li>automatically</li>
+<li>systematically before each statement (instead of those chosen by tester)</li>
+</ul>
+</li>
+<li>gives worst-case probabilistic guarantee on finding bugs</li>
+</ul>
+<h5 id="Terms"><a href="#Terms" class="headerlink" title="Terms"></a>Terms</h5><ul>
+<li>bug depth: the number of ordering constraints a schedule has to satisfy to find the bug (inter-process)<ul>
+<li>observation exploited by Cuzz: bug typically have small depth</li>
+</ul>
+</li>
+</ul>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><ul>
+<li>random testing is effective for testing security, mobile apps and concurrency</li>
+<li>should complement, not replace systematic, formal testing</li>
+<li>must generate test inputs from a reasonable distribution in order to be effective</li>
+<li>may be less effective for systems with multiple layers (e.g. compiler)</li>
+</ul>
+<h2 id="Module-4-Automated-Test-Generation"><a href="#Module-4-Automated-Test-Generation" class="headerlink" title="Module 4: Automated Test Generation"></a>Module 4: Automated Test Generation</h2><p>The key idea is to leverage the specifications to guide test generation:</p>
+<ul>
+<li>Types</li>
+<li>Invariants</li>
+<li>Pre- and Post-Conditions</li>
+</ul>
+<h3 id="Feedback-directed-random-testing-Randoop"><a href="#Feedback-directed-random-testing-Randoop" class="headerlink" title="Feedback-directed random testing: Randoop"></a>Feedback-directed random testing: Randoop</h3><h3 id="Systematic-testing-Korat"><a href="#Systematic-testing-Korat" class="headerlink" title="Systematic testing: Korat"></a>Systematic testing: Korat</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/07/X-words-per-day/" rel="prev" title="X words per day">
+      <i class="fa fa-chevron-left"></i> X words per day
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Module-1-Introduction-to-Software-Analysis"><span class="nav-number">2.</span> <span class="nav-text">Module 1: Introduction to Software Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Parts-of-static-analysis"><span class="nav-number">2.1.</span> <span class="nav-text">Parts of static analysis:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sound-amp-complete"><span class="nav-number">2.2.</span> <span class="nav-text">sound &amp; complete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#precision-amp-recall"><span class="nav-number">2.3.</span> <span class="nav-text">precision &amp; recall</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Module-2-Software-Specifications"><span class="nav-number">3.</span> <span class="nav-text">Module 2: Software Specifications</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Key-observations"><span class="nav-number">3.1.</span> <span class="nav-text">Key observations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Landscape-of-testing-approaches"><span class="nav-number">3.2.</span> <span class="nav-text">Landscape of testing approaches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#classification-of-specifications"><span class="nav-number">3.3.</span> <span class="nav-text">classification of specifications</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pre-amp-post-conditions"><span class="nav-number">3.4.</span> <span class="nav-text">pre- &amp; post-conditions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Invariants"><span class="nav-number">3.4.1.</span> <span class="nav-text">Invariants</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inferring-specifications"><span class="nav-number">3.5.</span> <span class="nav-text">Inferring specifications</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Houdini-algorithm"><span class="nav-number">3.5.1.</span> <span class="nav-text">Houdini algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Workflow"><span class="nav-number">3.5.1.1.</span> <span class="nav-text">Workflow</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Pseudocode"><span class="nav-number">3.5.1.2.</span> <span class="nav-text">Pseudocode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Pros-amp-Cons"><span class="nav-number">3.5.1.3.</span> <span class="nav-text">Pros &amp; Cons</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Measuring-test-suite-quality"><span class="nav-number">3.6.</span> <span class="nav-text">Measuring test suite quality</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Coverage-metrics"><span class="nav-number">3.6.1.</span> <span class="nav-text">Coverage metrics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mutation-analysis"><span class="nav-number">3.6.2.</span> <span class="nav-text">Mutation analysis</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Module-3-Random-Testing"><span class="nav-number">4.</span> <span class="nav-text">Module 3: Random Testing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-kinds-of-bugs-can-fuzzing-find"><span class="nav-number">4.1.</span> <span class="nav-text">What kinds of bugs can fuzzing find?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-testing-Pros-amp-Cons"><span class="nav-number">4.2.</span> <span class="nav-text">Random testing: Pros &amp; Cons</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AFL-American-Fuzzy-Lop"><span class="nav-number">4.3.</span> <span class="nav-text">AFL: American Fuzzy Lop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LibFuzzer"><span class="nav-number">4.4.</span> <span class="nav-text">LibFuzzer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSS-Fuzz"><span class="nav-number">4.5.</span> <span class="nav-text">OSS-Fuzz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ClusterFuzz"><span class="nav-number">4.6.</span> <span class="nav-text">ClusterFuzz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Grammar-based-fuzzing"><span class="nav-number">4.7.</span> <span class="nav-text">Grammar-based fuzzing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concurrency-testing-in-practice"><span class="nav-number">4.8.</span> <span class="nav-text">Concurrency testing in practice</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cuzz-fuzzing-thread-schedules"><span class="nav-number">4.8.1.</span> <span class="nav-text">Cuzz: fuzzing thread schedules</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Terms"><span class="nav-number">4.8.1.1.</span> <span class="nav-text">Terms</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">4.9.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Module-4-Automated-Test-Generation"><span class="nav-number">5.</span> <span class="nav-text">Module 4: Automated Test Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Feedback-directed-random-testing-Randoop"><span class="nav-number">5.1.</span> <span class="nav-text">Feedback-directed random testing: Randoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Systematic-testing-Korat"><span class="nav-number">5.2.</span> <span class="nav-text">Systematic testing: Korat</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jared Shaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jared Shaw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
