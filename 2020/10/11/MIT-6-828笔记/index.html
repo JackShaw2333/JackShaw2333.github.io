@@ -54,7 +54,7 @@
 <meta property="og:description" content="课程的schedule链接：6.828 &#x2F; Fall 2018">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;10&#x2F;12&#x2F;0RKaXF.jpg">
-<meta property="og:updated_time" content="2020-10-14T03:27:27.361Z">
+<meta property="og:updated_time" content="2020-12-18T15:10:02.755Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;s1.ax1x.com&#x2F;2020&#x2F;10&#x2F;12&#x2F;0RKaXF.jpg">
 
@@ -201,7 +201,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-14 11:27:27" itemprop="dateModified" datetime="2020-10-14T11:27:27+08:00">2020-10-14</time>
+                <time title="修改时间：2020-12-18 23:10:02" itemprop="dateModified" datetime="2020-12-18T23:10:02+08:00">2020-12-18</time>
               </span>
 
           
@@ -224,14 +224,14 @@
       
         <p>课程的schedule链接：<a href="https://pdos.csail.mit.edu/6.828/2018/schedule.html" target="_blank" rel="noopener">6.828 / Fall 2018</a></p>
 <a id="more"></a>
-<h2 id="Lab-1-Booting-a-PC"><a href="#Lab-1-Booting-a-PC" class="headerlink" title="Lab 1: Booting a PC"></a><a href="https://pdos.csail.mit.edu/6.828/2018/labs/lab1/" target="_blank" rel="noopener">Lab 1: Booting a PC</a></h2><p>32位PC的地址空间布局大致如下。</p>
+<h2 id="Lab-1-Booting-a-PC"><a href="#Lab-1-Booting-a-PC" class="headerlink" title="Lab 1: Booting a PC"></a><a href="https://pdos.csail.mit.edu/6.828/2018/labs/lab1/" target="_blank" rel="noopener">Lab 1: Booting a PC</a></h2><h3 id="Part-1-PC-Bootstrap"><a href="#Part-1-PC-Bootstrap" class="headerlink" title="Part 1: PC Bootstrap"></a>Part 1: PC Bootstrap</h3><p>32位PC的地址空间布局大致如下。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">+------------------+  &lt;- 0xFFFFFFFF (4GB)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">|      32-bit      |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">|  memory mapped   |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">|     devices      |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\&#x2F;\</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">|      Unused      |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">+------------------+  &lt;- depends on amount of RAM</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">| Extended Memory  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">+------------------+  &lt;- 0x00100000 (1MB)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">|     BIOS ROM     |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">+------------------+  &lt;- 0x000F0000 (960KB)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">|  16-bit devices, |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">|  expansion ROMs  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">+------------------+  &lt;- 0x000C0000 (768KB)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">|   VGA Display    |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">+------------------+  &lt;- 0x000A0000 (640KB)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">|    Low Memory    |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">|                  |</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">+------------------+  &lt;- 0x00000000</span></pre></td></tr></table></figure>
 <p>内存空间低1MB的空间具体分布如下图所示</p>
 <p><a href="https://imgchr.com/i/0RKaXF" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/12/0RKaXF.jpg" alt="The PC computer Memory Map"></a></p>
 <p>IBM PC从物理地址<code>0x000ffff0</code>开始执行，第一个执行的指令是1条无条件跳转指令。</p>
 <p>当BIOS开始运行后，它先设置中断向量表，并且初始化一些设备，例如VGA display。</p>
 <p>在BIOS初始化PCI总线和它知道的各种重要设备后，它开始寻找bootable device。当它找到1个可启动硬盘后，BIOS从中读取<code>boot loader</code>，此时，控制流转移到<code>boot loader</code>。</p>
-<h3 id="Exercise-2"><a href="#Exercise-2" class="headerlink" title="Exercise 2"></a>Exercise 2</h3><p>在GDB的调试界面，以下的汇编指令由BIOS执行。</p>
+<h4 id="Exercise-2"><a href="#Exercise-2" class="headerlink" title="Exercise 2"></a>Exercise 2</h4><p>在GDB的调试界面，以下的汇编指令由BIOS执行。</p>
 <figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[f000:fff0]    <span class="number">0xffff0</span>: ljmp   <span class="number">$0</span>xf000,<span class="number">$0</span>xe05b</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">[f000:e05b]    <span class="number">0xfe05b</span>: cmpl   <span class="number">$0</span>x0,%cs:<span class="number">0x6ac8</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[f000:e062]    <span class="number">0xfe062</span>: <span class="keyword">jne</span>    <span class="number">0xfd2e1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[f000:e066]    <span class="number">0xfe066</span>: <span class="keyword">xor</span>    %dx,%dx</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">[f000:e068]    <span class="number">0xfe068</span>: <span class="keyword">mov</span>    %dx,%ss</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">[f000:e06a]    <span class="number">0xfe06a</span>: <span class="keyword">mov</span>    <span class="number">$0</span>x7000,%esp</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">[f000:e070]    <span class="number">0xfe070</span>: <span class="keyword">mov</span>    <span class="number">$0</span>xf34c2,%edx</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">[f000:e076]    <span class="number">0xfe076</span>: <span class="keyword">jmp</span>    <span class="number">0xfd15c</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">[f000:d15c]    <span class="number">0xfd15c</span>: <span class="keyword">mov</span>    %eax,%ecx</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">[f000:d15f]    <span class="number">0xfd15f</span>: <span class="keyword">cli</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">[f000:d160]    <span class="number">0xfd160</span>: <span class="keyword">cld</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">[f000:d161]    <span class="number">0xfd161</span>: <span class="keyword">mov</span>    <span class="number">$0</span>x8f,%eax</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">[f000:d167]    <span class="number">0xfd167</span>: <span class="keyword">out</span>    %al,<span class="number">$0</span>x70</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">[f000:d169]    <span class="number">0xfd169</span>: <span class="keyword">in</span>     <span class="number">$0</span>x71,%al</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">[f000:d16b]    <span class="number">0xfd16b</span>: <span class="keyword">in</span>     <span class="number">$0</span>x92,%al</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">[f000:d16d]    <span class="number">0xfd16d</span>: <span class="keyword">or</span>     <span class="number">$0</span>x2,%al</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">[f000:d16f]    <span class="number">0xfd16f</span>: <span class="keyword">out</span>    %al,<span class="number">$0</span>x92</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">[f000:d171]    <span class="number">0xfd171</span>: lidtw  %cs:<span class="number">0x6ab8</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">[f000:d177]    <span class="number">0xfd177</span>: lgdtw  %cs:<span class="number">0x6a74</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">[f000:d17d]    <span class="number">0xfd17d</span>: <span class="keyword">mov</span>    %cr0,%eax</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">[f000:d180]    <span class="number">0xfd180</span>: <span class="keyword">or</span>     <span class="number">$0</span>x1,%eax</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">[f000:d184]    <span class="number">0xfd184</span>: <span class="keyword">mov</span>    %eax,%cr0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">[f000:d187]    <span class="number">0xfd187</span>: ljmpl  <span class="number">$0</span>x8,<span class="number">$0</span>xfd18f</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">The target architecture is assumed to be i386</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">=&gt; <span class="number">0xfd18f</span>:     <span class="keyword">mov</span>    <span class="number">$0</span>x10,%eax</span></pre></td></tr></table></figure>
 <p>第1条指令表明了BIOS从物理地址<code>0x000ffff0</code>开始执行，且此时<code>CS=0xf000</code>，<code>IP=0xfff0</code>。同时表示BIOS执行的第一条指令是无条件跳转指令，跳转到BIOS内部的某一位置。</p>
 <hr>
@@ -261,6 +261,24 @@
 <hr>
 <figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[f000:d187]    <span class="number">0xfd187</span>: ljmpl  <span class="number">$0</span>x8,<span class="number">$0</span>xfd18f</span></pre></td></tr></table></figure>
 <p>最后1条长跳转指令跳转到内核部分执行，至此，系统进入protection mode。</p>
+<h3 id="Part-2-The-Boot-Loader"><a href="#Part-2-The-Boot-Loader" class="headerlink" title="Part 2: The Boot Loader"></a>Part 2: The Boot Loader</h3><p>PC的硬盘被分为512字节的sector。sector是读写操作的最小单位。如果该硬盘是bootable，那么它的第一个sector称为boot sector。当BIOS找到一个bootable的硬盘后，它将512字节的boot sector加载到内存物理地址0x7c00-0x7dff，然后jmp到CS:IP = 0000:7c00。</p>
+<p>6.828使用的boot loader的组成文件有：</p>
+<ul>
+<li>boot/boot.S</li>
+<li>boot/main.c</li>
+</ul>
+<h4 id="Exercise-3"><a href="#Exercise-3" class="headerlink" title="Exercise 3"></a>Exercise 3</h4><ul>
+<li>在0x7c00设断点，追踪boot/boot.S的代码的同时，使用源代码和obj/boot/boot.asm来追踪当前位置，对比obj/boot/boot.asm中的源代码和GDB编译的代码</li>
+<li>追踪boot/main.c中的bootmain()函数，然后追踪readsect()函数。找到readsect()函数每个statement对应的汇编代码</li>
+<li>回到bootmain()函数后，找到用于读取kernel剩余sector的for循环的起止地址。找出哪条语句将在for循环结束后执行，并在那里设置断点。运行后，单步调试</li>
+</ul>
+<p>试着回答一下问题：</p>
+<ul>
+<li>处理器何时开始执行32位代码？具体是什么导致了实模式-保护模式的转换？</li>
+<li>boot loader最后执行的一条指令是什么？kernel的第一条指令是什么？</li>
+<li>kernel的第一条指令的地址在哪？</li>
+<li>为了完整载入kernel，boot loader如何判断要读入多少sector？这个数量信息是在哪找到的？</li>
+</ul>
 
     </div>
 
@@ -280,8 +298,8 @@
       <i class="fa fa-chevron-left"></i> 复制并重命名Android Project
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/10/15/%E3%80%8A%E7%A7%91%E6%8A%80%E6%96%87%E7%8C%AE%E5%86%99%E4%BD%9C%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="next" title="《科技文献写作》课程笔记">
-      《科技文献写作》课程笔记 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/10/19/Static-Analysis-NJU-notes/" rel="next" title="Static Analysis - NJU notes">
+      Static Analysis - NJU notes <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -320,7 +338,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab-1-Booting-a-PC"><span class="nav-number">1.</span> <span class="nav-text">Lab 1: Booting a PC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exercise-2"><span class="nav-number">1.1.</span> <span class="nav-text">Exercise 2</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lab-1-Booting-a-PC"><span class="nav-number">1.</span> <span class="nav-text">Lab 1: Booting a PC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-1-PC-Bootstrap"><span class="nav-number">1.1.</span> <span class="nav-text">Part 1: PC Bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Exercise-2"><span class="nav-number">1.1.1.</span> <span class="nav-text">Exercise 2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-2-The-Boot-Loader"><span class="nav-number">1.2.</span> <span class="nav-text">Part 2: The Boot Loader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Exercise-3"><span class="nav-number">1.2.1.</span> <span class="nav-text">Exercise 3</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -334,7 +352,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -343,7 +361,7 @@
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -368,7 +386,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

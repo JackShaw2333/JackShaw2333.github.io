@@ -55,7 +55,7 @@
 <meta property="og:description" content="Sources课程的资料来源如下。 录播视频B站主页 课程主页">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;s3.ax1x.com&#x2F;2020&#x2F;11&#x2F;20&#x2F;DQQfVP.png">
-<meta property="og:updated_time" content="2020-11-27T09:35:42.224Z">
+<meta property="og:updated_time" content="2020-12-04T09:33:06.786Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;s3.ax1x.com&#x2F;2020&#x2F;11&#x2F;20&#x2F;DQQfVP.png">
 
@@ -202,7 +202,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 17:35:42" itemprop="dateModified" datetime="2020-11-27T17:35:42+08:00">2020-11-27</time>
+                <time title="修改时间：2020-12-04 17:33:06" itemprop="dateModified" datetime="2020-12-04T17:33:06+08:00">2020-12-04</time>
               </span>
 
           
@@ -604,7 +604,7 @@
 <script type="math/tex; mode=display">F(x) \leq F(x \sqcup y)</script><script type="math/tex; mode=display">F(y) \leq F(x \sqcup y)</script><p>所以</p>
 <script type="math/tex; mode=display">F(x) \sqcup F(y) \leq F(x \sqcup y)</script><p>即$MOP \leq Ours$，若$F$满足分配律，那么$MOP = Ours$</p>
 <p>注意，<strong>bit-vector &amp; gen/kill problems (set union/intersection for join/meet) are distributive</strong></p>
-<h3 id="Constant-propagation"><a href="#Constant-propagation" class="headerlink" title="Constant propagation"></a>Constant propagation</h3><h3 id="Worklist-algorithm"><a href="#Worklist-algorithm" class="headerlink" title="Worklist algorithm"></a>Worklist algorithm</h3><h2 id="Lec-7-Interprocedural-Analysis"><a href="#Lec-7-Interprocedural-Analysis" class="headerlink" title="Lec 7 Interprocedural Analysis"></a>Lec 7 Interprocedural Analysis</h2><h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><h3 id="Call-graph-construction-CHA）"><a href="#Call-graph-construction-CHA）" class="headerlink" title="Call graph construction (CHA）"></a>Call graph construction (CHA）</h3><blockquote>
+<h3 id="Constant-propagation"><a href="#Constant-propagation" class="headerlink" title="Constant propagation"></a>Constant propagation</h3><h3 id="Worklist-algorithm"><a href="#Worklist-algorithm" class="headerlink" title="Worklist algorithm"></a>Worklist algorithm</h3><h2 id="Lec-7-Interprocedural-Analysis"><a href="#Lec-7-Interprocedural-Analysis" class="headerlink" title="Lec 7 Interprocedural Analysis"></a>Lec 7 Interprocedural Analysis</h2><h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><h3 id="Call-graph-construction-CHA"><a href="#Call-graph-construction-CHA" class="headerlink" title="Call graph construction: CHA"></a>Call graph construction: CHA</h3><blockquote>
 <p>a call graph is a set of edges from call-sites to their target methods</p>
 </blockquote>
 <p>以面向对象的典型语言Java为例。</p>
@@ -658,14 +658,22 @@
 <li>type of the receiver object</li>
 <li>method signature at the call site</li>
 </ul>
-<p>method signature可以视作method的ID</p>
+<p>在本lecture中，method signature可以视作method的ID</p>
+<ul>
+<li>signature = <font color="red">class type</font> + <font color="blue">method name</font> + <font color="green">descriptor</font></li>
+<li><font color="green">descriptor = return type + parameter type</font>
+
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="function">T <span class="title">foo</span><span class="params">(P p, Q q, R r)</span> </span>&#123;...&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>&lt;<font color="red">C</font>: <font color="green">T</font> <font color="blue">foo</font>(<font color="green">P, Q, R)</font>&gt;</p>
 <p>我们定义函数$Dispatch(c, m)$来模拟运行时method dispatch的过程。</p>
 <script type="math/tex; mode=display">
-Dispatch(c, m) = 
+Dispatch(c, m) =
 \begin{cases}
 m', & if\ \textbf{c}\ contains\ non-abstract\ method\ \textbf{m'}\ that\ has\ the\ same\ name\ and\ descriptor\ as\ \textbf{m} \\
 Dispatch(c', m) & otherwise, where\ \textbf{c'} is\ superclass\ of\ \textbf{c}
-\end{cases}</script><h4 id="Call-resolution-of-CHA"><a href="#Call-resolution-of-CHA" class="headerlink" title="Call resolution of CHA"></a>Call resolution of CHA</h4><p>CHA速度快但精度低，指针分析速度慢精度高</p>
+\end{cases}</script><h4 id="Call-resolution-of-CHA-class-hierarchy-analysis"><a href="#Call-resolution-of-CHA-class-hierarchy-analysis" class="headerlink" title="Call resolution of CHA (class hierarchy analysis)"></a>Call resolution of CHA (class hierarchy analysis)</h4><p>CHA速度快但精度低，指针分析速度慢精度高</p>
 <h3 id="Interprocedural-control-flow-graph"><a href="#Interprocedural-control-flow-graph" class="headerlink" title="Interprocedural control-flow graph"></a>Interprocedural control-flow graph</h3><ul>
 <li>CFG represents structure of an individual method</li>
 <li>ICFG represents structure of the entire program</li>
@@ -685,6 +693,165 @@ Dispatch(c', m) & otherwise, where\ \textbf{c'} is\ superclass\ of\ \textbf{c}
 <p>call &amp; return edge也需要transfer function</p>
 <h3 id="Interprocedural-data-flow-analysis"><a href="#Interprocedural-data-flow-analysis" class="headerlink" title="Interprocedural data-flow analysis"></a>Interprocedural data-flow analysis</h3><p>对于每个call node, kill data-flow value for the LHS variable, its value will flow to return site along the return edges；否则会损失精度，如constant propagation中LHS原来的值和return得到的值若进行join操作会得到NAC</p>
 <p>call site到return site的边称为<code>call-to-return edge</code>，它使得analysis能够在ICFG中propagate local data-flow，如果没有这条edge，local data-flow将经过其他method，这无疑是低效的。</p>
+<h2 id="Lec-8-Pointer-Analysis"><a href="#Lec-8-Pointer-Analysis" class="headerlink" title="Lec 8 Pointer Analysis"></a>Lec 8 Pointer Analysis</h2><h3 id="Motivation-1"><a href="#Motivation-1" class="headerlink" title="Motivation"></a>Motivation</h3><p>比CHA精确。</p>
+<h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><ul>
+<li>compute which mem locations a pointer can point to</li>
+<li>regarded as a may-analysis<ul>
+<li>computes an over-approximation of the set of objects that a pointer can point to</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight graph"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">         input                     output</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">program -------&gt; pointer analysis --------&gt; points-to relations</span></pre></td></tr></table></figure>
+<h4 id="Pointer-analysis-vs-alias-analysis"><a href="#Pointer-analysis-vs-alias-analysis" class="headerlink" title="Pointer analysis vs alias analysis"></a>Pointer analysis vs alias analysis</h4><p>是2个联系紧密但不同的概念</p>
+<ul>
+<li>pointer analysis: which objects a pointer can point to?</li>
+<li>alias analysis: can 2 pointers point to the same object?</li>
+</ul>
+<h3 id="Key-factors"><a href="#Key-factors" class="headerlink" title="Key factors"></a>Key factors</h3><ul>
+<li>heap abstraction</li>
+<li>context sensitivity</li>
+<li>flow sensitivity</li>
+<li>analysis cope</li>
+</ul>
+<h4 id="Heap-abstraction"><a href="#Heap-abstraction" class="headerlink" title="Heap abstraction"></a>Heap abstraction</h4><p>在程序动态运行的过程中，heap object的数量可能是无限的。为了保证程序可终止，heap abstraction model动态地将无限的具体的object分配为有限的抽象object。</p>
+<h5 id="Allocation-site-abstraction"><a href="#Allocation-site-abstraction" class="headerlink" title="Allocation-site abstraction"></a>Allocation-site abstraction</h5><p>用allocation site抽象具体的object，每个allocation site都有一个abstract object，因此abstract object的数量是有限的。</p>
+<h4 id="Context-sensitivity"><a href="#Context-sensitivity" class="headerlink" title="Context sensitivity"></a>Context sensitivity</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>content-sensitive</th>
+<th>context-insensitive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>distinguish different calling contexts of a method</td>
+<td>merge all calling contexts of a method</td>
+</tr>
+<tr>
+<td>analyze each method multiple times, once for each context</td>
+<td>analyze each method once</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="Flow-sensitivity"><a href="#Flow-sensitivity" class="headerlink" title="Flow sensitivity"></a>Flow sensitivity</h4><p>how to model control flow?</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>flow-sensitive</th>
+<th>flow-insensitive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>respect the execution order of the statements</td>
+<td>ignore the control-flow order, treat the program as a set of unordered statements</td>
+</tr>
+<tr>
+<td>maintain a map of points-to relations at each program location</td>
+<td>maintain one map of points-to relations for the whole program</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="Analysis-scope"><a href="#Analysis-scope" class="headerlink" title="Analysis scope"></a>Analysis scope</h4><ul>
+<li>whole-program</li>
+<li>demand-driven</li>
+</ul>
+<h3 id="Pointers-in-Java"><a href="#Pointers-in-Java" class="headerlink" title="Pointers in Java"></a>Pointers in Java</h3><p>我们只关注影响pointer的statements。</p>
+<ul>
+<li>local variable</li>
+<li>static field</li>
+<li>instance field</li>
+<li>array element<ul>
+<li>usually ignore indexes, only modeled as a single field</li>
+</ul>
+</li>
+</ul>
+<h3 id="Pointer-affecting-statements"><a href="#Pointer-affecting-statements" class="headerlink" title="Pointer-affecting statements"></a>Pointer-affecting statements</h3><p>本课程暂时忽略<code>static field</code>和<code>array element</code>。</p>
+<ul>
+<li>new</li>
+<li>assign</li>
+<li>store</li>
+<li>load</li>
+<li>call</li>
+</ul>
+<h2 id="Pointer-analysis-foundations-1"><a href="#Pointer-analysis-foundations-1" class="headerlink" title="Pointer analysis foundations 1"></a>Pointer analysis foundations 1</h2><h3 id="Domains-and-notations"><a href="#Domains-and-notations" class="headerlink" title="Domains and notations"></a>Domains and notations</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Variables</td>
+<td>$x, y \in V$</td>
+</tr>
+<tr>
+<td>Fields</td>
+<td>$f, g \in F$</td>
+</tr>
+<tr>
+<td>Objects</td>
+<td>$o_i, o_j \in O$</td>
+</tr>
+<tr>
+<td>Instance fields</td>
+<td>$o_i.f, o_j.f \in O \times F$</td>
+</tr>
+<tr>
+<td>Pointers</td>
+<td>$Pointer = V \cup (O \times F)$</td>
+</tr>
+<tr>
+<td>Pointers-to relations</td>
+<td>$pt = Pointer \mapsto \mathcal{P}(O)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>$\mathcal{P}(O)$ denotes the powerset of $O$</li>
+<li>$pt(p)$ denotes the points-to set of $p$</li>
+</ul>
+<h3 id="Rules"><a href="#Rules" class="headerlink" title="Rules"></a>Rules</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>kind</th>
+<th>statement</th>
+<th>rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>new</td>
+<td><code>i: x = new T()</code></td>
+<td>$\overline{o_i \in pt(x)}$</td>
+</tr>
+<tr>
+<td>assign</td>
+<td><code>x = y</code></td>
+<td>$\frac{o_i \in pt(y)}{o_i \in pt(x)}$</td>
+</tr>
+<tr>
+<td>store</td>
+<td><code>x.f = y</code></td>
+<td>$\frac{o_i \in pt(x), o_j \in pt(y)}{o_j \in pt(o_i.f)}$</td>
+</tr>
+<tr>
+<td>load</td>
+<td><code>y = x.f</code></td>
+<td>$\frac{o_i \in pt(x), o_j \in pt(o_i.f)}{o_j \in pt(y)}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中，$\frac{premises}{conclusion}$</p>
 
     </div>
 
@@ -703,8 +870,8 @@ Dispatch(c', m) & otherwise, where\ \textbf{c'} is\ superclass\ of\ \textbf{c}
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/10/15/%E3%80%8A%E7%A7%91%E6%8A%80%E6%96%87%E7%8C%AE%E5%86%99%E4%BD%9C%E3%80%8B%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="prev" title="《科技文献写作》课程笔记">
-      <i class="fa fa-chevron-left"></i> 《科技文献写作》课程笔记
+    <a href="/2020/10/11/MIT-6-828%E7%AC%94%E8%AE%B0/" rel="prev" title="MIT 6.828笔记">
+      <i class="fa fa-chevron-left"></i> MIT 6.828笔记
     </a></div>
       <div class="post-nav-item">
     <a href="/2020/10/22/Phrases-from-Yes-Minister/" rel="next" title="Phrases from "YM & YPM"">
@@ -747,7 +914,7 @@ Dispatch(c', m) & otherwise, where\ \textbf{c'} is\ superclass\ of\ \textbf{c}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sources"><span class="nav-number">1.</span> <span class="nav-text">Sources</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">Lec 1 Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PL-and-Static-Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">PL and Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-we-need-Static-Analysis"><span class="nav-number">2.2.</span> <span class="nav-text">Why we need Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Static-Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">What is Static Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rice’s-Theorem"><span class="nav-number">2.3.1.</span> <span class="nav-text">Rice’s Theorem</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Analysis-features-and-examples"><span class="nav-number">2.4.</span> <span class="nav-text">Static Analysis features and examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Necessity-of-soundness"><span class="nav-number">2.4.1.</span> <span class="nav-text">Necessity of soundness</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-2-IR"><span class="nav-number">3.</span> <span class="nav-text">Lec 2 IR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASR-vs-IR"><span class="nav-number">3.1.</span> <span class="nav-text">ASR vs IR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IR-three-address-code-3AC"><span class="nav-number">3.2.</span> <span class="nav-text">IR: three-address code (3AC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3AC-in-real-static-analyzer-Soot"><span class="nav-number">3.3.</span> <span class="nav-text">3AC in real static analyzer: Soot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM中的4种方法调用"><span class="nav-number">3.3.1.</span> <span class="nav-text">JVM中的4种方法调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#method-signature"><span class="nav-number">3.3.2.</span> <span class="nav-text">method signature</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clinit方法"><span class="nav-number">3.3.3.</span> <span class="nav-text">clinit方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-single-assignment-SSA-（Optional）"><span class="nav-number">3.4.</span> <span class="nav-text">Static single assignment (SSA) （Optional）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-blocks（BB）"><span class="nav-number">3.5.</span> <span class="nav-text">Basic blocks（BB）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-flow-graphs-CFG"><span class="nav-number">3.6.</span> <span class="nav-text">Control flow graphs (CFG)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-3-Data-flow-analysis-1"><span class="nav-number">4.</span> <span class="nav-text">Lec 3 Data flow analysis 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Overview"><span class="nav-number">4.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preliminaries"><span class="nav-number">4.2.</span> <span class="nav-text">Preliminaries</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input-and-output-states"><span class="nav-number">4.2.1.</span> <span class="nav-text">Input and output states</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Notations-for-transfer-function’s-constraints"><span class="nav-number">4.2.2.</span> <span class="nav-text">Notations for transfer function’s constraints</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Notations-for-control-flow’s-constraints"><span class="nav-number">4.2.3.</span> <span class="nav-text">Notations for control flow’s constraints</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#control-flow-within-a-BB"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">control flow within a BB</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#control-flow-among-BBs"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">control flow among BBs</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#forward"><span class="nav-number">4.2.3.2.1.</span> <span class="nav-text">forward</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#backward"><span class="nav-number">4.2.3.2.2.</span> <span class="nav-text">backward</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reaching-definitions-analysis"><span class="nav-number">4.3.</span> <span class="nav-text">Reaching definitions analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Issues-not-covered"><span class="nav-number">4.3.1.</span> <span class="nav-text">Issues not covered</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Understanding-reaching-definitions"><span class="nav-number">4.3.2.</span> <span class="nav-text">Understanding reaching definitions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transfer-function"><span class="nav-number">4.3.3.</span> <span class="nav-text">transfer function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#control-flow"><span class="nav-number">4.3.4.</span> <span class="nav-text">control flow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm-of-reaching-definitions-analysis"><span class="nav-number">4.3.5.</span> <span class="nav-text">Algorithm of reaching definitions analysis</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-4-Data-flow-analysis-2"><span class="nav-number">5.</span> <span class="nav-text">Lec 4 Data flow analysis 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Live-variables-analysis"><span class="nav-number">5.1.</span> <span class="nav-text">Live variables analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm"><span class="nav-number">5.1.1.</span> <span class="nav-text">Algorithm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Available-expressions-analysis"><span class="nav-number">5.2.</span> <span class="nav-text">Available expressions analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">Algorithm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">5.3.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-5-Data-flow-analysis-foundations-1"><span class="nav-number">6.</span> <span class="nav-text">Lec 5 Data flow analysis - foundations 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative-algorithm-another-view"><span class="nav-number">6.1.</span> <span class="nav-text">Iterative algorithm, another view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partial-order"><span class="nav-number">6.2.</span> <span class="nav-text">Partial order</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Upper-and-lower-bounds"><span class="nav-number">6.3.</span> <span class="nav-text">Upper and lower bounds</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lub-join-amp-glb-meet"><span class="nav-number">6.3.1.</span> <span class="nav-text">lub (join) &amp; glb (meet)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lattice-semilattice-complete-and-product-lattice"><span class="nav-number">6.4.</span> <span class="nav-text">Lattice, semilattice, complete and product lattice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-flow-analysis-framework-via-lattice"><span class="nav-number">6.5.</span> <span class="nav-text">Data flow analysis framework via lattice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monotonicity-and-fixed-point-theorem-（重要）"><span class="nav-number">6.6.</span> <span class="nav-text">Monotonicity and fixed point theorem （重要）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Monotonicity"><span class="nav-number">6.6.1.</span> <span class="nav-text">Monotonicity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fix-point-theorem"><span class="nav-number">6.6.2.</span> <span class="nav-text">Fix-point theorem</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#存在性证明"><span class="nav-number">6.6.2.1.</span> <span class="nav-text">存在性证明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最小（大）性证明"><span class="nav-number">6.6.2.2.</span> <span class="nav-text">最小（大）性证明</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-6-DFA-foundations-2"><span class="nav-number">7.</span> <span class="nav-text">Lec 6 DFA - foundations 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Relate-iterative-algorithm-to-fixed-point-theorem"><span class="nav-number">7.1.</span> <span class="nav-text">Relate iterative algorithm to fixed point theorem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#May-must-analysis-a-lattice-view"><span class="nav-number">7.2.</span> <span class="nav-text">May/must analysis, a lattice view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOP-and-distributivity"><span class="nav-number">7.3.</span> <span class="nav-text">MOP and distributivity</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Meet-Over-All-Paths-Solution-MOP"><span class="nav-number">7.3.1.</span> <span class="nav-text">Meet-Over-All-Paths Solution (MOP)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Our-iterative-algorithm-vs-MOP"><span class="nav-number">7.3.2.</span> <span class="nav-text">Our iterative algorithm vs MOP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Constant-propagation"><span class="nav-number">7.4.</span> <span class="nav-text">Constant propagation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Worklist-algorithm"><span class="nav-number">7.5.</span> <span class="nav-text">Worklist algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-7-Interprocedural-Analysis"><span class="nav-number">8.</span> <span class="nav-text">Lec 7 Interprocedural Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Motivation"><span class="nav-number">8.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Call-graph-construction-CHA）"><span class="nav-number">8.2.</span> <span class="nav-text">Call graph construction (CHA）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-dispatch-of-virtual-calls"><span class="nav-number">8.2.1.</span> <span class="nav-text">Method dispatch of virtual calls</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Call-resolution-of-CHA"><span class="nav-number">8.2.2.</span> <span class="nav-text">Call resolution of CHA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interprocedural-control-flow-graph"><span class="nav-number">8.3.</span> <span class="nav-text">Interprocedural control-flow graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interprocedural-data-flow-analysis"><span class="nav-number">8.4.</span> <span class="nav-text">Interprocedural data-flow analysis</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sources"><span class="nav-number">1.</span> <span class="nav-text">Sources</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">Lec 1 Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PL-and-Static-Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">PL and Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-we-need-Static-Analysis"><span class="nav-number">2.2.</span> <span class="nav-text">Why we need Static Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Static-Analysis"><span class="nav-number">2.3.</span> <span class="nav-text">What is Static Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Rice’s-Theorem"><span class="nav-number">2.3.1.</span> <span class="nav-text">Rice’s Theorem</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Analysis-features-and-examples"><span class="nav-number">2.4.</span> <span class="nav-text">Static Analysis features and examples</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Necessity-of-soundness"><span class="nav-number">2.4.1.</span> <span class="nav-text">Necessity of soundness</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-2-IR"><span class="nav-number">3.</span> <span class="nav-text">Lec 2 IR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASR-vs-IR"><span class="nav-number">3.1.</span> <span class="nav-text">ASR vs IR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IR-three-address-code-3AC"><span class="nav-number">3.2.</span> <span class="nav-text">IR: three-address code (3AC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3AC-in-real-static-analyzer-Soot"><span class="nav-number">3.3.</span> <span class="nav-text">3AC in real static analyzer: Soot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM中的4种方法调用"><span class="nav-number">3.3.1.</span> <span class="nav-text">JVM中的4种方法调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#method-signature"><span class="nav-number">3.3.2.</span> <span class="nav-text">method signature</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clinit方法"><span class="nav-number">3.3.3.</span> <span class="nav-text">clinit方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-single-assignment-SSA-（Optional）"><span class="nav-number">3.4.</span> <span class="nav-text">Static single assignment (SSA) （Optional）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-blocks（BB）"><span class="nav-number">3.5.</span> <span class="nav-text">Basic blocks（BB）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-flow-graphs-CFG"><span class="nav-number">3.6.</span> <span class="nav-text">Control flow graphs (CFG)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-3-Data-flow-analysis-1"><span class="nav-number">4.</span> <span class="nav-text">Lec 3 Data flow analysis 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Overview"><span class="nav-number">4.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preliminaries"><span class="nav-number">4.2.</span> <span class="nav-text">Preliminaries</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input-and-output-states"><span class="nav-number">4.2.1.</span> <span class="nav-text">Input and output states</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Notations-for-transfer-function’s-constraints"><span class="nav-number">4.2.2.</span> <span class="nav-text">Notations for transfer function’s constraints</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Notations-for-control-flow’s-constraints"><span class="nav-number">4.2.3.</span> <span class="nav-text">Notations for control flow’s constraints</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#control-flow-within-a-BB"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">control flow within a BB</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#control-flow-among-BBs"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">control flow among BBs</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#forward"><span class="nav-number">4.2.3.2.1.</span> <span class="nav-text">forward</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#backward"><span class="nav-number">4.2.3.2.2.</span> <span class="nav-text">backward</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reaching-definitions-analysis"><span class="nav-number">4.3.</span> <span class="nav-text">Reaching definitions analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Issues-not-covered"><span class="nav-number">4.3.1.</span> <span class="nav-text">Issues not covered</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Understanding-reaching-definitions"><span class="nav-number">4.3.2.</span> <span class="nav-text">Understanding reaching definitions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transfer-function"><span class="nav-number">4.3.3.</span> <span class="nav-text">transfer function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#control-flow"><span class="nav-number">4.3.4.</span> <span class="nav-text">control flow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm-of-reaching-definitions-analysis"><span class="nav-number">4.3.5.</span> <span class="nav-text">Algorithm of reaching definitions analysis</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-4-Data-flow-analysis-2"><span class="nav-number">5.</span> <span class="nav-text">Lec 4 Data flow analysis 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Live-variables-analysis"><span class="nav-number">5.1.</span> <span class="nav-text">Live variables analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm"><span class="nav-number">5.1.1.</span> <span class="nav-text">Algorithm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Available-expressions-analysis"><span class="nav-number">5.2.</span> <span class="nav-text">Available expressions analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">Algorithm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary"><span class="nav-number">5.3.</span> <span class="nav-text">Summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-5-Data-flow-analysis-foundations-1"><span class="nav-number">6.</span> <span class="nav-text">Lec 5 Data flow analysis - foundations 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative-algorithm-another-view"><span class="nav-number">6.1.</span> <span class="nav-text">Iterative algorithm, another view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partial-order"><span class="nav-number">6.2.</span> <span class="nav-text">Partial order</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Upper-and-lower-bounds"><span class="nav-number">6.3.</span> <span class="nav-text">Upper and lower bounds</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lub-join-amp-glb-meet"><span class="nav-number">6.3.1.</span> <span class="nav-text">lub (join) &amp; glb (meet)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lattice-semilattice-complete-and-product-lattice"><span class="nav-number">6.4.</span> <span class="nav-text">Lattice, semilattice, complete and product lattice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-flow-analysis-framework-via-lattice"><span class="nav-number">6.5.</span> <span class="nav-text">Data flow analysis framework via lattice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monotonicity-and-fixed-point-theorem-（重要）"><span class="nav-number">6.6.</span> <span class="nav-text">Monotonicity and fixed point theorem （重要）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Monotonicity"><span class="nav-number">6.6.1.</span> <span class="nav-text">Monotonicity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fix-point-theorem"><span class="nav-number">6.6.2.</span> <span class="nav-text">Fix-point theorem</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#存在性证明"><span class="nav-number">6.6.2.1.</span> <span class="nav-text">存在性证明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最小（大）性证明"><span class="nav-number">6.6.2.2.</span> <span class="nav-text">最小（大）性证明</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-6-DFA-foundations-2"><span class="nav-number">7.</span> <span class="nav-text">Lec 6 DFA - foundations 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Relate-iterative-algorithm-to-fixed-point-theorem"><span class="nav-number">7.1.</span> <span class="nav-text">Relate iterative algorithm to fixed point theorem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#May-must-analysis-a-lattice-view"><span class="nav-number">7.2.</span> <span class="nav-text">May/must analysis, a lattice view</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOP-and-distributivity"><span class="nav-number">7.3.</span> <span class="nav-text">MOP and distributivity</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Meet-Over-All-Paths-Solution-MOP"><span class="nav-number">7.3.1.</span> <span class="nav-text">Meet-Over-All-Paths Solution (MOP)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Our-iterative-algorithm-vs-MOP"><span class="nav-number">7.3.2.</span> <span class="nav-text">Our iterative algorithm vs MOP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Constant-propagation"><span class="nav-number">7.4.</span> <span class="nav-text">Constant propagation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Worklist-algorithm"><span class="nav-number">7.5.</span> <span class="nav-text">Worklist algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-7-Interprocedural-Analysis"><span class="nav-number">8.</span> <span class="nav-text">Lec 7 Interprocedural Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Motivation"><span class="nav-number">8.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Call-graph-construction-CHA"><span class="nav-number">8.2.</span> <span class="nav-text">Call graph construction: CHA</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-dispatch-of-virtual-calls"><span class="nav-number">8.2.1.</span> <span class="nav-text">Method dispatch of virtual calls</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Call-resolution-of-CHA-class-hierarchy-analysis"><span class="nav-number">8.2.2.</span> <span class="nav-text">Call resolution of CHA (class hierarchy analysis)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interprocedural-control-flow-graph"><span class="nav-number">8.3.</span> <span class="nav-text">Interprocedural control-flow graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interprocedural-data-flow-analysis"><span class="nav-number">8.4.</span> <span class="nav-text">Interprocedural data-flow analysis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lec-8-Pointer-Analysis"><span class="nav-number">9.</span> <span class="nav-text">Lec 8 Pointer Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Motivation-1"><span class="nav-number">9.1.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intro"><span class="nav-number">9.2.</span> <span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pointer-analysis-vs-alias-analysis"><span class="nav-number">9.2.1.</span> <span class="nav-text">Pointer analysis vs alias analysis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key-factors"><span class="nav-number">9.3.</span> <span class="nav-text">Key factors</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Heap-abstraction"><span class="nav-number">9.3.1.</span> <span class="nav-text">Heap abstraction</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Allocation-site-abstraction"><span class="nav-number">9.3.1.1.</span> <span class="nav-text">Allocation-site abstraction</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Context-sensitivity"><span class="nav-number">9.3.2.</span> <span class="nav-text">Context sensitivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Flow-sensitivity"><span class="nav-number">9.3.3.</span> <span class="nav-text">Flow sensitivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Analysis-scope"><span class="nav-number">9.3.4.</span> <span class="nav-text">Analysis scope</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pointers-in-Java"><span class="nav-number">9.4.</span> <span class="nav-text">Pointers in Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pointer-affecting-statements"><span class="nav-number">9.5.</span> <span class="nav-text">Pointer-affecting statements</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pointer-analysis-foundations-1"><span class="nav-number">10.</span> <span class="nav-text">Pointer analysis foundations 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Domains-and-notations"><span class="nav-number">10.1.</span> <span class="nav-text">Domains and notations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rules"><span class="nav-number">10.2.</span> <span class="nav-text">Rules</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -761,7 +928,7 @@ Dispatch(c', m) & otherwise, where\ \textbf{c'} is\ superclass\ of\ \textbf{c}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -770,7 +937,7 @@ Dispatch(c', m) & otherwise, where\ \textbf{c'} is\ superclass\ of\ \textbf{c}
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -795,7 +962,7 @@ Dispatch(c', m) & otherwise, where\ \textbf{c'} is\ superclass\ of\ \textbf{c}
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

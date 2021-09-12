@@ -54,7 +54,7 @@
 <meta property="og:site_name" content="xBug">
 <meta property="og:description" content="问题简述在用Visual Studio 2019编写多文件工程时，出现了头文件包含相关问题，花了我很长时间才自己摸索得到解决。 对我启发比较大的相关问题是头文件的相互包含问题，虽然我遇到的并不是这个问题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-31T13:41:04.353Z">
+<meta property="og:updated_time" content="2021-08-05T02:00:39.081Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/12/31/Visual-Studio-2019-%E5%A4%B4%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
@@ -192,10 +192,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-12-31 21:18:54 / 修改时间：21:41:04" itemprop="dateCreated datePublished" datetime="2019-12-31T21:18:54+08:00">2019-12-31</time>
+              <time title="创建时间：2019-12-31 21:18:54" itemprop="dateCreated datePublished" datetime="2019-12-31T21:18:54+08:00">2019-12-31</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-05 10:00:39" itemprop="dateModified" datetime="2021-08-05T10:00:39+08:00">2021-08-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -243,7 +249,7 @@
 <p>$$$$ \<string.h\></p>
 <p>$$$$ \<ctime\><br>MyException.h</p>
 </blockquote>
-<p>我个人总结的错误原因是<strong><code>MyException.h</code>在其他类的实现(.cpp文件)中得到使用，但该文件并未被任一<code>.h</code>文件包含</strong>。</p>
+<p>我个人总结的错误原因是<code>MyException.h</code>在其他类的实现(.cpp文件)中得到使用，但该文件并未被任一<code>.h</code>文件包含。</p>
 <p>因此解决方法是将<code>MyException.h</code>包含到其他任一<code>.h</code>文件中。</p>
 
     </div>
@@ -321,7 +327,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -330,7 +336,7 @@
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -355,7 +361,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
