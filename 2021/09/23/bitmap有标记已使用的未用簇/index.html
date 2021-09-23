@@ -46,18 +46,17 @@
   };
 </script>
 
-  <meta name="description" content="第5章 Linux的文件权限与目录配置5.3 目录配置一般每种Linux Distribution（Linux发行版）的配置文件、执行文件的位置和每个目录内放置的内容都差不多，这是由于有一套标准，名为Filesystem Hierarchy Standard (FHS)。 5.3.1 Linux目录配置的依据—FHSFHS的主要目的是希望使用者可以了解到已安装软件通常放置于哪个目录下，重点在于规">
-<meta name="keywords" content="OS,Linux">
+  <meta name="description" content="Introduction由于C盘空间剩余容量警告，使用diskgenius从D盘扩容C盘，但常常在磁盘检查步骤报错：  $bitmap有标记已使用的未用簇">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《鸟哥的Linux私房菜》学习笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;07&#x2F;09&#x2F;%E3%80%8A%E9%B8%9F%E5%93%A5%E7%9A%84Linux%E7%A7%81%E6%88%BF%E8%8F%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0&#x2F;index.html">
+<meta property="og:title" content="$bitmap有标记已使用的未用簇">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2021&#x2F;09&#x2F;23&#x2F;bitmap%E6%9C%89%E6%A0%87%E8%AE%B0%E5%B7%B2%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%AA%E7%94%A8%E7%B0%87&#x2F;index.html">
 <meta property="og:site_name" content="xBug">
-<meta property="og:description" content="第5章 Linux的文件权限与目录配置5.3 目录配置一般每种Linux Distribution（Linux发行版）的配置文件、执行文件的位置和每个目录内放置的内容都差不多，这是由于有一套标准，名为Filesystem Hierarchy Standard (FHS)。 5.3.1 Linux目录配置的依据—FHSFHS的主要目的是希望使用者可以了解到已安装软件通常放置于哪个目录下，重点在于规">
+<meta property="og:description" content="Introduction由于C盘空间剩余容量警告，使用diskgenius从D盘扩容C盘，但常常在磁盘检查步骤报错：  $bitmap有标记已使用的未用簇">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-26T14:00:04.709Z">
+<meta property="og:updated_time" content="2021-09-23T13:42:20.475Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/07/09/%E3%80%8A%E9%B8%9F%E5%93%A5%E7%9A%84Linux%E7%A7%81%E6%88%BF%E8%8F%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+<link rel="canonical" href="http://yoursite.com/2021/09/23/bitmap%E6%9C%89%E6%A0%87%E8%AE%B0%E5%B7%B2%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%AA%E7%94%A8%E7%B0%87/">
 
 
 <script id="page-configurations">
@@ -71,7 +70,7 @@
   };
 </script>
 
-  <title>《鸟哥的Linux私房菜》学习笔记 | xBug</title>
+  <title>$bitmap有标记已使用的未用簇 | xBug</title>
   
 
 
@@ -170,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/09/%E3%80%8A%E9%B8%9F%E5%93%A5%E7%9A%84Linux%E7%A7%81%E6%88%BF%E8%8F%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/09/23/bitmap%E6%9C%89%E6%A0%87%E8%AE%B0%E5%B7%B2%E4%BD%BF%E7%94%A8%E7%9A%84%E6%9C%AA%E7%94%A8%E7%B0%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -183,7 +182,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          《鸟哥的Linux私房菜》学习笔记
+          $bitmap有标记已使用的未用簇
         </h1>
 
         <div class="post-meta">
@@ -192,16 +191,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-07-09 17:49:30" itemprop="dateCreated datePublished" datetime="2020-07-09T17:49:30+08:00">2020-07-09</time>
+              <time title="创建时间：2021-09-23 21:37:17 / 修改时间：21:42:20" itemprop="dateCreated datePublished" datetime="2021-09-23T21:37:17+08:00">2021-09-23</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-26 22:00:04" itemprop="dateModified" datetime="2020-07-26T22:00:04+08:00">2020-07-26</time>
-              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -221,47 +214,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <a id="more"></a>
-<h1 id="第5章-Linux的文件权限与目录配置"><a href="#第5章-Linux的文件权限与目录配置" class="headerlink" title="第5章 Linux的文件权限与目录配置"></a>第5章 Linux的文件权限与目录配置</h1><h2 id="5-3-目录配置"><a href="#5-3-目录配置" class="headerlink" title="5.3 目录配置"></a>5.3 目录配置</h2><p>一般每种Linux Distribution（Linux发行版）的配置文件、执行文件的位置和每个目录内放置的内容都差不多，这是由于有一套标准，名为<code>Filesystem Hierarchy Standard (FHS)</code>。</p>
-<h3 id="5-3-1-Linux目录配置的依据—FHS"><a href="#5-3-1-Linux目录配置的依据—FHS" class="headerlink" title="5.3.1 Linux目录配置的依据—FHS"></a>5.3.1 Linux目录配置的依据—FHS</h3><p>FHS的主要目的是<strong>希望使用者可以了解到已安装软件通常放置于哪个目录下</strong>，重点在于规范每个特定的目录下应该要放置什么数据。</p>
-<p>FHS根据文件系统使用的频繁与否和是否允许使用者随意更改，将目录定义为4种交互作用的形态，如下表所示。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>可分享的 shareable</th>
-<th>不可分享的 unshareable</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>不变的 static</strong></td>
-<td>/usr 软件放置处 <br> /opt 第三方协力软件</td>
-<td>/etc 配置文件 <br> /boot 开机于核心文档</td>
-</tr>
-<tr>
-<td><strong>可变的 variable</strong></td>
-<td>/var/mail 使用者邮件信箱 <br> /var/spool/news 新闻组</td>
-<td>/var/run 程序相关 <br> /var/lock 程序相关</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>其中</p>
-<ul>
-<li>可分享：可分享给其他系统挂载使用的目录。</li>
-</ul>
-<p>FHS针对目录树仅定义了3个目录下应该放置的数据，分别是：</p>
-<ul>
-<li><code>/root</code> 根目录：于开机系统有关</li>
-<li><code>/usr (unix software resource)</code>：于软件安装/执行有关</li>
-<li><code>/var (variable)</code>：与系统运作过程有关</li>
-</ul>
-<h4 id="根目录-的意义和内容"><a href="#根目录-的意义和内容" class="headerlink" title="根目录/的意义和内容"></a>根目录<code>/</code>的意义和内容</h4><p>所有的目录都由根目录衍生出来，同时根目录与开机/还原/系统修复等有关。因为根目录的重要性，FHS要求根目录不要放在非常大的分区槽内。</p>
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>由于C盘空间剩余容量警告，使用diskgenius从D盘扩容C盘，但常常在磁盘检查步骤报错：</p>
 <blockquote>
-<p>根目录所在分区越小越好，且应用程序所安装的软件最好不要与根目录放在同一个分区槽，保持根目录越小越好。</p>
+<p>$bitmap有标记已使用的未用簇</p>
 </blockquote>
+<a id="more"></a>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>使用windows自带的<code>chkdsk</code>指令，选项为<code>/f</code>和<code>/x</code>，参数为需要修复的盘符。使用<code>chkdsk</code>修复C盘的指令如下所示。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">chkdsk</span> /f /x c:</span></pre></td></tr></table></figure>
 
     </div>
 
@@ -270,10 +229,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/OS/" rel="tag"># OS</a>
-              <a href="/tags/Linux/" rel="tag"># Linux</a>
-          </div>
 
         
 
@@ -281,13 +236,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/08/TCP-IP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" rel="prev" title="TCP/IP网络编程">
-      <i class="fa fa-chevron-left"></i> TCP/IP网络编程
+    <a href="/2021/07/15/The-Fuzzing-Book-notes/" rel="prev" title="The Fuzzing Book notes">
+      <i class="fa fa-chevron-left"></i> The Fuzzing Book notes
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/07/14/Java%E9%98%9F%E5%88%97/" rel="next" title="Java队列">
-      Java队列 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -325,7 +277,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第5章-Linux的文件权限与目录配置"><span class="nav-number">1.</span> <span class="nav-text">第5章 Linux的文件权限与目录配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-目录配置"><span class="nav-number">1.1.</span> <span class="nav-text">5.3 目录配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-1-Linux目录配置的依据—FHS"><span class="nav-number">1.1.1.</span> <span class="nav-text">5.3.1 Linux目录配置的依据—FHS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根目录-的意义和内容"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">根目录/的意义和内容</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
