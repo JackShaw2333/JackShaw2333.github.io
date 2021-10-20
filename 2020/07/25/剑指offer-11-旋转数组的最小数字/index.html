@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="题目把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剑指offer 11. 旋转数组的最小数字">
+<meta property="og:url" content="http://yoursite.com/2020/07/25/%E5%89%91%E6%8C%87offer-11-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97/index.html">
+<meta property="og:site_name" content="xBug">
+<meta property="og:description" content="题目把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-25T09:05:58.000Z">
+<meta property="article:modified_time" content="2021-10-20T14:28:56.669Z">
+<meta property="article:author" content="Jared Shaw">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/07/25/%E5%89%91%E6%8C%87offer-11-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>剑指offer 11. 旋转数组的最小数字 | xBug</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xBug</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/25/%E5%89%91%E6%8C%87offer-11-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          剑指offer 11. 旋转数组的最小数字
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-25 17:05:58" itemprop="dateCreated datePublished" datetime="2020-07-25T17:05:58+08:00">2020-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-20 22:28:56" itemprop="dateModified" datetime="2021-10-20T22:28:56+08:00">2021-10-20</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个递增排序的数组的一个旋转，输出旋转数组的最小元素。例如，数组 [3,4,5,1,2] 为 [1,2,3,4,5] 的一个旋转，该数组的最小值为1。  </p>
+<span id="more"></span>
+<p>示例 1：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[3,4,5,1,2]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure></p>
+<p>示例 2：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[2,2,2,0,1]</span><br><span class="line">输出：0</span><br></pre></td></tr></table></figure></p>
+<p>来源：力扣（LeetCode）</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof">https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof</a></p>
+<p>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<hr>
+<p>难度：简单</p>
+<p>标签：二分查找</p>
+<h1 id="我的解答"><a href="#我的解答" class="headerlink" title="我的解答"></a>我的解答</h1><h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p>最开始我没有想到二分法，直接用的遍历的方式。</p>
+<p>无论是遍历还是二分法，这里有个细节值得注意：以遍历为例，直接地会想到两种方法——从前向后编列和从后向前遍历。<br>从前向后遍历找比前一个位置元素小的；<br>从后向前遍历找比后一个位置元素大的。</p>
+<p>直觉上好像没有太大的差异，但其实从前向后遍历是不完善的，因为没有考虑数组可能本身就是非递减的数组，即并没有任何旋转。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minArray</span><span class="params">(<span class="keyword">int</span>[] numbers)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = numbers.length - <span class="number">1</span>; i &gt;= <span class="number">1</span>; --i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (numbers[i - <span class="number">1</span>] &gt; numbers[i]) &#123;</span><br><span class="line">                <span class="keyword">return</span> numbers[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> numbers[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从前向后遍历虽不完善，但是仍有改进空间，即事先判断旋转数组的首尾元素大小：</p>
+<ul>
+<li>若首 &lt; 尾，则首元素就是旋转点</li>
+<li>否则从左到右遍历，仍可找到旋转点</li>
+</ul>
+<p>这两种遍历方式的区别在文章后续提到的二分法中仍有类似体现和解决方法。</p>
+<h1 id="优秀题解"><a href="#优秀题解" class="headerlink" title="优秀题解"></a>优秀题解</h1><h2 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h2><p>参考了<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/solution/mian-shi-ti-11-xuan-zhuan-shu-zu-de-zui-xiao-shu-3/">优秀题解</a>。</p>
+<p><strong>有序数组的问题要首先要考虑二分</strong>。二分可以将原本线性级别的时间复杂度降低至对数级别。</p>
+<p>通过思考不难发现旋转数组的一些性质：</p>
+<ol>
+<li>我们可以将旋转后的数组看作2个部分，即<strong>左排序数组</strong>和<strong>右排序数组</strong></li>
+<li>左排序数组一定不为空，右排序数组可能为空</li>
+<li>左排序数组和右排序数组分别为<strong>非递减数组</strong></li>
+<li>左排序数组的第一个元素（即最小元素）<strong>大于或等于</strong>右排序数组的最后一个元素（即最大元素）</li>
+<li>若右排序数组不为空，所求的旋转点为右排序数组的第一个元素，否则旋转点为左排序数组的第一个元素，即旋转数组的第一个元素。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    ^ |</span><br><span class="line">  ^ ^ |</span><br><span class="line">^ ^ ^ |     ^</span><br><span class="line">^ ^ ^ |   ^ ^</span><br><span class="line">^ ^ ^ | ^ ^ ^</span><br><span class="line"> 左   | 右</span><br></pre></td></tr></table></figure>
+<p>利用这些性质，我们用<code>i</code>和<code>j</code>分别指向整个旋转数组<code>numbers</code>的头尾，用<code>m = (i + j) / 2</code>指向二分的中点，分类讨论后有以下几种情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    ^ |</span><br><span class="line">  ^ ^ |</span><br><span class="line">^ ^ ^ |     ^</span><br><span class="line">^ ^ ^ |   ^ ^</span><br><span class="line">^ ^ ^ | ^ ^ ^</span><br><span class="line">i     |     j</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>numbers[i] &lt; numbers[j]</code>。此时说明右排序数组为空，根据性质5，直接返回<code>numbers[i]</code></li>
+<li>否则<ul>
+<li><code>numbers[m] &gt; numbers[j]</code>。此时说明<code>m</code>指向了左排序数组中的某个位置，因为根据性质3和性质4可得右排序数组不为空，<code>j</code>指向了右排序数组中最大的元素，如果<code>m</code>指向的元素比<code>j</code>指向的元素还大，那么<code>m</code>一定在左排序数组中，那么根据性质5，旋转点<code>target</code>一定处于<code>[m + 1, j]</code>的范围中。此时令<code>i = m + 1</code>，准备下一次二分</li>
+<li><code>numbers[m] &lt; numbers[j]</code>。此时还需分2类进行讨论<ul>
+<li>若右排序数组不为空。此时说明<code>m</code>指向了右排序数组中的某个位置，因为根据性质3和性质4，比<code>j</code>指向的元素还小的元素，只可能在右排序数组中。旋转点<code>target</code>一定处于<code>[i, m]</code>的范围中（<code>m</code>可能就指向了<code>target</code>）。此时令<code>j = m</code>，准备下一次二分</li>
+<li>若右排序数组为空。那么<code>target</code>元素就位于左排序数组的第一个元素，同样满足<em>旋转点<code>target</code>一定处于<code>[i, m]</code>的范围中</em>。此时仍可令<code>j = m</code>，准备下一次二分</li>
+<li>综上，无论那种情况，都可以采取同样的策略</li>
+</ul>
+</li>
+<li><code>numbers[m] == numbers[j]</code>。此时无法判断<code>m</code>究竟在左右哪个排序数组中，但可以确定的是：<ul>
+<li>若<code>m</code>在右排序数组中，根据性质3可得，<code>[m, j]</code>区间内所有元素都相等，旋转点在<code>[i, m]</code>中</li>
+<li>若<code>m</code>在左排序数组中，根据性质3和性质4可得，<code>numbers[j] &lt;= numbers[i, ..., m-1] &lt;= numbers[m]</code>，同时<code>numbers[m] == numbers[j]</code>，则<code>numbers[j] == numbers[i, ..., m-1] == numbers[m]</code>，旋转点在<code>[m + 1, j]</code>中</li>
+<li>这样似乎并没有解决问题，但只要我们采取的操作能保证不丢失<code>target</code>的位置且<code>i</code>和<code>j</code>的值能产生变化即可</li>
+<li>进一步分析，因为<code>target</code>指向的元素是旋转数组中最小的元素，那么<code>numbers[target] &lt;= numbers[m] == numbers[j]</code>，这里可进一步分为2种情况<ul>
+<li>若<code>numbers[target] == numbers[m] == numbers[j]</code><ul>
+<li>若<code>m</code>在右排序数组中，则右排序数组内所有元素都相等，此时<code>j</code>可以不断减一，使得之后<code>m</code>可落在左排序数组中</li>
+<li>若<code>m</code>在左排序数组中，则<code>[i, m]</code>和右排序数组内的所有元素都相等，此时<code>j</code>也可以不断减一，直到退化到<code>j</code>落入左排序数组。这样最终返回的元素位置虽不是<code>target</code>，但其值与<code>numbers[target]</code>相同</li>
+</ul>
+</li>
+<li>若<code>numbers[target] &lt; numbers[m] == numbers[j]</code><ul>
+<li>若<code>m</code>在右排序数组中，<code>j</code>不断减一仍满足条件</li>
+<li>若<code>m</code>在左排序数组中，<code>j</code>不断减一仍可退化到<code>j</code>落入左排序数组。这样最终返回的元素位置虽不是<code>target</code>，但其值与<code>numbers[target]</code>相同</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>所以此时可以采取的操作是<code>j = j - 1</code>。当然，这可能并非唯一正确的操作，</li>
+</ul>
+</li>
+<li>最后，当<code>i == j</code>时跳出循环，并返回<code>numbers[i]</code></li>
+</ul>
+</li>
+</ul>
+<p>与之前的遍历法一样，如果不事先判断右排序数组是否为空，不能选择<code>numbers[i]</code>作为比较对象，因为：</p>
+<ul>
+<li>若<code>numbers[m] &gt; numbers[i]</code>。此时说明<code>m</code>指向了左排序数组的某个位置，因为根据性质2和性质3，比<code>i</code>指向的位置大的元素只可能在左排序数组中，但仅此并不能证明右排序数组不为空，不能判断旋转点究竟是左排序数组的第一个元素还是右排序数组的第一个元素。为了证明右排序数组是否为空，则还需令<code>numbers[m]</code>和<code>numbers[j]</code>进行一次比较</li>
+</ul>
+<p>但若先行根据<code>numbers[i]</code>和<code>numbers[j]</code>的大小关系判断出右排序数组存在性，就可以用<code>numbers[i]</code>作为比较对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minArray</span><span class="params">(<span class="keyword">int</span>[] numbers)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> j = numbers.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> m = i + (j - i) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (numbers[i] &gt;= numbers[j]) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i != j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (numbers[m] &lt; numbers[j]) &#123;</span><br><span class="line">                    j = m;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (numbers[m] &gt; numbers[j]) &#123;</span><br><span class="line">                    i = m + <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    --j;</span><br><span class="line">                &#125;</span><br><span class="line">                m = i + (j - i) / <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> numbers[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/24/%E5%89%91%E6%8C%87offer-10-2-%E9%9D%92%E8%9B%99%E8%B7%B3%E5%8F%B0%E9%98%B6%E9%97%AE%E9%A2%98/" rel="prev" title="剑指offer 10-2. 青蛙跳台阶问题">
+      <i class="fa fa-chevron-left"></i> 剑指offer 10-2. 青蛙跳台阶问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/26/%E5%89%91%E6%8C%87offer-12-%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84/" rel="next" title="剑指offer 12. 矩阵中的路径">
+      剑指offer 12. 矩阵中的路径 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E8%A7%A3%E7%AD%94"><span class="nav-number">2.</span> <span class="nav-text">我的解答</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%8D%E5%8E%86"><span class="nav-number">2.1.</span> <span class="nav-text">遍历</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E7%A7%80%E9%A2%98%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">优秀题解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%86"><span class="nav-number">3.1.</span> <span class="nav-text">二分</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jared Shaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jared Shaw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.4.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

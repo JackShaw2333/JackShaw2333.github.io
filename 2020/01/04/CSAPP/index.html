@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="引言CSAPP的相关学习笔记。 书籍相关资料 课程网站 课程视频">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSAPP笔记">
+<meta property="og:url" content="http://yoursite.com/2020/01/04/CSAPP/index.html">
+<meta property="og:site_name" content="xBug">
+<meta property="og:description" content="引言CSAPP的相关学习笔记。 书籍相关资料 课程网站 课程视频">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-04T12:02:49.000Z">
+<meta property="article:modified_time" content="2021-10-20T14:28:56.669Z">
+<meta property="article:author" content="Jared Shaw">
+<meta property="article:tag" content="CSAPP">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/01/04/CSAPP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>CSAPP笔记 | xBug</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xBug</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/04/CSAPP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSAPP笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-04 20:02:49" itemprop="dateCreated datePublished" datetime="2020-01-04T20:02:49+08:00">2020-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-20 22:28:56" itemprop="dateModified" datetime="2021-10-20T22:28:56+08:00">2021-10-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/books/" itemprop="url" rel="index">
+                    <span itemprop="name">books</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/books/CS/" itemprop="url" rel="index">
+                    <span itemprop="name">CS</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>CSAPP的相关学习笔记。</p>
+<p><a target="_blank" rel="noopener" href="https://csapp.cs.cmu.edu/">书籍相关资料</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~213">课程网站</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iW411d7hd">课程视频</a></p>
+<span id="more"></span>
+<h2 id="书"><a href="#书" class="headerlink" title="书"></a>书</h2><h3 id="第1章"><a href="#第1章" class="headerlink" title="第1章"></a>第1章</h3><p><a target="_blank" rel="noopener" href="https://dreamanddead.gitbooks.io/csapp-3e-solutions/">习题参考答案</a></p>
+<h3 id="第2章"><a href="#第2章" class="headerlink" title="第2章"></a>第2章</h3><p>如果把比特串看作位向量，则布尔代数的运算和集合的运算的对应关系如下表所示。<br>| 布尔运算 | 集合运算 |<br>|:————-|:————-|<br>| &amp;        | 交       |<br>| \        | 并       |<br>| ^        | 对称差   |<br>| ~        | 补       |</p>
+<h2 id="视频课程"><a href="#视频课程" class="headerlink" title="视频课程"></a>视频课程</h2><h3 id="Lecture-03-Bits-Bytes-and-Integer"><a href="#Lecture-03-Bits-Bytes-and-Integer" class="headerlink" title="Lecture 03 Bits, Bytes, and Integer"></a>Lecture 03 Bits, Bytes, and Integer</h3><p>尽量少使用无符号数。</p>
+<h4 id="Machine-Words"><a href="#Machine-Words" class="headerlink" title="Machine Words"></a>Machine Words</h4><p>机器字长指处理器惯常处理的数据的位数，也是地址或指针的位长度。</p>
+<p>64位机器实际提供了2^47个字节的内存空间，并非2^64。</p>
+<p>字长实际由硬件和编译器共同决定，编译器可以选择编译32位的代码或64位的代码。</p>
+<h3 id="Lecture-04-Floating-Point"><a href="#Lecture-04-Floating-Point" class="headerlink" title="Lecture 04 Floating Point"></a>Lecture 04 Floating Point</h3><h4 id="IEEE的浮点数表示"><a href="#IEEE的浮点数表示" class="headerlink" title="IEEE的浮点数表示"></a>IEEE的浮点数表示</h4><p>计算机采用<code>IEEE 754</code>标准对浮点数进行编码。</p>
+<p><code>IEEE 754</code>标准将浮点数分为3部分：</p>
+<ul>
+<li>符号（sign）。<code>s = 1</code>是负数，反之是正数</li>
+<li>尾数（significand）。<code>M</code>是一个二进制小数</li>
+<li>阶码（exponent）。<code>E</code>的作用是对浮点数加权，权重是2的<code>E</code>次幂</li>
+</ul>
+<p>浮点数的位表示因此被分为3个字段，分别对这些值进行编码：</p>
+<ul>
+<li>1个单独的符号位<code>s</code>直接编码符号</li>
+<li>k位阶码字段<code>exp</code>编码阶码<code>E</code></li>
+<li>n位小数字段<code>frac</code>编码尾数<code>M</code>，依赖于阶码字段的值是否为0</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>浮点格式</th>
+<th>s</th>
+<th>exp</th>
+<th>frac</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单精度32位</td>
+<td>1位</td>
+<td>8位</td>
+<td>23位</td>
+</tr>
+<tr>
+<td>双精度64位</td>
+<td>1位</td>
+<td>11位</td>
+<td>52位</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>根据<code>exp</code>的值，被编码的值可分为3种不同的情况</p>
+<h5 id="规格化的值"><a href="#规格化的值" class="headerlink" title="规格化的值"></a>规格化的值</h5><p>当<code>exp</code>的位模式不全为1或0时，属于这种情况。</p>
+<p>此时阶码字段被解释为以<strong>偏置（bias）形式表示的有符号整数</strong>，即<code>E = e - Bias</code>，其中<code>e</code>为<code>exp</code>字段被解释为无符号数时的值，而<code>Bias</code>是一个与<code>exp</code>字段长度有关的固定值，等于<code>2^(k-1)-1</code>（单精度时是127，双精度是1023）</p>
+<p><code>frac</code>为小数字段，表示的是小数<code>f</code>。尾数值<code>M = 1 + f</code>。这种表示方式被称为<strong>隐含的以1开头（implied leading 1）的表示</strong>。</p>
+<h5 id="非规格化的值"><a href="#非规格化的值" class="headerlink" title="非规格化的值"></a>非规格化的值</h5><p>当阶码域全为0时，所表示的数是非规格化的数。在这种情况下，阶码值是<code>E = 1 - Bias</code>，尾数<code>M = f</code>，不包含隐含的开头1。</p>
+<p>非规格化数有2个用途：</p>
+<ul>
+<li>提供了一种表示0的方法。需要注意的是，这种表示方法会出现<code>+0</code>和<code>-0</code>。</li>
+<li>表示那些非常接近0的数，这种属性称为<strong>逐渐溢出（gradual overflow）</strong>。</li>
+</ul>
+<h5 id="特殊值"><a href="#特殊值" class="headerlink" title="特殊值"></a>特殊值</h5><p>当阶码全为1时的数为特殊值。此时当小数域为0时表示无穷；若小数域非0表示<code>NaN (Not a Number)</code></p>
+<p>如果将所有固定位长可表示的浮点数标注在数轴上，可以发现的一个现象是——可表示的数并非均匀分布的，越靠近原点处越稠密。</p>
+<p>值得注意的是<strong>规格化浮点数</strong>和<strong>非规格化浮点数</strong>这样的编码方式保证了浮点数的进位在编码上的体现是平滑的。</p>
+<h4 id="舍入（rounding）"><a href="#舍入（rounding）" class="headerlink" title="舍入（rounding）"></a>舍入（rounding）</h4><p>常用的舍入方式有4种：</p>
+<ul>
+<li>向偶数舍入（IEEE 754默认使用的摄入方式）</li>
+<li>向零舍入</li>
+<li>向下舍入</li>
+<li>向上舍入</li>
+</ul>
+<p>在二进制数舍入时注意<code>halfway</code>值，即被舍掉部分为<code>100...</code>（1后面全是0）的值。当被舍掉部分大于<code>halfway</code>值，则进位；小于则不进位；等于时则需要向偶数舍入，即若进位后舍入的值为偶数则进位，否则不进位。</p>
+<h4 id="浮点运算"><a href="#浮点运算" class="headerlink" title="浮点运算"></a>浮点运算</h4><p>当浮点数相乘时，符号位相与，阶码位相加，尾数位相乘。</p>
+<p>相乘的结果可能需要进行如下修正：</p>
+<ul>
+<li>如果<code>M &gt;= 2</code>，<code>M</code>右移并且增加阶码位</li>
+<li>如果阶码位溢出，则结果为无穷</li>
+<li>对<code>M</code>进行舍入操作</li>
+</ul>
+<p>浮点数的运算具备以下特征</p>
+<ul>
+<li>满足交换律</li>
+<li>不满足结合律</li>
+<li>不满足分配律</li>
+</ul>
+<h3 id="Lecture-13-Linking"><a href="#Lecture-13-Linking" class="headerlink" title="Lecture 13 Linking"></a>Lecture 13 Linking</h3><h4 id="为何使用Linker"><a href="#为何使用Linker" class="headerlink" title="为何使用Linker"></a>为何使用Linker</h4><ul>
+<li>模块化</li>
+<li>提高效率<ul>
+<li>时间上，当某个源文件改变时，只需编译改变的文件</li>
+<li>空间上，executable files只需存储使用了的函数代码，如使用C标准库的函数</li>
+</ul>
+</li>
+</ul>
+<h4 id="Linker做了什么"><a href="#Linker做了什么" class="headerlink" title="Linker做了什么"></a>Linker做了什么</h4><h5 id="step1-符号解析（symbol-resolution）"><a href="#step1-符号解析（symbol-resolution）" class="headerlink" title="step1 符号解析（symbol resolution）"></a>step1 符号解析（symbol resolution）</h5><p>链接器将每个符号引用和符号定义联系起来。</p>
+<h5 id="step2-重定向（relocation）"><a href="#step2-重定向（relocation）" class="headerlink" title="step2 重定向（relocation）"></a>step2 重定向（relocation）</h5><ul>
+<li>将分离的代码和数据段合并</li>
+<li>将各个<code>.o</code>文件中符号在可执行文件中的地址确定下来</li>
+<li>更新这些符号的引用</li>
+</ul>
+<h4 id="3种object-files"><a href="#3种object-files" class="headerlink" title="3种object files"></a>3种object files</h4><ul>
+<li>可重定位文件，<code>.o</code>文件，不能单独执行，需要和其他可重定位文件链接成可执行文件</li>
+<li>可执行文件，<code>.out</code>文件，可以单独被载入内存执行</li>
+<li>共享目标文件，<code>.so</code>文件</li>
+</ul>
+<p>3种目标文件都采用ELF文件格式</p>
+<h4 id="ELF文件"><a href="#ELF文件" class="headerlink" title="ELF文件"></a>ELF文件</h4><p>ELF文件格式如下图所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">+============================+</span><br><span class="line">| ELF header                 |</span><br><span class="line">|----------------------------|</span><br><span class="line">| Segment header table       |</span><br><span class="line">| (required for executables) |</span><br><span class="line">|----------------------------|</span><br><span class="line">| .text section              |</span><br><span class="line">|----------------------------|</span><br><span class="line">| .rodata section            |</span><br><span class="line">|----------------------------|</span><br><span class="line">| .data section              |</span><br><span class="line">|----------------------------|</span><br><span class="line">| .bss section               |</span><br><span class="line">|============================|</span><br><span class="line">| .symtabl section           |</span><br><span class="line">|----------------------------|</span><br><span class="line">| .rel.txt section           |</span><br><span class="line">|----------------------------|</span><br><span class="line">| .rel.data section          |</span><br><span class="line">|----------------------------|</span><br><span class="line">| .debug section             |</span><br><span class="line">|----------------------------|</span><br><span class="line">| Section header table       |</span><br><span class="line">+============================+</span><br></pre></td></tr></table></figure>
+<h4 id="符号和符号表"><a href="#符号和符号表" class="headerlink" title="符号和符号表"></a>符号和符号表</h4><p>每个可重定位目标模块<code>m</code>都有一个符号表，它包含了模块<strong>定义和引用的符号的信息</strong>。</p>
+<p>在linker的上下文中，有3种不同的符号：</p>
+<ul>
+<li><code>m</code>定义并能被其他模块引用的<strong>全局符号</strong>，对应于<strong>非静态的C函数和全局变量</strong></li>
+<li>其他模块定义，被<code>m</code>模块引用的全局符号，称为<strong>外部符号</strong>，对应于<strong>在其他模块中定义的非静态C函数和全局变量</strong></li>
+<li>只被<code>m</code>定义和引用的<strong>局部符号</strong>，对应于<strong>带<code>static</code>属性的C函数和全局变量</strong></li>
+</ul>
+<p><code>.symtab</code>中的符号表不包含对应于本地非静态程序变量的符号，这些符号定义在运行时被<strong>栈</strong>管理。但带有<code>static</code>属性的本地过程变量不在栈中管理。若同一模块的2个函数各自定义了一个静态局部变量，则编译器向汇编器输出2个不同名字的局部链接器符号。</p>
+<p>符号表是由汇编器构造的，使用编译器输出到<code>.s</code>文件中的符号。每个符号都被分配到目标文件的某个节（section）</p>
+<p>有3个特殊的伪节（pseudosection）在节头表中没有条目：</p>
+<ul>
+<li><code>ABS</code>不该被重定位的符号</li>
+<li><code>UNDEF</code>未定义的符号</li>
+<li><code>COMMON</code>还未被分配位置的未初始化的数据目标</li>
+</ul>
+<p>只有可重定位文件才有这些伪节。</p>
+<p><code>COMMON</code>和<code>.bss</code>的区别很细微，现代GCC根据下列规则分配符号：</p>
+<ul>
+<li><code>COMMON</code>未初始化的全局变量</li>
+<li><code>.bss</code>未初始化的静态变量以及初始化为0的全局或静态变量</li>
+</ul>
+<h4 id="多重定义的全局符号"><a href="#多重定义的全局符号" class="headerlink" title="多重定义的全局符号"></a>多重定义的全局符号</h4><p>编译器向汇编器输出每个全局符号，或<strong>强</strong>或<strong>弱</strong>，汇编器把这个信息隐含编码在可重定位目标文件的符号表里。</p>
+<ul>
+<li>函数和已初始化的全局变量是强符号</li>
+<li>未初始化的全局变量是弱符号</li>
+</ul>
+<p>根据强弱符号，linux链接器使用下列规则处理多重定义的符号：</p>
+<ul>
+<li>不允许多个同名强符号</li>
+<li>如果有1个强符号和若干弱符号同名，选择强符号</li>
+<li>如果若干弱符号同名，随机选择1个符号</li>
+</ul>
+<p>使用GCC<code>-fno-common</code>选项调用链接器，所有的重名都将会除非错误。<code>-Werror</code>选项将所有警告变为错误。</p>
+<p>回到<code>COMMON</code>和<code>.bss</code>的符号分配问题，当编译器遇到一个弱全局符号时，它无法确定其他模块是否会有同名弱符号，为此它将该弱符号分配给<code>COMMON</code>，把决定权留给链接器。而被初始化为0的符号为强符号，编译器可以放心地将其分配到<code>.bss</code>。类似地，静态符号的构造也是唯一的，因此静态符号不会被分配到<code>COMMON</code>。</p>
+<p>因为全局变量的种种规则以及可能造成的隐藏问题，尽量少使用全局变量。如果要使用</p>
+<ul>
+<li>尽可能使用<code>static</code>进行限制</li>
+<li>尽可能初始化</li>
+<li>如果使用外部的全局变量，使用<code>extern</code>进行标识</li>
+</ul>
+<h4 id="与静态库链接"><a href="#与静态库链接" class="headerlink" title="与静态库链接"></a>与静态库链接</h4><p>至此，我们假设的情况都是链接器读取一组可重定位目标文件，并将它们链接起来形成可执行文件。</p>
+<p>考察这样一个问题，我们编写的C程序经常需要使用标准库函数，如<code>atoi</code>，<code>printf</code>等，那么我们使用这些函数时应该如何链接呢？</p>
+<p>一个自然的想法是，将同一文件中的标准库函数编译成一个可重定位文件，与程序员编写的可重定位链接成1个可执行文件。然而这个想法有很严重的缺点：</p>
+<ul>
+<li>系统中每个使用了标准库函数的可执行文件都将包含所有标准库函数的完全副本，这对于硬盘空间是一大浪费，当许多这样的可执行文件被载入内存后，对于内存又是一大浪费</li>
+<li>开发者对标准库文件进行任何修改后，都必须重新编译，费时费力</li>
+</ul>
+<p>由此，还有另一个想法——将每个标准库函数单独编译为1个可重定位文件，按需链接。这一想法规避了第1个想法的2大缺点，但是又引入了新的问题——过多的标准库函数的可重定位文件需要编程人员显式链接，增加错误可能。</p>
+<p>由此<strong>静态库</strong>的概念被提出。相关的函数可以被编译为独立的目标模块，然后封装成1个单独的静态库文件，链接时应用程序可以只显式指定静态库文件，真正的链接过程中，链接器将只复制被程序引用的目标模块，这样完美的解决了前面2个想法的问题。</p>
+<p>在Linux系统中，静态库以一种称为<strong>存档（archive）</strong>的特殊文件格式存放在磁盘中。存档文件是一组链接起来的可重定位目标文件的集合，有一个头部描述每个成员文件的大小和位置，以后缀名<code>.a</code>标识。</p>
+<p>静态库虽然好用，但由于链接器解析外部引用的算法特点，当定义一个符号的库出现在引用这个符号的目标文件之前，链接就会失败，因此关于静态库的使用准则是——将其放在命令行行尾。</p>
+<p>如果静态库之间不是独立的话，还需对它们进行排序，使得对于每个被某一存档文件中某个成员引用的外部符号<code>s</code>，在命令行中至少有一个含有对<code>s</code>定义的文件是在这之后的。</p>
+<p>如果需要满足依赖需求，可以在命令行上重复库。</p>
+<h4 id="重定位（relocation）"><a href="#重定位（relocation）" class="headerlink" title="重定位（relocation）"></a>重定位（relocation）</h4><p>一旦链接器完成了符号解析，就把代码中每个符号引用和一个符号定义关联起来，此时链接器就知道了输入模块中代码节和数据节的确切大小。接下来就可开始重定位。</p>
+<p>重定位时将合并输入模块，并为每个符号分配运行时地址，如下图所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">relocatable object files</span><br><span class="line"></span><br><span class="line">+=============+</span><br><span class="line">| system code | .text</span><br><span class="line">+-------------+</span><br><span class="line">| system data | .data</span><br><span class="line">+=============+</span><br><span class="line"></span><br><span class="line">main.o</span><br><span class="line">+=======================+</span><br><span class="line">| main()                | .text</span><br><span class="line">+-----------------------+</span><br><span class="line">| int array[2] = &#123;1, 2&#125; | .data</span><br><span class="line">+=======================+</span><br><span class="line"></span><br><span class="line">sum.o</span><br><span class="line">+=======+</span><br><span class="line">| sum() | .text</span><br><span class="line">+=======+</span><br><span class="line"></span><br><span class="line">在链接后</span><br><span class="line"></span><br><span class="line">executable object files</span><br><span class="line"></span><br><span class="line">+=======================+</span><br><span class="line">| Headers               |</span><br><span class="line">+-----------------------+  ------</span><br><span class="line">| system code           |  ^</span><br><span class="line">|-----------------------|  |</span><br><span class="line">| main()                |  |</span><br><span class="line">|-----------------------|  .text</span><br><span class="line">| sum()                 |  |</span><br><span class="line">|-----------------------|  |</span><br><span class="line">| more system code      |  v</span><br><span class="line">+-----------------------+  ------</span><br><span class="line">| system data           |  ^</span><br><span class="line">|-----------------------|  .data</span><br><span class="line">| int array[2] = &#123;1, 2&#125; |  v</span><br><span class="line">+-----------------------+  ------</span><br><span class="line">| .symtab               |</span><br><span class="line">| .debug                |</span><br><span class="line">+=======================+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>重定位由2部分组成：</p>
+<h5 id="重定位节和符号定义"><a href="#重定位节和符号定义" class="headerlink" title="重定位节和符号定义"></a>重定位节和符号定义</h5><p>这一步中，链接器将所有相同类型的节合并为同一类型的新的聚合节。然后链接器将运行时内存地址赋给新的聚合节及每个符号。这一步完成后，程序中每条指令和全局变量都有唯一的运行时内存地址。</p>
+<h5 id="重定位节中的符号引用"><a href="#重定位节中的符号引用" class="headerlink" title="重定位节中的符号引用"></a>重定位节中的符号引用</h5><p>链接器修改代码节和数据节中对每个符号的引用，使之指向正确的运行时地址。为此链接器依赖于可重定位目标模块中称为<strong>重定位条目</strong>的数据结构</p>
+<h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/machao/p/8397961.html">习题参考答案</a></p>
+<h3 id="2-12"><a href="#2-12" class="headerlink" title="2.12"></a>2.12</h3><blockquote>
+<p>A. x &amp;= 0x000000FF<br>B. x ^= 0xFFFFFF00<br>C. x |= 0x000000FF</p>
+</blockquote>
+<p>总结：</p>
+<ol>
+<li>与。与1不变，与0为0</li>
+<li>或。或1为1，或0不变</li>
+<li>异或。异或1取反，异或0不变</li>
+<li>要求结果一部分不变，一部分变0——与。</li>
+<li>要求结果一部分不变，一部分变1——或。</li>
+<li>要求结果一部分不变，一部分取反——异或。</li>
+</ol>
+<h3 id="2-13"><a href="#2-13" class="headerlink" title="2.13"></a>2.13</h3><p><code>bis</code>等价于<code>z |= m</code>；</p>
+<p><code>bic</code>等价于<code>z &amp;= ~m</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bool_or: <span class="keyword">int</span> result = <span class="built_in">bis</span>(x, y);</span><br><span class="line"></span><br><span class="line">bool_xor: <span class="keyword">int</span> result = <span class="built_in">bis</span>(<span class="built_in">bic</span>(x,y), <span class="built_in">bix</span>(y,x));</span><br></pre></td></tr></table></figure>
+<p>因为<code>x ^ y = (x &amp; ~y) | (y &amp; ~x)</code></p>
+<h3 id="2-15"><a href="#2-15" class="headerlink" title="2.15"></a>2.15</h3><blockquote>
+<p>~(x ^ y)</p>
+</blockquote>
+<h3 id="2-25"><a href="#2-25" class="headerlink" title="2.25"></a>2.25</h3><p>当<code>length</code>为0时，<code>length-1</code>为<code>UMax</code>，导致<code>for</code>循环时数组越界。</p>
+<p>应当将函数头部分改为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">sum_elements</span><span class="params">(<span class="keyword">float</span> a[], <span class="keyword">unsigned</span> length)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="2-26"><a href="#2-26" class="headerlink" title="2.26"></a>2.26</h3><p>A. 当字符串<code>s</code>的长度小于字符串<code>t</code>的长度时<br>B. 根据无符号数算术运算的规则，此时<code>strlen(s)-strlen(t)</code>的结果不是负数产生<code>下溢</code>。<br>C. 将<code>strlonger</code>函数改为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strlonger</span><span class="params">(<span class="keyword">char</span> *s, <span class="keyword">char</span> *t)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>)<span class="built_in">strlen</span>(s) - (<span class="keyword">int</span>)<span class="built_in">strlen</span>(t) &gt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-30"><a href="#2-30" class="headerlink" title="2.30"></a>2.30</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tadd_ok</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = x + y;</span><br><span class="line">    <span class="keyword">if</span> (x&gt;<span class="number">0</span> &amp;&amp; y&gt;<span class="number">0</span> &amp;&amp; sum&lt;<span class="number">0</span> || x&lt;<span class="number">0</span> &amp;&amp; y&lt;<span class="number">0</span> &amp;&amp; sum&gt;<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CSAPP/" rel="tag"># CSAPP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/04/%E8%8B%B1%E8%AF%AD%E6%9B%BF%E6%8D%A2%E8%AF%8D/" rel="prev" title="英语替换词">
+      <i class="fa fa-chevron-left"></i> 英语替换词
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/10/%E6%89%98%E7%A6%8F%E5%9B%9B%E5%A4%A7%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="next" title="托福四大模块学习方法">
+      托福四大模块学习方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%A6"><span class="nav-number">2.</span> <span class="nav-text">书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0"><span class="nav-number">2.1.</span> <span class="nav-text">第1章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0"><span class="nav-number">2.2.</span> <span class="nav-text">第2章</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E8%AF%BE%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">视频课程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lecture-03-Bits-Bytes-and-Integer"><span class="nav-number">3.1.</span> <span class="nav-text">Lecture 03 Bits, Bytes, and Integer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Machine-Words"><span class="nav-number">3.1.1.</span> <span class="nav-text">Machine Words</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lecture-04-Floating-Point"><span class="nav-number">3.2.</span> <span class="nav-text">Lecture 04 Floating Point</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE%E7%9A%84%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.2.1.</span> <span class="nav-text">IEEE的浮点数表示</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%84%E6%A0%BC%E5%8C%96%E7%9A%84%E5%80%BC"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">规格化的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%9E%E8%A7%84%E6%A0%BC%E5%8C%96%E7%9A%84%E5%80%BC"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">非规格化的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%80%BC"><span class="nav-number">3.2.1.3.</span> <span class="nav-text">特殊值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%88%8D%E5%85%A5%EF%BC%88rounding%EF%BC%89"><span class="nav-number">3.2.2.</span> <span class="nav-text">舍入（rounding）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E8%BF%90%E7%AE%97"><span class="nav-number">3.2.3.</span> <span class="nav-text">浮点运算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lecture-13-Linking"><span class="nav-number">3.3.</span> <span class="nav-text">Lecture 13 Linking</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E4%BD%BF%E7%94%A8Linker"><span class="nav-number">3.3.1.</span> <span class="nav-text">为何使用Linker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linker%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">3.3.2.</span> <span class="nav-text">Linker做了什么</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#step1-%E7%AC%A6%E5%8F%B7%E8%A7%A3%E6%9E%90%EF%BC%88symbol-resolution%EF%BC%89"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">step1 符号解析（symbol resolution）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#step2-%E9%87%8D%E5%AE%9A%E5%90%91%EF%BC%88relocation%EF%BC%89"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">step2 重定向（relocation）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E7%A7%8Dobject-files"><span class="nav-number">3.3.3.</span> <span class="nav-text">3种object files</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ELF%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.4.</span> <span class="nav-text">ELF文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%92%8C%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-number">3.3.5.</span> <span class="nav-text">符号和符号表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E9%87%8D%E5%AE%9A%E4%B9%89%E7%9A%84%E5%85%A8%E5%B1%80%E7%AC%A6%E5%8F%B7"><span class="nav-number">3.3.6.</span> <span class="nav-text">多重定义的全局符号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8E%E9%9D%99%E6%80%81%E5%BA%93%E9%93%BE%E6%8E%A5"><span class="nav-number">3.3.7.</span> <span class="nav-text">与静态库链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E4%BD%8D%EF%BC%88relocation%EF%BC%89"><span class="nav-number">3.3.8.</span> <span class="nav-text">重定位（relocation）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%8A%82%E5%92%8C%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><span class="nav-number">3.3.8.1.</span> <span class="nav-text">重定位节和符号定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%8A%82%E4%B8%AD%E7%9A%84%E7%AC%A6%E5%8F%B7%E5%BC%95%E7%94%A8"><span class="nav-number">3.3.8.2.</span> <span class="nav-text">重定位节中的符号引用</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%A0%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-12"><span class="nav-number">4.1.</span> <span class="nav-text">2.12</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-13"><span class="nav-number">4.2.</span> <span class="nav-text">2.13</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-15"><span class="nav-number">4.3.</span> <span class="nav-text">2.15</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-25"><span class="nav-number">4.4.</span> <span class="nav-text">2.25</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-26"><span class="nav-number">4.5.</span> <span class="nav-text">2.26</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-30"><span class="nav-number">4.6.</span> <span class="nav-text">2.30</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jared Shaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jared Shaw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.4.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
