@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="0. Infomationhttps:&#x2F;&#x2F;doi.org&#x2F;10.1007&#x2F;s11704-020-9441-1 from Frontiers of Computer Science 21. 1. Abstract 7 types of bugs; 12 fixing patterns; about 2&#x2F;3 of patches are small-scale and can be done in a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Experience report: investigating bug fixes in machine learning frameworks&#x2F;libraries">
+<meta property="og:url" content="http://yoursite.com/2022/01/03/Experience-report-investigating-bug-fixes-in-machine-learning-frameworks-libraries/index.html">
+<meta property="og:site_name" content="xBug">
+<meta property="og:description" content="0. Infomationhttps:&#x2F;&#x2F;doi.org&#x2F;10.1007&#x2F;s11704-020-9441-1 from Frontiers of Computer Science 21. 1. Abstract 7 types of bugs; 12 fixing patterns; about 2&#x2F;3 of patches are small-scale and can be done in a">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-03T11:58:22.000Z">
+<meta property="article:modified_time" content="2022-01-03T11:58:22.000Z">
+<meta property="article:author" content="Jared Shaw">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/01/03/Experience-report-investigating-bug-fixes-in-machine-learning-frameworks-libraries/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Experience report: investigating bug fixes in machine learning frameworks/libraries | xBug</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xBug</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/03/Experience-report-investigating-bug-fixes-in-machine-learning-frameworks-libraries/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jared Shaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xBug">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Experience report: investigating bug fixes in machine learning frameworks/libraries
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-03 19:58:22" itemprop="dateCreated datePublished" datetime="2022-01-03T19:58:22+08:00">2022-01-03</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="0-Infomation"><a href="#0-Infomation" class="headerlink" title="0. Infomation"></a>0. Infomation</h2><p><a target="_blank" rel="noopener" href="https://doi.org/10.1007/s11704-020-9441-1">https://doi.org/10.1007/s11704-020-9441-1</a> from Frontiers of Computer Science 21.</p>
+<h2 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1. Abstract"></a>1. Abstract</h2><ul>
+<li>7 types of bugs;</li>
+<li>12 fixing patterns;</li>
+<li>about 2/3 of patches are small-scale and can be done in a month;</li>
+<li>about 50% bug fixes are corrective activitiy</li>
+<li>questionnaire survey</li>
+</ul>
+<h2 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h2><p>The following 4 types</p>
+<ul>
+<li>compatibility bugs</li>
+<li>variable bugs</li>
+<li>doc bugs</li>
+<li>design defect bugs</li>
+</ul>
+<p>occur most.</p>
+<h2 id="3-Empirical-study"><a href="#3-Empirical-study" class="headerlink" title="3. Empirical study"></a>3. Empirical study</h2><h3 id="3-0-RQs"><a href="#3-0-RQs" class="headerlink" title="3.0. RQs"></a>3.0. RQs</h3><ul>
+<li>RQ1: the categories of bugs?</li>
+<li>RQ2: common fixing patterns?</li>
+<li>RQ3: fixing duration?</li>
+<li>RQ4: fixing scale?</li>
+<li>RQ5: common types of software maintenance activities?</li>
+</ul>
+<h3 id="3-1-Data-collection"><a href="#3-1-Data-collection" class="headerlink" title="3.1. Data collection"></a>3.1. Data collection</h3><p>5 ML projects (Scikit-learn, Paddle, Caffe, SciPy, TensorFlow) from GitHub:</p>
+<ul>
+<li>Scikit-learn: 269</li>
+<li>Paddle: 131</li>
+<li>Caffe: 101</li>
+<li>SciPy: 179</li>
+<li>TensorFlow: 259</li>
+</ul>
+<p>939 bugs in total.</p>
+<h3 id="3-2-Methodology"><a href="#3-2-Methodology" class="headerlink" title="3.2. Methodology"></a>3.2. Methodology</h3><p>2 authors 1) categorized them and 2) checked each others’ categories</p>
+<h2 id="4-Empirical-results"><a href="#4-Empirical-results" class="headerlink" title="4. Empirical results"></a>4. Empirical results</h2><h3 id="4-0-RQ1-bug-category"><a href="#4-0-RQ1-bug-category" class="headerlink" title="4.0. RQ1: bug category"></a>4.0. RQ1: bug category</h3><p>Based on occuring reasons.</p>
+<ul>
+<li>variable bug, 24.28%<ul>
+<li>variable transfer (VT), an error when data stream is passed</li>
+<li>variable evaluatoin (VA)</li>
+<li>variable constraint (VC), when constraints are ignored or are set incorrectly; leads to low performance learners; takes many efforts</li>
+<li>data initialization (DI), variable error in value assignment</li>
+</ul>
+</li>
+<li>design defect, 22.26%, caused by coding errors or boundary errors<ul>
+<li>algorithm design error (ADE), incorrect design of ML algorithm</li>
+<li>coding error (CE), inaccurate understanding of ML algorithm</li>
+<li>boundary error (BE), users do not consider special situation</li>
+</ul>
+</li>
+<li>compatibility bug, 21.51%<ul>
+<li>conflicts with the OS (COS), 39.60%</li>
+<li>conflicts with algorithm model version (CAV), 20.30%</li>
+<li>conflicts with hardware (CH), 16.34%</li>
+<li>conflicts with platform software (CPS), 40.91% in Caffe</li>
+</ul>
+</li>
+<li>doc bug, 11.08%<ul>
+<li>no-timely-update bug (NTU), occurs when updates frequently</li>
+<li>API caller error bug (ACE), users use wrong APIs due to wrong doc</li>
+</ul>
+</li>
+<li>performance optimization bug (PO)</li>
+<li>memory overflow bug (MO)</li>
+</ul>
+<h3 id="4-1-RQ2-fixing-patterns"><a href="#4-1-RQ2-fixing-patterns" class="headerlink" title="4.1. RQ2: fixing patterns"></a>4.1. RQ2: fixing patterns</h3><p>12 patterns,</p>
+<ul>
+<li>add test module</li>
+<li>add if module</li>
+<li>modify variable</li>
+</ul>
+<p>are 3 most common ones.</p>
+<hr>
+<ul>
+<li>for variable bugs<ul>
+<li>add if module</li>
+<li>modify variable</li>
+</ul>
+</li>
+<li>for design defects and compatibility bugs<ul>
+<li>add if module</li>
+<li>modify variable</li>
+<li>add test module</li>
+</ul>
+</li>
+</ul>
+<p>are most common ones.</p>
+<hr>
+<p><em>if fixing pattern</em> has 2 kinds:</p>
+<ul>
+<li>add if module (AIM)</li>
+<li>change if condition (CIC)</li>
+</ul>
+<p><em>try fixing pattern</em> useful in bug localization.</p>
+<hr>
+<p>some fixing patterns related to functionality:</p>
+<ul>
+<li>modify assertion module (MAM)</li>
+<li>add loop module (ALM)</li>
+<li>add test module (ATM)</li>
+</ul>
+<hr>
+<p>some other fixing patterns:</p>
+<ul>
+<li>keep consistency between GPU and CPU (KCGC)</li>
+<li>modify content of different versions (MCV)</li>
+</ul>
+<h3 id="4-2-RQ3-bug-fixing-time"><a href="#4-2-RQ3-bug-fixing-time" class="headerlink" title="4.2. RQ3: bug fixing time"></a>4.2. RQ3: bug fixing time</h3><ul>
+<li>short-term: 1 day - 1 week, 40.58%</li>
+<li>common-term: 1 week - 1 month, 26.20%</li>
+<li>long-term: &gt; 1 month, 33.23%</li>
+</ul>
+<p>many bugs are fixed by 1 or 2 developers.</p>
+<p>memory overflow and compatibility bugs need a longer time to fix</p>
+<h3 id="4-3-RQ4-bug-fixing-scale"><a href="#4-3-RQ4-bug-fixing-scale" class="headerlink" title="4.3. RQ4: bug fixing scale"></a>4.3. RQ4: bug fixing scale</h3><ul>
+<li>micro-scale: 0-50 lines code change and 1 changed file, 34.08%</li>
+<li>small-scale: 0-50 lines code change and &gt;1 changed files, 34.72%</li>
+<li>medium-scale: 50-200 lines, 19.38%</li>
+<li>large-scale: &gt;200 lines, 11.82%</li>
+</ul>
+<p>most patches are small and within 1 method</p>
+<h3 id="4-4-RQ5-maintenance-types-of-ML-issues"><a href="#4-4-RQ5-maintenance-types-of-ML-issues" class="headerlink" title="4.4. RQ5: maintenance types of ML issues"></a>4.4. RQ5: maintenance types of ML issues</h3><ul>
+<li>corrective, 45.90%</li>
+<li>adaptive, 20.77%</li>
+<li>perfective, 31.63%</li>
+<li>preventive, 1.70%</li>
+</ul>
+<h3 id="4-5-Questionnaire-survey"><a href="#4-5-Questionnaire-survey" class="headerlink" title="4.5. Questionnaire survey"></a>4.5. Questionnaire survey</h3><p>48 valid responses out of 1000 emails</p>
+<p>some inconsistencies with empirical results</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/22/System-Validation-Automata-and-behavioural-equivalences/" rel="prev" title="System Validation: Automata and behavioural equivalences">
+      <i class="fa fa-chevron-left"></i> System Validation: Automata and behavioural equivalences
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Infomation"><span class="nav-number">1.</span> <span class="nav-text">0. Infomation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Abstract"><span class="nav-number">2.</span> <span class="nav-text">1. Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Introduction"><span class="nav-number">3.</span> <span class="nav-text">2. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Empirical-study"><span class="nav-number">4.</span> <span class="nav-text">3. Empirical study</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-0-RQs"><span class="nav-number">4.1.</span> <span class="nav-text">3.0. RQs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Data-collection"><span class="nav-number">4.2.</span> <span class="nav-text">3.1. Data collection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Methodology"><span class="nav-number">4.3.</span> <span class="nav-text">3.2. Methodology</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Empirical-results"><span class="nav-number">5.</span> <span class="nav-text">4. Empirical results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-RQ1-bug-category"><span class="nav-number">5.1.</span> <span class="nav-text">4.0. RQ1: bug category</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-RQ2-fixing-patterns"><span class="nav-number">5.2.</span> <span class="nav-text">4.1. RQ2: fixing patterns</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-RQ3-bug-fixing-time"><span class="nav-number">5.3.</span> <span class="nav-text">4.2. RQ3: bug fixing time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-RQ4-bug-fixing-scale"><span class="nav-number">5.4.</span> <span class="nav-text">4.3. RQ4: bug fixing scale</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-RQ5-maintenance-types-of-ML-issues"><span class="nav-number">5.5.</span> <span class="nav-text">4.4. RQ5: maintenance types of ML issues</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-Questionnaire-survey"><span class="nav-number">5.6.</span> <span class="nav-text">4.5. Questionnaire survey</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jared Shaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jared Shaw</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.4.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+</body>
+</html>
