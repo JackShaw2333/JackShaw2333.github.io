@@ -2,6 +2,7 @@
 title: log-sum-exp函数
 date: 2021-09-25 10:35:39
 tags:
+mathjax: true
 ---
 
 ## Introduction
