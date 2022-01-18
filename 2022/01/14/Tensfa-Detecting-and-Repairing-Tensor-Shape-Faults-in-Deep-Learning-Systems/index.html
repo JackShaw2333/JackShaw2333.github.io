@@ -46,19 +46,19 @@
   };
 </script>
 
-  <meta name="description" content="题目请实现一个函数，输入一个整数，输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。">
+  <meta name="description" content="0. Introdoi: 10.1109&#x2F;ISSRE52982.2021.00014">
 <meta property="og:type" content="article">
-<meta property="og:title" content="剑指offer 15. 二进制中1的个数">
-<meta property="og:url" content="http://yoursite.com/2020/08/03/%E5%89%91%E6%8C%87offer-15-%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0/index.html">
+<meta property="og:title" content="Tensfa: Detecting and Repairing Tensor Shape Faults in Deep Learning Systems">
+<meta property="og:url" content="http://yoursite.com/2022/01/14/Tensfa-Detecting-and-Repairing-Tensor-Shape-Faults-in-Deep-Learning-Systems/index.html">
 <meta property="og:site_name" content="xBug">
-<meta property="og:description" content="题目请实现一个函数，输入一个整数，输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。">
+<meta property="og:description" content="0. Introdoi: 10.1109&#x2F;ISSRE52982.2021.00014">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-08-03T14:15:30.000Z">
-<meta property="article:modified_time" content="2020-08-03T14:15:30.000Z">
+<meta property="article:published_time" content="2022-01-14T12:16:27.000Z">
+<meta property="article:modified_time" content="2022-01-14T12:16:27.000Z">
 <meta property="article:author" content="Jared Shaw">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/08/03/%E5%89%91%E6%8C%87offer-15-%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0/">
+<link rel="canonical" href="http://yoursite.com/2022/01/14/Tensfa-Detecting-and-Repairing-Tensor-Shape-Faults-in-Deep-Learning-Systems/">
 
 
 <script id="page-configurations">
@@ -72,7 +72,7 @@
   };
 </script>
 
-  <title>剑指offer 15. 二进制中1的个数 | xBug</title>
+  <title>Tensfa: Detecting and Repairing Tensor Shape Faults in Deep Learning Systems | xBug</title>
   
 
 
@@ -171,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/03/%E5%89%91%E6%8C%87offer-15-%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/14/Tensfa-Detecting-and-Repairing-Tensor-Shape-Faults-in-Deep-Learning-Systems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -184,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          剑指offer 15. 二进制中1的个数
+          Tensfa: Detecting and Repairing Tensor Shape Faults in Deep Learning Systems
         </h1>
 
         <div class="post-meta">
@@ -194,7 +194,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-08-03 22:15:30" itemprop="dateCreated datePublished" datetime="2020-08-03T22:15:30+08:00">2020-08-03</time>
+              <time title="创建时间：2022-01-14 20:16:27" itemprop="dateCreated datePublished" datetime="2022-01-14T20:16:27+08:00">2022-01-14</time>
             </span>
 
           
@@ -215,20 +215,70 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>请实现一个函数，输入一个整数，输出该数二进制表示中 1 的个数。例如，把 9 表示成二进制是 1001，有 2 位是 1。因此，如果输入 9，则该函数输出 2。</p>
+        <h2 id="0-Intro"><a href="#0-Intro" class="headerlink" title="0. Intro"></a>0. Intro</h2><p>doi: 10.1109/ISSRE52982.2021.00014</p>
 <span id="more"></span>
-<p>示例 1：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：00000000000000000000000000001011</span><br><span class="line">输出：3</span><br><span class="line">解释：输入的二进制串 00000000000000000000000000001011 中，共有三位为 &#x27;1&#x27;。</span><br></pre></td></tr></table></figure></p>
-<p>示例 2：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：00000000000000000000000010000000</span><br><span class="line">输出：1</span><br><span class="line">解释：输入的二进制串 00000000000000000000000010000000 中，共有一位为 &#x27;1&#x27;。</span><br></pre></td></tr></table></figure></p>
-<p>示例 3：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：11111111111111111111111111111101</span><br><span class="line">输出：31</span><br><span class="line">解释：输入的二进制串 11111111111111111111111111111101 中，共有 31 位为 &#x27;1&#x27;。</span><br></pre></td></tr></table></figure></p>
-<p>来源：力扣（LeetCode）</p>
-<p>链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof">https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof</a></p>
-<p>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1. Abstract"></a>1. Abstract</h2><ul>
+<li>empirical study on <strong>crashing tensor shape faults</strong></li>
+<li>propose and implement Tensfa to detect and repair crashing tensor shape faults<ul>
+<li>a ML method to learn and decision trees to detect</li>
+<li>1st automated solution to repairing</li>
+<li>construct <strong>SFData</strong>, a set of 146 buggy programs</li>
+<li>f1-score 95.88% in detection</li>
+<li>80/146 in repair</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h2><p>computational graph:</p>
+<ul>
+<li>node - operation (OP)</li>
+<li>tensor - an edge of the graph</li>
+</ul>
 <hr>
-<p>难度：简单</p>
-<p>标签：位运算</p>
-<h1 id="我的解答"><a href="#我的解答" class="headerlink" title="我的解答"></a>我的解答</h1><p>这个题目非常简单，只要使用位运算符<code>&amp;</code>以及逻辑右移即可。</p>
-<p>如果使用Java，需要注意<code>&gt;&gt;&gt;</code>才是逻辑右移运算符。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">// you need to treat n as an unsigned value</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hammingWeight</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n != <span class="number">0</span>) &#123;</span><br><span class="line">            ans += (n &amp; <span class="number">1</span>);</span><br><span class="line">            n &gt;&gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2 solutions:</p>
+<ul>
+<li>static shape fault detection</li>
+<li>dynamic shape fault detection</li>
+</ul>
+<hr>
+<p>challenges:</p>
+<ul>
+<li>python’s dynamic nature make static analysis hard</li>
+<li>many OPs are defined in frameworks/libraries, each may has trivial restrictions, which is hard to define detection rules</li>
+<li>a dataset for evaluation and repairing</li>
+</ul>
+<h2 id="3-An-empirical-study"><a href="#3-An-empirical-study" class="headerlink" title="3. An empirical study"></a>3. An empirical study</h2><h3 id="3-0-Preliminaries"><a href="#3-0-Preliminaries" class="headerlink" title="3.0. Preliminaries"></a>3.0. Preliminaries</h3><p>definitions:</p>
+<ul>
+<li>operation</li>
+<li>shape restriction</li>
+<li>tensor shape fault</li>
+<li>crashing tensor shape fault</li>
+<li>plausible/correct patch</li>
+</ul>
+<h3 id="3-1-Dataset"><a href="#3-1-Dataset" class="headerlink" title="3.1. Dataset"></a>3.1. Dataset</h3><p>from stackoverflow</p>
+<ul>
+<li>extracting info from posts</li>
+<li>reusing code in github</li>
+<li>generating random test</li>
+<li>producing crash messages</li>
+</ul>
+<h3 id="3-2-Shape-fault-analysis"><a href="#3-2-Shape-fault-analysis" class="headerlink" title="3.2. Shape fault analysis"></a>3.2. Shape fault analysis</h3><ul>
+<li>construction<ul>
+<li>PRI, parameter restriction incompatible, OP parameter shapes and OP restriction are incompatible</li>
+<li>ALI, adjacent layer incompatible, shapes of adjacent layers are incompatible</li>
+</ul>
+</li>
+<li>execution, 65.82%<ul>
+<li>FII, feature input incompatible, feature shapes and model input shapes are incompatible</li>
+<li>LOI, label output incompatible, label shapes and model output shapes are incompatible</li>
+</ul>
+</li>
+</ul>
+<p>The better the APIs are encapsulated, the less possible programs suffer from shape faults during construction.</p>
+<h3 id="3-3-Analysis-of-fault-detection-capability"><a href="#3-3-Analysis-of-fault-detection-capability" class="headerlink" title="3.3. Analysis of fault detection capability"></a>3.3. Analysis of fault detection capability</h3><ul>
+<li>rule-based approaches suffers from generality problem</li>
+<li>crashing messages from shape faults are similar, making ML methods promising</li>
+</ul>
+<h2 id="4-Approach"><a href="#4-Approach" class="headerlink" title="4. Approach"></a>4. Approach</h2>
     </div>
 
     
@@ -243,12 +293,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/08/03/%E5%89%91%E6%8C%87offer-14-2-%E5%89%AA%E7%BB%B3%E5%AD%902/" rel="prev" title="剑指offer 14-2. 剪绳子2">
-      <i class="fa fa-chevron-left"></i> 剑指offer 14-2. 剪绳子2
+    <a href="/2022/01/03/Experience-report-investigating-bug-fixes-in-machine-learning-frameworks-libraries/" rel="prev" title="Experience report: investigating bug fixes in machine learning frameworks/libraries">
+      <i class="fa fa-chevron-left"></i> Experience report: investigating bug fixes in machine learning frameworks/libraries
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/08/04/%E5%89%91%E6%8C%87offer-16-%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9/" rel="next" title="剑指offer 16. 数值的整数次方">
-      剑指offer 16. 数值的整数次方 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/01/15/Silent-Bugs-in-Deep-Learning-Frameworks-An-Empirical-study-of-Keras-and-TensorFlow/" rel="next" title="Silent Bugs in Deep Learning Frameworks: An Empirical study of Keras and TensorFlow">
+      Silent Bugs in Deep Learning Frameworks: An Empirical study of Keras and TensorFlow <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -287,7 +337,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E8%A7%A3%E7%AD%94"><span class="nav-number">2.</span> <span class="nav-text">我的解答</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Intro"><span class="nav-number">1.</span> <span class="nav-text">0. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Abstract"><span class="nav-number">2.</span> <span class="nav-text">1. Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Introduction"><span class="nav-number">3.</span> <span class="nav-text">2. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-An-empirical-study"><span class="nav-number">4.</span> <span class="nav-text">3. An empirical study</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-0-Preliminaries"><span class="nav-number">4.1.</span> <span class="nav-text">3.0. Preliminaries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Dataset"><span class="nav-number">4.2.</span> <span class="nav-text">3.1. Dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Shape-fault-analysis"><span class="nav-number">4.3.</span> <span class="nav-text">3.2. Shape fault analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Analysis-of-fault-detection-capability"><span class="nav-number">4.4.</span> <span class="nav-text">3.3. Analysis of fault detection capability</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Approach"><span class="nav-number">5.</span> <span class="nav-text">4. Approach</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -424,6 +474,56 @@
   
 
   
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 

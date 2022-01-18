@@ -46,21 +46,19 @@
   };
 </script>
 
-  <meta name="description" content="引言这个关于RL的系列，既是平时学习的总结回顾，也作为复习资料。因为平时学业的原因，RL的学习常常会中断不少时间，遗忘率较高，写下这个系列，便于复习与回顾。 参考博客刘建平Pinard 参考文章">
+  <meta name="description" content="0. Introhttps:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2112.13314">
 <meta property="og:type" content="article">
-<meta property="og:title" content="强化学习#1 模型基础">
-<meta property="og:url" content="http://yoursite.com/2019/11/29/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-1-%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="Silent Bugs in Deep Learning Frameworks: An Empirical study of Keras and TensorFlow">
+<meta property="og:url" content="http://yoursite.com/2022/01/15/Silent-Bugs-in-Deep-Learning-Frameworks-An-Empirical-study-of-Keras-and-TensorFlow/index.html">
 <meta property="og:site_name" content="xBug">
-<meta property="og:description" content="引言这个关于RL的系列，既是平时学习的总结回顾，也作为复习资料。因为平时学业的原因，RL的学习常常会中断不少时间，遗忘率较高，写下这个系列，便于复习与回顾。 参考博客刘建平Pinard 参考文章">
+<meta property="og:description" content="0. Introhttps:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2112.13314">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-11-29T08:48:36.000Z">
-<meta property="article:modified_time" content="2019-11-29T08:48:36.000Z">
+<meta property="article:published_time" content="2022-01-15T06:27:28.000Z">
+<meta property="article:modified_time" content="2022-01-15T06:27:28.000Z">
 <meta property="article:author" content="Jared Shaw">
-<meta property="article:tag" content="AI">
-<meta property="article:tag" content="RL">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2019/11/29/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-1-%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">
+<link rel="canonical" href="http://yoursite.com/2022/01/15/Silent-Bugs-in-Deep-Learning-Frameworks-An-Empirical-study-of-Keras-and-TensorFlow/">
 
 
 <script id="page-configurations">
@@ -74,7 +72,7 @@
   };
 </script>
 
-  <title>强化学习#1 模型基础 | xBug</title>
+  <title>Silent Bugs in Deep Learning Frameworks: An Empirical study of Keras and TensorFlow | xBug</title>
   
 
 
@@ -173,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/29/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-1-%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/15/Silent-Bugs-in-Deep-Learning-Frameworks-An-Empirical-study-of-Keras-and-TensorFlow/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -186,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          强化学习#1 模型基础
+          Silent Bugs in Deep Learning Frameworks: An Empirical study of Keras and TensorFlow
         </h1>
 
         <div class="post-meta">
@@ -196,24 +194,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-29 16:48:36" itemprop="dateCreated datePublished" datetime="2019-11-29T16:48:36+08:00">2019-11-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/RL/" itemprop="url" rel="index">
-                    <span itemprop="name">RL</span>
-                  </a>
-                </span>
+              <time title="创建时间：2022-01-15 14:27:28" itemprop="dateCreated datePublished" datetime="2022-01-15T14:27:28+08:00">2022-01-15</time>
             </span>
 
           
@@ -234,29 +215,94 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>这个关于RL的系列，既是平时学习的总结回顾，也作为复习资料。因为平时学业的原因，RL的学习常常会中断不少时间，遗忘率较高，写下这个系列，便于复习与回顾。</p>
-<p>参考博客<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/">刘建平Pinard</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/p/9385570.html">参考文章</a></p>
+        <h2 id="0-Intro"><a href="#0-Intro" class="headerlink" title="0. Intro"></a>0. Intro</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.13314">https://arxiv.org/abs/2112.13314</a></p>
 <span id="more"></span>
-<h1 id="强化学习与其他机器学习方法的异同"><a href="#强化学习与其他机器学习方法的异同" class="headerlink" title="强化学习与其他机器学习方法的异同"></a>强化学习与其他机器学习方法的异同</h1><p>Reinforcement Learning是与Supervised Learning, Unsupervised Learning并列的Machine Learning方法</p>
-<h2 id="RL-vs-Supervised-Learning"><a href="#RL-vs-Supervised-Learning" class="headerlink" title="RL vs Supervised Learning"></a>RL vs Supervised Learning</h2><ol>
-<li>RL没有预先准备的输出值以供学习。RL只有reward，reward不是事先给出，而是在agent与environment交互后得到的。</li>
-<li>RL的每一步(step)与时间顺序密切相关；Supervised Learning的数据之间往往相互独立。</li>
-</ol>
-<h2 id="RL-vs-Unsupervised-Learning"><a href="#RL-vs-Unsupervised-Learning" class="headerlink" title="RL vs Unsupervised Learning"></a>RL vs Unsupervised Learning</h2><ol>
-<li>Unsupervised Learning无输出值也无reward，只有数据特征。</li>
-<li>Unsupervised Learning数据之间独立，没有前后依赖关系。</li>
-</ol>
-<h1 id="RL建模"><a href="#RL建模" class="headerlink" title="RL建模"></a>RL建模</h1><h2 id="MDP"><a href="#MDP" class="headerlink" title="MDP"></a>MDP</h2><blockquote>
-<p>MDP可由元组$(S, A, P, R, \gamma)$描述<br>$S$为有限的<strong>状态集</strong><br>$A$为有限的<strong>动作集</strong><br>$P$为状态转移概率<br>$R$为回报函数<br>$\gamma$为折扣因子，用来计算累积回报</p>
+<h2 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1. Abstract"></a>1. Abstract</h2><blockquote>
+<p>Silent bugs lead to wrong behavior but do not cause system crashes or hangs, nor show an error message.</p>
 </blockquote>
-<p>还有一些重要的模型要素如下</p>
-<ol>
-<li>Policy $\pi$。最常见的策略表达方式是一个<strong>条件概率分布</strong>$\pi(a|s)$，即$\pi(a|s)=P(A_t=a|S_t=s)$</li>
-<li>$v<em>{\pi}(s)$，agent在policy $\pi$和state $s$时采取action后的价值(value)。价值函数$v</em>{\pi}(s)$一般表示为下式，变体在其基础上调整。<script type="math/tex; mode=display">v_{\pi}(s)=\mathbb{E}_{\pi} (R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+...|S_t=s)</script></li>
-<li>探索率$\epsilon$</li>
-</ol>
-<p>参考博客<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinard/">刘建平Pinard</a></p>
+<p>However, little information can be obtained from the DL model’s internal mechanism and training/inference due to the “black-box” and stochastic nature of DL training/inference.</p>
+<p>RQs</p>
+<ul>
+<li>impacts and consequences</li>
+<li>from which part of the framework’s API</li>
+<li>to what extent are the considered silent bugs relevant for DL developers</li>
+</ul>
+<hr>
+<ul>
+<li>77 bug reports from 1168 closed issues of Keras/TensorFlow</li>
+<li>7 categories, 4 levels of bug impact</li>
+<li>14 components are responsible</li>
+<li>an online survey with 103 DL developers</li>
+<li>suggest a set of guidelines</li>
+<li>make datasets used publicly available</li>
+</ul>
+<h2 id="2-Background"><a href="#2-Background" class="headerlink" title="2. Background"></a>2. Background</h2><h2 id="3-Silent-bugs"><a href="#3-Silent-bugs" class="headerlink" title="3. Silent bugs"></a>3. Silent bugs</h2><h3 id="3-0-Methodology"><a href="#3-0-Methodology" class="headerlink" title="3.0. Methodology"></a>3.0. Methodology</h3><h4 id="3-0-0-Data-collection"><a href="#3-0-0-Data-collection" class="headerlink" title="3.0.0. Data collection"></a>3.0.0. Data collection</h4><h4 id="3-0-1-Manual-inspection"><a href="#3-0-1-Manual-inspection" class="headerlink" title="3.0.1. Manual inspection"></a>3.0.1. Manual inspection</h4><ul>
+<li>4 inclusion criteria</li>
+<li>3 reviewers</li>
+</ul>
+<h4 id="3-0-2-Labeling-and-classification"><a href="#3-0-2-Labeling-and-classification" class="headerlink" title="3.0.2. Labeling and classification"></a>3.0.2. Labeling and classification</h4><p>4 threat/impact levels:</p>
+<ul>
+<li>UI element</li>
+<li>model’s info</li>
+<li>model’s operation</li>
+<li>model’s result</li>
+</ul>
+<p>Labeling process is performed in 3 rounds.</p>
+<h3 id="3-1-Empirical-results"><a href="#3-1-Empirical-results" class="headerlink" title="3.1. Empirical results"></a>3.1. Empirical results</h3><h4 id="3-1-0-RQ1-Impact-of-bugs"><a href="#3-1-0-RQ1-Impact-of-bugs" class="headerlink" title="3.1.0. RQ1: Impact of bugs"></a>3.1.0. RQ1: Impact of bugs</h4><ul>
+<li>wrong shape</li>
+<li>wrong displayed message</li>
+<li>wrong save/load</li>
+<li>wrong parameter setting</li>
+<li>performance degradation</li>
+<li>wrong structure</li>
+<li>wrong calculation</li>
+</ul>
+<h4 id="3-1-1-RQ2-Faulty-components"><a href="#3-1-1-RQ2-Faulty-components" class="headerlink" title="3.1.1. RQ2: Faulty components"></a>3.1.1. RQ2: Faulty components</h4><p>All components:</p>
+<ul>
+<li>layer</li>
+<li>regularization</li>
+<li>callbacks</li>
+<li>optimizer</li>
+<li>activations</li>
+<li>metrics</li>
+<li>model</li>
+<li>estimator</li>
+<li>loss</li>
+<li>TF</li>
+<li>saving</li>
+<li>engine</li>
+<li>wrapper</li>
+<li>backend</li>
+</ul>
+<p>The most impacted components are engine (19 samples), layer (14 samples) and model (13 samples)</p>
+<h2 id="4-Validation-and-relevance-assessment"><a href="#4-Validation-and-relevance-assessment" class="headerlink" title="4. Validation and relevance assessment"></a>4. Validation and relevance assessment</h2><h3 id="4-0-Methodology"><a href="#4-0-Methodology" class="headerlink" title="4.0. Methodology"></a>4.0. Methodology</h3><h3 id="Validation-results"><a href="#Validation-results" class="headerlink" title="Validation results"></a>Validation results</h3><h4 id="Notion-of-silent-bugs"><a href="#Notion-of-silent-bugs" class="headerlink" title="Notion of silent bugs"></a>Notion of silent bugs</h4><ul>
+<li>56.3% are familiar with <strong>silent bugs</strong></li>
+<li>97.1% find <strong>silent bug</strong> meaningful</li>
+</ul>
+<h4 id="Categorization-of-scenario"><a href="#Categorization-of-scenario" class="headerlink" title="Categorization of scenario"></a>Categorization of scenario</h4><ul>
+<li>wrong structure rareset, 28%</li>
+<li>performance degradation most, 55%</li>
+</ul>
+<h4 id="Categorization-of-impact"><a href="#Categorization-of-impact" class="headerlink" title="Categorization of impact"></a>Categorization of impact</h4><ul>
+<li>75.8% agree that this scale is relevant</li>
+</ul>
+<h4 id="Comparison-with-traditional-bugs"><a href="#Comparison-with-traditional-bugs" class="headerlink" title="Comparison with traditional bugs"></a>Comparison with traditional bugs</h4><ul>
+<li>72.8% find silent bugs more problematic</li>
+</ul>
+<h2 id="Potential-triage-of-silent-bugs"><a href="#Potential-triage-of-silent-bugs" class="headerlink" title="Potential triage of silent bugs"></a>Potential triage of silent bugs</h2><p>Some recommendations that can help in tracking and/or preventing silent bugs:</p>
+<ul>
+<li>reveal as much infomation as possible<ul>
+<li>use assertions or return more info, unit test and benchmark work badly</li>
+</ul>
+</li>
+<li>do not blindly trust the framework</li>
+<li>following a proper development cycle</li>
+<li>redundancy is a must<ul>
+<li>regression testing: using multiple versions of the framework</li>
+<li>N-versioning: running multiple semantically equivalent programs</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -265,10 +311,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/AI/" rel="tag"># AI</a>
-              <a href="/tags/RL/" rel="tag"># RL</a>
-          </div>
 
         
 
@@ -276,13 +318,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/11/29/%E9%9B%85%E6%80%9D4%E6%A8%A1%E5%9D%97%E5%A4%87%E8%80%83%E7%AD%96%E7%95%A5/" rel="prev" title="雅思4模块备考策略">
-      <i class="fa fa-chevron-left"></i> 雅思4模块备考策略
+    <a href="/2022/01/14/Tensfa-Detecting-and-Repairing-Tensor-Shape-Faults-in-Deep-Learning-Systems/" rel="prev" title="Tensfa: Detecting and Repairing Tensor Shape Faults in Deep Learning Systems">
+      <i class="fa fa-chevron-left"></i> Tensfa: Detecting and Repairing Tensor Shape Faults in Deep Learning Systems
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2019/12/02/RUDDER-Return-Decomposition-for-Delayed-Rewards/" rel="next" title="RUDDER: Return Decomposition for Delayed Rewards">
-      RUDDER: Return Decomposition for Delayed Rewards <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -320,7 +359,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%85%B6%E4%BB%96%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84%E5%BC%82%E5%90%8C"><span class="nav-number">2.</span> <span class="nav-text">强化学习与其他机器学习方法的异同</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RL-vs-Supervised-Learning"><span class="nav-number">2.1.</span> <span class="nav-text">RL vs Supervised Learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RL-vs-Unsupervised-Learning"><span class="nav-number">2.2.</span> <span class="nav-text">RL vs Unsupervised Learning</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RL%E5%BB%BA%E6%A8%A1"><span class="nav-number">3.</span> <span class="nav-text">RL建模</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MDP"><span class="nav-number">3.1.</span> <span class="nav-text">MDP</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Intro"><span class="nav-number">1.</span> <span class="nav-text">0. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Abstract"><span class="nav-number">2.</span> <span class="nav-text">1. Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Background"><span class="nav-number">3.</span> <span class="nav-text">2. Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Silent-bugs"><span class="nav-number">4.</span> <span class="nav-text">3. Silent bugs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-0-Methodology"><span class="nav-number">4.1.</span> <span class="nav-text">3.0. Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-0-0-Data-collection"><span class="nav-number">4.1.1.</span> <span class="nav-text">3.0.0. Data collection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-0-1-Manual-inspection"><span class="nav-number">4.1.2.</span> <span class="nav-text">3.0.1. Manual inspection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-0-2-Labeling-and-classification"><span class="nav-number">4.1.3.</span> <span class="nav-text">3.0.2. Labeling and classification</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Empirical-results"><span class="nav-number">4.2.</span> <span class="nav-text">3.1. Empirical results</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-0-RQ1-Impact-of-bugs"><span class="nav-number">4.2.1.</span> <span class="nav-text">3.1.0. RQ1: Impact of bugs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-RQ2-Faulty-components"><span class="nav-number">4.2.2.</span> <span class="nav-text">3.1.1. RQ2: Faulty components</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Validation-and-relevance-assessment"><span class="nav-number">5.</span> <span class="nav-text">4. Validation and relevance assessment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-Methodology"><span class="nav-number">5.1.</span> <span class="nav-text">4.0. Methodology</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Validation-results"><span class="nav-number">5.2.</span> <span class="nav-text">Validation results</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Notion-of-silent-bugs"><span class="nav-number">5.2.1.</span> <span class="nav-text">Notion of silent bugs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Categorization-of-scenario"><span class="nav-number">5.2.2.</span> <span class="nav-text">Categorization of scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Categorization-of-impact"><span class="nav-number">5.2.3.</span> <span class="nav-text">Categorization of impact</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comparison-with-traditional-bugs"><span class="nav-number">5.2.4.</span> <span class="nav-text">Comparison with traditional bugs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Potential-triage-of-silent-bugs"><span class="nav-number">6.</span> <span class="nav-text">Potential triage of silent bugs</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
