@@ -46,19 +46,19 @@
   };
 </script>
 
-  <meta name="description" content="0. Introdoi: 10.1007&#x2F;978-3-030-59410-7_40">
+  <meta name="description" content="0. Introdoi: 10.1109&#x2F;ISSRE5003.2020.00010">
 <meta property="og:type" content="article">
-<meta property="og:title" content="An Empirical Study on Bugs inside TensorFlow">
-<meta property="og:url" content="http://yoursite.com/2022/01/18/An-Empirical-Study-on-Bugs-inside-TensorFlow/index.html">
+<meta property="og:title" content="Fault Triggers in the TensorFlow Framework: An Experience Report">
+<meta property="og:url" content="http://yoursite.com/2022/01/18/Fault-Triggers-in-the-TensorFlow-Framework-An-Experience-Report/index.html">
 <meta property="og:site_name" content="xBug">
-<meta property="og:description" content="0. Introdoi: 10.1007&#x2F;978-3-030-59410-7_40">
+<meta property="og:description" content="0. Introdoi: 10.1109&#x2F;ISSRE5003.2020.00010">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-18T02:49:41.000Z">
-<meta property="article:modified_time" content="2022-01-18T02:49:41.000Z">
+<meta property="article:published_time" content="2022-01-18T14:34:15.000Z">
+<meta property="article:modified_time" content="2022-01-18T14:34:15.000Z">
 <meta property="article:author" content="Jared Shaw">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2022/01/18/An-Empirical-Study-on-Bugs-inside-TensorFlow/">
+<link rel="canonical" href="http://yoursite.com/2022/01/18/Fault-Triggers-in-the-TensorFlow-Framework-An-Experience-Report/">
 
 
 <script id="page-configurations">
@@ -72,7 +72,7 @@
   };
 </script>
 
-  <title>An Empirical Study on Bugs inside TensorFlow | xBug</title>
+  <title>Fault Triggers in the TensorFlow Framework: An Experience Report | xBug</title>
   
 
 
@@ -171,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/18/An-Empirical-Study-on-Bugs-inside-TensorFlow/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/01/18/Fault-Triggers-in-the-TensorFlow-Framework-An-Experience-Report/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -184,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          An Empirical Study on Bugs inside TensorFlow
+          Fault Triggers in the TensorFlow Framework: An Experience Report
         </h1>
 
         <div class="post-meta">
@@ -194,7 +194,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-01-18 10:49:41" itemprop="dateCreated datePublished" datetime="2022-01-18T10:49:41+08:00">2022-01-18</time>
+              <time title="创建时间：2022-01-18 22:34:15" itemprop="dateCreated datePublished" datetime="2022-01-18T22:34:15+08:00">2022-01-18</time>
             </span>
 
           
@@ -215,84 +215,111 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="0-Intro"><a href="#0-Intro" class="headerlink" title="0. Intro"></a>0. Intro</h2><p>doi: 10.1007/978-3-030-59410-7_40</p>
+        <h2 id="0-Intro"><a href="#0-Intro" class="headerlink" title="0. Intro"></a>0. Intro</h2><p>doi: 10.1109/ISSRE5003.2020.00010</p>
 <span id="more"></span>
-<h2 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1. Abstract"></a>1. Abstract</h2><p>The 1st empirical study to analyze the bugs inside a typical deep learning library, i.e., TensorFlow.</p>
-<p>The symptoms and root causes of are more likely ordinary projects.</p>
-<p>TensorFlow bugs resides in</p>
-<ul>
-<li>interfaces, 26.24%</li>
-<li>learning algorithm, 11.79%</li>
-<li>how to compile, 8.02%</li>
-<li>deploy, 7.55%</li>
-<li>install, 4.72%</li>
+<h2 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1. Abstract"></a>1. Abstract</h2><ul>
+<li>2285 bug reports from TF’s Github are collected</li>
+<li>A bug classification is performed based on fault triggering conditions, followed by the frequency distribution of different types of bugs and the evolution features of varying bug types over time</li>
+<li>Relationships between bug types and fixing time are investigated</li>
+<li>Root causes of Bohrbugs and Mandelbugs are studied</li>
+<li>5 root causes are discovered</li>
+<li>Analysis of regression bug is conducted</li>
+<li>8 implications</li>
 </ul>
-<h2 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h2><p>RQs</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Fault triggers not only including the timing of inputs and operations, but also involving the interactions with other systems.</p>
+<p><a target="_blank" rel="noopener" href="https://grottke.de/documents/AClassificationOfSWFaults.pdf" title="pdf"><em>Grottke</em> and <em>Trivedi</em></a> divided bugs into 2 categories:</p>
 <ul>
-<li>what are the symptoms and causes of bugs in TensorFlow</li>
-<li>where are the bugs inside TensorFlow</li>
+<li>Bohrbug (BOH) is easy to be isolated and their manifestation is consistent under a well-defined set of conditions</li>
+<li>Mandelbug (MAN) is a special kind of faults, whose activation and/or error propagation is complex and difficult to be discovered by traditional techniques<ul>
+<li>non-aging related Mandelbug (NAM)</li>
+<li>aging related Mandelbug (ARB) is a kind of bug that can lead to the software aging phenomenon</li>
 </ul>
-<h2 id="3-Methodology"><a href="#3-Methodology" class="headerlink" title="3. Methodology"></a>3. Methodology</h2><h3 id="3-0-Dataset"><a href="#3-0-Dataset" class="headerlink" title="3.0. Dataset"></a>3.0. Dataset</h3><p>Analyzed 202 bugs from Dec 2017 to Mar 2019, 84 of them have bug reports.</p>
-<p>Steps to extract bugs:</p>
-<ul>
-<li>filtering pull requests by labels</li>
-<li>searching pull requests by keywords</li>
-<li>extract bug reports and code changes</li>
+</li>
+<li>Regression bug is a type of bug that causes a feature, which worked normally in previous versions bug stopped working after a certain code commit</li>
 </ul>
-<h3 id="3-1-Manual-analysis"><a href="#3-1-Manual-analysis" class="headerlink" title="3.1. Manual analysis"></a>3.1. Manual analysis</h3><h4 id="3-1-0-Protocol-of-RQ1"><a href="#3-1-0-Protocol-of-RQ1" class="headerlink" title="3.1.0. Protocol of RQ1"></a>3.1.0. Protocol of RQ1</h4><p>A <em>lift</em> function to measure the correlations between symptoms and root causes</p>
-<script type="math/tex; mode=display">lift(A, b) = \frac{P(A \cap B)}{P(A)P(B)}</script><p>If a <em>lift</em> value is greater than 1, A and B are correlated.</p>
-<h4 id="3-1-1-Protocol-of-RQ2"><a href="#3-1-1-Protocol-of-RQ2" class="headerlink" title="3.1.1. Protocol of RQ2"></a>3.1.1. Protocol of RQ2</h4><p>Identified TF components:</p>
+<hr>
+<p>RQs:</p>
 <ul>
-<li>kernel</li>
-<li>computation graph</li>
-<li>API</li>
-<li>runtime</li>
-<li>framework</li>
-<li>tool</li>
-<li>platform</li>
-<li>contribution</li>
-<li>library</li>
-<li>doc</li>
+<li>what is the distribution of different bug types in TF</li>
+<li>how much time is spent on fixing different types of bugs</li>
+<li>what are the root causes of Bohrbugs and Mandelbugs</li>
 </ul>
-<h2 id="4-Empirical-results"><a href="#4-Empirical-results" class="headerlink" title="4. Empirical results"></a>4. Empirical results</h2><h3 id="4-0-RQ1-symptoms-and-root-causes"><a href="#4-0-RQ1-symptoms-and-root-causes" class="headerlink" title="4.0. RQ1 symptoms and root causes"></a>4.0. RQ1 symptoms and root causes</h3><p>Symptoms</p>
-<ul>
-<li>functional error, 35.64%</li>
-<li>crash, 26.73%</li>
-<li>hang, 1.49%</li>
-<li>performance degradation, 1.49%</li>
-<li>build failure, 23.76%</li>
-<li>warning-style error, 10.89%</li>
+<h2 id="Study-methodology"><a href="#Study-methodology" class="headerlink" title="Study methodology"></a>Study methodology</h2><h3 id="Research-data"><a href="#Research-data" class="headerlink" title="Research data"></a>Research data</h3><ul>
+<li>report filtering</li>
+<li>retracting bug reports and related info</li>
 </ul>
-<p>Root causes</p>
-<ul>
-<li>dimension mismatch, 3.96%</li>
-<li>type confusion, 12.38%</li>
-<li>processing, 22.28%</li>
-<li>inconsistency, 16.83%</li>
-<li>algorithm, 2.97%</li>
-<li>corner case, 15.35%</li>
-<li>logic error, 9.90%</li>
-<li>configuration error, 7.43%</li>
-<li>referenced types error, 4.95%</li>
-<li>memory, 2.97%</li>
-<li>concurrency, 0.99%</li>
+<h3 id="Bug-classification-based-on-fault-triggering-conditions"><a href="#Bug-classification-based-on-fault-triggering-conditions" class="headerlink" title="Bug classification based on fault triggering conditions"></a>Bug classification based on fault triggering conditions</h3><ul>
+<li>BOH</li>
+<li>MAN<ul>
+<li>NAM<ul>
+<li>LAG, there exits a time lag between fault activation and the occurrence of its failure</li>
+<li>ENV, interaction of the software with its system-internal env would affect the activation of the bug and/or error propagation</li>
+<li>TIM, timing of inputs and operations has impacts on the fault activation and/or error propagation</li>
+<li>SEQ, the sequence (i.e., the relative order) of inputs and operations would influence the fault activation and/or the propagation of error</li>
 </ul>
-<p>Distribution</p>
-<ul>
-<li>Finding 1. compared to symptoms, root causes are more determinative, since several root causes have dominated symptoms</li>
-<li>Finding 2. the symptoms and causes of TF are more like an ordinary software system than a maching learning system</li>
-<li>Finding 3. for symptom of TF bugs, build failures have correlation with inconsistencies, configurations and referenced type errors, and warning-style bugs have correlation with inconsistencies, processing, and type confusions. For the root causes of TF bugs, dimension mismatches lead to functional errors, and type confusions have correlation with functional errors, crashes, and warning-style errors</li>
+</li>
+<li>ARB<ul>
+<li>MEM, caused by the accumulation of errors because of improper memory management</li>
+<li>STO, caused by the accumulation of errors as a result of improper storage space management</li>
+<li>LOG, caused by the leaks of other logical resources</li>
+<li>NUM, caused by the accumulation of numerical errors</li>
+<li>TOT, caused by the increase of the fault activation or error propagation rate with total system runtime, but it is not induced by the accumulation of internal error states</li>
 </ul>
-<h3 id="4-1-RQ2-bug-locations"><a href="#4-1-RQ2-bug-locations" class="headerlink" title="4.1. RQ2 bug locations"></a>4.1. RQ2 bug locations</h3><p>Distribution</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>5 root causes:</p>
 <ul>
-<li>contribution, 34.91%</li>
-<li>kernel, 11.79%</li>
-<li>API, 26.42%</li>
-<li>library, 8.02%</li>
-<li>platform, 7.55%</li>
-<li>tool, 4.72%</li>
-<li>computation graph, 0.94%</li>
-<li>Finding 4. In TF, the major reported bugs are in deep learning algorithms and their interfaces, and the bugs in compiling, deploying, and installing TF on different platforms occupy a smaller proporation</li>
+<li>environment and configuration</li>
+<li>concurrency</li>
+<li>memory</li>
+<li>compatibility</li>
+<li>semantic</li>
+</ul>
+<hr>
+<p>Bug report classification procedure</p>
+<ul>
+<li>actual bug filtering</li>
+<li>classification based on fault triggering conditions</li>
+</ul>
+<h2 id="Bug-classification"><a href="#Bug-classification" class="headerlink" title="Bug classification"></a>Bug classification</h2><ul>
+<li>Finding 1. 2285 bugs, 41.17% reports contains an actual bug, 44.86% do not contain bugs, 13.44% are invalid bug reports<ul>
+<li>invalid reports and non-bugs account for a large proportion of all classified bug reports</li>
+</ul>
+</li>
+<li>Finding 2. 953 bugs, BOH (78.17%), MAN (16.47%), UNK (5.35%)<ul>
+<li>testing of BOH should be the focus of TF testing</li>
+</ul>
+</li>
+<li>Finding 3. major subtype of ARBs is MEM (84.09%)<ul>
+<li>pay attention to the release and consumption of resources</li>
+<li>provide guidelines for users to configure the parameters and structure of their model to avoid insufficient memory problems</li>
+</ul>
+</li>
+<li>Finding 4. major subtype of NAMs are TIM (46.38%) and ENV (31.88%)<ul>
+<li>testing NAMs should focus on TIM and ENV. For TIM, use pairwise testing to expose concurrency bugs; For ENV, focus on fault-tolerance techniques</li>
+</ul>
+</li>
+<li>Finding 5. in the first 2 years, proportion of BOH decrease and increase in the following 2 years; MAN shows the opposite</li>
+<li>Finding 6. it takes more time to close an invalid bug report than close an actual bug<ul>
+<li>users should provide high-quality bug reports</li>
+</ul>
+</li>
+<li>Finding 7. in TF, it tends to take more time to fix a Mandelbug than a Bohrbug<ul>
+<li>specific strategies should be developed to deal with Mandelbugs, mitigation approaches such as fault tolerance and software rejuvenation could be used</li>
+</ul>
+</li>
+</ul>
+<h2 id="Root-causes"><a href="#Root-causes" class="headerlink" title="Root causes"></a>Root causes</h2><ul>
+<li>Finding 8. 98.93% of BOHs are caused by semantic bugs, 84.09% of ARBs are caused by memory bugs, and 39.13% of NAMs are caused by concurrency bugs</li>
+<li>Finding 9. A NAM is prone to be an environment/configuration bug or a concurrency bug; an ARB is more likely to be a memory bug; a BOH is more likely to be a compatibility bug or a semantic bug</li>
+</ul>
+<h2 id="Regression-bugs-in-TF"><a href="#Regression-bugs-in-TF" class="headerlink" title="Regression bugs in TF"></a>Regression bugs in TF</h2><ul>
+<li>Finding 10. 86 out of 953 bugs are regression bugs. In all regression bugs, BOHs, MANs and UNKs account for 77.91%, 15.12%, and 6.98%<ul>
+<li>developers implement more regression testing before releasing a new TF version</li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -309,13 +336,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/01/15/Silent-Bugs-in-Deep-Learning-Frameworks-An-Empirical-study-of-Keras-and-TensorFlow/" rel="prev" title="Silent Bugs in Deep Learning Frameworks: An Empirical study of Keras and TensorFlow">
-      <i class="fa fa-chevron-left"></i> Silent Bugs in Deep Learning Frameworks: An Empirical study of Keras and TensorFlow
+    <a href="/2022/01/18/An-Empirical-Study-on-Bugs-inside-TensorFlow/" rel="prev" title="An Empirical Study on Bugs inside TensorFlow">
+      <i class="fa fa-chevron-left"></i> An Empirical Study on Bugs inside TensorFlow
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/01/18/Fault-Triggers-in-the-TensorFlow-Framework-An-Experience-Report/" rel="next" title="Fault Triggers in the TensorFlow Framework: An Experience Report">
-      Fault Triggers in the TensorFlow Framework: An Experience Report <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -353,7 +377,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Intro"><span class="nav-number">1.</span> <span class="nav-text">0. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Abstract"><span class="nav-number">2.</span> <span class="nav-text">1. Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Introduction"><span class="nav-number">3.</span> <span class="nav-text">2. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Methodology"><span class="nav-number">4.</span> <span class="nav-text">3. Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-0-Dataset"><span class="nav-number">4.1.</span> <span class="nav-text">3.0. Dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Manual-analysis"><span class="nav-number">4.2.</span> <span class="nav-text">3.1. Manual analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-0-Protocol-of-RQ1"><span class="nav-number">4.2.1.</span> <span class="nav-text">3.1.0. Protocol of RQ1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-Protocol-of-RQ2"><span class="nav-number">4.2.2.</span> <span class="nav-text">3.1.1. Protocol of RQ2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Empirical-results"><span class="nav-number">5.</span> <span class="nav-text">4. Empirical results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-RQ1-symptoms-and-root-causes"><span class="nav-number">5.1.</span> <span class="nav-text">4.0. RQ1 symptoms and root causes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-RQ2-bug-locations"><span class="nav-number">5.2.</span> <span class="nav-text">4.1. RQ2 bug locations</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Intro"><span class="nav-number">1.</span> <span class="nav-text">0. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Abstract"><span class="nav-number">2.</span> <span class="nav-text">1. Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">3.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Study-methodology"><span class="nav-number">4.</span> <span class="nav-text">Study methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Research-data"><span class="nav-number">4.1.</span> <span class="nav-text">Research data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bug-classification-based-on-fault-triggering-conditions"><span class="nav-number">4.2.</span> <span class="nav-text">Bug classification based on fault triggering conditions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bug-classification"><span class="nav-number">5.</span> <span class="nav-text">Bug classification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Root-causes"><span class="nav-number">6.</span> <span class="nav-text">Root causes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Regression-bugs-in-TF"><span class="nav-number">7.</span> <span class="nav-text">Regression bugs in TF</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
