@@ -43,13 +43,13 @@ Highlight the need for new techniques such as cross-framework differential testi
 
 SO questions about 3 frameworks, TF, PyTorch, and Deeplearning4j.
 
-### Manual inspection
+### 3.2. Manual inspection
 
-### Automated classification
+### 3.3. Automated classification
 
-## Analysis of the results
+## 4. Analysis of the results
 
-### RQ1
+### 4.0. RQ1
 
 - implementation
   - distributed training
@@ -64,11 +64,11 @@ SO questions about 3 frameworks, TF, PyTorch, and Deeplearning4j.
 - comprehension
 - installation
 
-### RQ2
+### 4.1. RQ2
 
-### RQ3
+### 4.2. RQ3
 
-## Research opportunities
+## 5. Research opportunities
 
 implications:
 
