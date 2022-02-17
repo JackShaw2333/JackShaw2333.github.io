@@ -95,27 +95,27 @@ The most impacted components are engine (19 samples), layer (14 samples) and mod
 
 ### 4.0. Methodology
 
-### Validation results
+### 4.1. Validation results
 
-#### Notion of silent bugs
+#### 4.1.0. Notion of silent bugs
 
 - 56.3% are familiar with **silent bugs**
 - 97.1% find **silent bug** meaningful
 
-#### Categorization of scenario
+#### 4.1.1. Categorization of scenario
 
 - wrong structure rareset, 28%
 - performance degradation most, 55%
 
-#### Categorization of impact
+#### 4.1.2. Categorization of impact
 
 - 75.8% agree that this scale is relevant
 
-#### Comparison with traditional bugs
+#### 4.1.3. Comparison with traditional bugs
 
 - 72.8% find silent bugs more problematic
 
-## Potential triage of silent bugs
+## 5. Potential triage of silent bugs
 
 Some recommendations that can help in tracking and/or preventing silent bugs:
 

@@ -21,7 +21,7 @@ doi: 10.1109/ISSRE5003.2020.00010
 - Analysis of regression bug is conducted
 - 8 implications
 
-## Introduction
+## 2. Introduction
 
 Fault triggers not only including the timing of inputs and operations, but also involving the interactions with other systems.
 
@@ -41,14 +41,14 @@ RQs:
 - how much time is spent on fixing different types of bugs
 - what are the root causes of Bohrbugs and Mandelbugs
 
-## Study methodology
+## 3. Study methodology
 
-### Research data
+### 3.0. Research data
 
 - report filtering
 - retracting bug reports and related info
 
-### Bug classification based on fault triggering conditions
+### 3.1. Bug classification based on fault triggering conditions
 
 - BOH
 - MAN
@@ -79,7 +79,7 @@ Bug report classification procedure
 - actual bug filtering
 - classification based on fault triggering conditions
 
-## Bug classification
+## 4. Bug classification
 
 - Finding 1. 2285 bugs, 41.17% reports contains an actual bug, 44.86% do not contain bugs, 13.44% are invalid bug reports
   - invalid reports and non-bugs account for a large proportion of all classified bug reports
@@ -96,12 +96,12 @@ Bug report classification procedure
 - Finding 7. in TF, it tends to take more time to fix a Mandelbug than a Bohrbug
   - specific strategies should be developed to deal with Mandelbugs, mitigation approaches such as fault tolerance and software rejuvenation could be used
 
-## Root causes
+## 5. Root causes
 
 - Finding 8. 98.93% of BOHs are caused by semantic bugs, 84.09% of ARBs are caused by memory bugs, and 39.13% of NAMs are caused by concurrency bugs
 - Finding 9. A NAM is prone to be an environment/configuration bug or a concurrency bug; an ARB is more likely to be a memory bug; a BOH is more likely to be a compatibility bug or a semantic bug
 
-## Regression bugs in TF
+## 6. Regression bugs in TF
 
 - Finding 10. 86 out of 953 bugs are regression bugs. In all regression bugs, BOHs, MANs and UNKs account for 77.91%, 15.12%, and 6.98%
   - developers implement more regression testing before releasing a new TF version

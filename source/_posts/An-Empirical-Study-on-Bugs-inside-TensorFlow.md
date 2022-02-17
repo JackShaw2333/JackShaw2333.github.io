@@ -14,7 +14,7 @@ doi: 10.1007/978-3-030-59410-7_40
 
 The 1st empirical study to analyze the bugs inside a typical deep learning library, i.e., TensorFlow.
 
-The symptoms and root causes of are more likely ordinary projects.
+The symptoms and root causes are more likely ordinary projects.
 
 TensorFlow bugs resides in
 
@@ -72,7 +72,7 @@ Identified TF components:
 
 ### 4.0. RQ1 symptoms and root causes
 
-Symptoms
+#### Symptoms
 
 - functional error, 35.64%
 - crash, 26.73%
@@ -81,29 +81,37 @@ Symptoms
 - build failure, 23.76%
 - warning-style error, 10.89%
 
-Root causes
+#### Root causes
 
 - dimension mismatch, 3.96%
 - type confusion, 12.38%
 - processing, 22.28%
-- inconsistency, 16.83%
+- inconsistency (due to API change or version update), 16.83%
 - algorithm, 2.97%
 - corner case, 15.35%
 - logic error, 9.90%
 - configuration error, 7.43%
-- referenced types error, 4.95%
+- referenced types error (caused by missing or adding unnecessary `include` or `import`), 4.95%
 - memory, 2.97%
 - concurrency, 0.99%
 
-Distribution
+#### Distribution
 
-- Finding 1. compared to symptoms, root causes are more determinative, since several root causes have dominated symptoms
-- Finding 2. the symptoms and causes of TF are more like an ordinary software system than a maching learning system
-- Finding 3. for symptom of TF bugs, build failures have correlation with inconsistencies, configurations and referenced type errors, and warning-style bugs have correlation with inconsistencies, processing, and type confusions. For the root causes of TF bugs, dimension mismatches lead to functional errors, and type confusions have correlation with functional errors, crashes, and warning-style errors
+- **Finding 1**. compared to symptoms, root causes are more determinative, since several root causes have dominated symptoms
+- **Finding 2**. the symptoms and causes of TF are more like an ordinary software system than a maching learning system
+- **Finding 3**.
+  - | symptoms | root causes |
+    |-|-|
+    | build failures | inconsistencies, configurations, referenced type errors |
+    | warning-style bugs | inconsistencies, processing, type confusions |
+  - | root causes | symptoms |
+    |-|-|
+    | dimension mismatch | functional errors |
+    | type confusion | functional errors, crashes, warning-style errors |
 
 ### 4.1. RQ2 bug locations
 
-Distribution
+#### Distribution
 
 - contribution, 34.91%
 - kernel, 11.79%
@@ -112,4 +120,18 @@ Distribution
 - platform, 7.55%
 - tool, 4.72%
 - computation graph, 0.94%
-- Finding 4. In TF, the major reported bugs are in deep learning algorithms and their interfaces, and the bugs in compiling, deploying, and installing TF on different platforms occupy a smaller proporation
+
+**Finding 4**.
+
+- the major reported bugs are in deep learning algorithms and their interfaces, and
+- the bugs in compiling, deploying, and installing TF on different platforms occupy a smaller proporation
+
+#### Correlation of bug categories
+
+**Finding 5**.
+
+- crashes and build failures are popular symtoms.
+- inconsistencies are a popular root cause.
+- **kernel** contains many semantic bugs
+- **API** contains root causes related to tensor computations
+- in related components, e.g., **library** and **tool**, build failures are popular and most bugs are caused by inconsistencies
