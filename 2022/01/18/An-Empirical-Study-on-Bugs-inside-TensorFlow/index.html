@@ -218,7 +218,7 @@
         <h2 id="0-Intro"><a href="#0-Intro" class="headerlink" title="0. Intro"></a>0. Intro</h2><p>doi: 10.1007/978-3-030-59410-7_40</p>
 <span id="more"></span>
 <h2 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1. Abstract"></a>1. Abstract</h2><p>The 1st empirical study to analyze the bugs inside a typical deep learning library, i.e., TensorFlow.</p>
-<p>The symptoms and root causes of are more likely ordinary projects.</p>
+<p>The symptoms and root causes are more likely ordinary projects.</p>
 <p>TensorFlow bugs resides in</p>
 <ul>
 <li>interfaces, 26.24%</li>
@@ -254,8 +254,7 @@
 <li>library</li>
 <li>doc</li>
 </ul>
-<h2 id="4-Empirical-results"><a href="#4-Empirical-results" class="headerlink" title="4. Empirical results"></a>4. Empirical results</h2><h3 id="4-0-RQ1-symptoms-and-root-causes"><a href="#4-0-RQ1-symptoms-and-root-causes" class="headerlink" title="4.0. RQ1 symptoms and root causes"></a>4.0. RQ1 symptoms and root causes</h3><p>Symptoms</p>
-<ul>
+<h2 id="4-Empirical-results"><a href="#4-Empirical-results" class="headerlink" title="4. Empirical results"></a>4. Empirical results</h2><h3 id="4-0-RQ1-symptoms-and-root-causes"><a href="#4-0-RQ1-symptoms-and-root-causes" class="headerlink" title="4.0. RQ1 symptoms and root causes"></a>4.0. RQ1 symptoms and root causes</h3><h4 id="Symptoms"><a href="#Symptoms" class="headerlink" title="Symptoms"></a>Symptoms</h4><ul>
 <li>functional error, 35.64%</li>
 <li>crash, 26.73%</li>
 <li>hang, 1.49%</li>
@@ -263,28 +262,29 @@
 <li>build failure, 23.76%</li>
 <li>warning-style error, 10.89%</li>
 </ul>
-<p>Root causes</p>
-<ul>
+<h4 id="Root-causes"><a href="#Root-causes" class="headerlink" title="Root causes"></a>Root causes</h4><ul>
 <li>dimension mismatch, 3.96%</li>
 <li>type confusion, 12.38%</li>
 <li>processing, 22.28%</li>
-<li>inconsistency, 16.83%</li>
+<li>inconsistency (due to API change or version update), 16.83%</li>
 <li>algorithm, 2.97%</li>
 <li>corner case, 15.35%</li>
 <li>logic error, 9.90%</li>
 <li>configuration error, 7.43%</li>
-<li>referenced types error, 4.95%</li>
+<li>referenced types error (caused by missing or adding unnecessary <code>include</code> or <code>import</code>), 4.95%</li>
 <li>memory, 2.97%</li>
 <li>concurrency, 0.99%</li>
 </ul>
-<p>Distribution</p>
-<ul>
-<li>Finding 1. compared to symptoms, root causes are more determinative, since several root causes have dominated symptoms</li>
-<li>Finding 2. the symptoms and causes of TF are more like an ordinary software system than a maching learning system</li>
-<li>Finding 3. for symptom of TF bugs, build failures have correlation with inconsistencies, configurations and referenced type errors, and warning-style bugs have correlation with inconsistencies, processing, and type confusions. For the root causes of TF bugs, dimension mismatches lead to functional errors, and type confusions have correlation with functional errors, crashes, and warning-style errors</li>
+<h4 id="Distribution"><a href="#Distribution" class="headerlink" title="Distribution"></a>Distribution</h4><ul>
+<li><strong>Finding 1</strong>. compared to symptoms, root causes are more determinative, since several root causes have dominated symptoms</li>
+<li><strong>Finding 2</strong>. the symptoms and causes of TF are more like an ordinary software system than a maching learning system</li>
+<li><strong>Finding 3</strong>.<ul>
+<li>| symptoms | root causes |<br>|-|-|<br>| build failures | inconsistencies, configurations, referenced type errors |<br>| warning-style bugs | inconsistencies, processing, type confusions |</li>
+<li>| root causes | symptoms |<br>|-|-|<br>| dimension mismatch | functional errors |<br>| type confusion | functional errors, crashes, warning-style errors |</li>
 </ul>
-<h3 id="4-1-RQ2-bug-locations"><a href="#4-1-RQ2-bug-locations" class="headerlink" title="4.1. RQ2 bug locations"></a>4.1. RQ2 bug locations</h3><p>Distribution</p>
-<ul>
+</li>
+</ul>
+<h3 id="4-1-RQ2-bug-locations"><a href="#4-1-RQ2-bug-locations" class="headerlink" title="4.1. RQ2 bug locations"></a>4.1. RQ2 bug locations</h3><h4 id="Distribution-1"><a href="#Distribution-1" class="headerlink" title="Distribution"></a>Distribution</h4><ul>
 <li>contribution, 34.91%</li>
 <li>kernel, 11.79%</li>
 <li>API, 26.42%</li>
@@ -292,7 +292,19 @@
 <li>platform, 7.55%</li>
 <li>tool, 4.72%</li>
 <li>computation graph, 0.94%</li>
-<li>Finding 4. In TF, the major reported bugs are in deep learning algorithms and their interfaces, and the bugs in compiling, deploying, and installing TF on different platforms occupy a smaller proporation</li>
+</ul>
+<p><strong>Finding 4</strong>.</p>
+<ul>
+<li>the major reported bugs are in deep learning algorithms and their interfaces, and</li>
+<li>the bugs in compiling, deploying, and installing TF on different platforms occupy a smaller proporation</li>
+</ul>
+<h4 id="Correlation-of-bug-categories"><a href="#Correlation-of-bug-categories" class="headerlink" title="Correlation of bug categories"></a>Correlation of bug categories</h4><p><strong>Finding 5</strong>.</p>
+<ul>
+<li>crashes and build failures are popular symtoms.</li>
+<li>inconsistencies are a popular root cause.</li>
+<li><strong>kernel</strong> contains many semantic bugs</li>
+<li><strong>API</strong> contains root causes related to tensor computations</li>
+<li>in related components, e.g., <strong>library</strong> and <strong>tool</strong>, build failures are popular and most bugs are caused by inconsistencies</li>
 </ul>
 
     </div>
@@ -353,7 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Intro"><span class="nav-number">1.</span> <span class="nav-text">0. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Abstract"><span class="nav-number">2.</span> <span class="nav-text">1. Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Introduction"><span class="nav-number">3.</span> <span class="nav-text">2. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Methodology"><span class="nav-number">4.</span> <span class="nav-text">3. Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-0-Dataset"><span class="nav-number">4.1.</span> <span class="nav-text">3.0. Dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Manual-analysis"><span class="nav-number">4.2.</span> <span class="nav-text">3.1. Manual analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-0-Protocol-of-RQ1"><span class="nav-number">4.2.1.</span> <span class="nav-text">3.1.0. Protocol of RQ1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-Protocol-of-RQ2"><span class="nav-number">4.2.2.</span> <span class="nav-text">3.1.1. Protocol of RQ2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Empirical-results"><span class="nav-number">5.</span> <span class="nav-text">4. Empirical results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-RQ1-symptoms-and-root-causes"><span class="nav-number">5.1.</span> <span class="nav-text">4.0. RQ1 symptoms and root causes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-RQ2-bug-locations"><span class="nav-number">5.2.</span> <span class="nav-text">4.1. RQ2 bug locations</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-Intro"><span class="nav-number">1.</span> <span class="nav-text">0. Intro</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Abstract"><span class="nav-number">2.</span> <span class="nav-text">1. Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Introduction"><span class="nav-number">3.</span> <span class="nav-text">2. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Methodology"><span class="nav-number">4.</span> <span class="nav-text">3. Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-0-Dataset"><span class="nav-number">4.1.</span> <span class="nav-text">3.0. Dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Manual-analysis"><span class="nav-number">4.2.</span> <span class="nav-text">3.1. Manual analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-0-Protocol-of-RQ1"><span class="nav-number">4.2.1.</span> <span class="nav-text">3.1.0. Protocol of RQ1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-Protocol-of-RQ2"><span class="nav-number">4.2.2.</span> <span class="nav-text">3.1.1. Protocol of RQ2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Empirical-results"><span class="nav-number">5.</span> <span class="nav-text">4. Empirical results</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-RQ1-symptoms-and-root-causes"><span class="nav-number">5.1.</span> <span class="nav-text">4.0. RQ1 symptoms and root causes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Symptoms"><span class="nav-number">5.1.1.</span> <span class="nav-text">Symptoms</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Root-causes"><span class="nav-number">5.1.2.</span> <span class="nav-text">Root causes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Distribution"><span class="nav-number">5.1.3.</span> <span class="nav-text">Distribution</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-RQ2-bug-locations"><span class="nav-number">5.2.</span> <span class="nav-text">4.1. RQ2 bug locations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Distribution-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">Distribution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Correlation-of-bug-categories"><span class="nav-number">5.2.2.</span> <span class="nav-text">Correlation of bug categories</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -367,7 +379,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-count">75</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
